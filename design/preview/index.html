@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phác thảo giao diện · Ebook và Thumbnail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=JetBrains+Mono:wght@500;700&family=Lexend:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============ Công cụ xem trước (vỏ trang, trung tính) ============ */
+:root{--tool-bg:#eceef1;--tool-ink:#16191d;--tool-mute:#5d6570;--tool-line:#d6dae0;--tool-card:#fbfbfc}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--tool-bg);color:var(--tool-ink);font-family:"Be Vietnam Pro",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.bar{position:sticky;top:0;z-index:20;background:rgba(251,251,252,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--tool-line)}
+.bar-in{max-width:1400px;margin:0 auto;padding:12px 24px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+.bar h1{font-size:16px;margin:0;font-weight:800;letter-spacing:-.01em;flex:1 1 220px}
+.seg{display:flex;gap:4px;padding:4px;background:#e3e6ea;border-radius:12px}
+.seg button{border:0;background:transparent;font:inherit;font-size:13.5px;font-weight:700;color:var(--tool-mute);height:34px;padding:0 14px;border-radius:9px;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.seg button .chip{width:12px;height:12px;border-radius:4px;display:inline-block}
+.seg button.on{background:#fff;color:var(--tool-ink);box-shadow:0 1px 3px rgba(20,24,30,.14)}
+.seg button:active{transform:translateY(1px)}
+.ctl{max-width:1400px;margin:0 auto;padding:10px 24px 14px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:12px;align-items:end}
+.ctl label{display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:700;color:var(--tool-mute)}
+.ctl input,.ctl select{height:38px;border:1px solid var(--tool-line);border-radius:10px;padding:0 12px;font:inherit;font-size:14px;color:var(--tool-ink);background:#fff}
+.ctl input:focus,.ctl select:focus{outline:2px solid #2563eb;outline-offset:1px}
+.ctl .check{flex-direction:row;align-items:center;height:38px}
+.ctl small{font-weight:500}
+main{max-width:1400px;margin:0 auto;padding:28px 24px 80px;display:grid;gap:44px}
+.sec-h{display:flex;align-items:baseline;gap:14px;margin:0 0 16px}
+.sec-h h2{margin:0;font-size:22px;letter-spacing:-.02em}
+.sec-h p{margin:0;color:var(--tool-mute);font-size:14px}
+.stage{background:var(--tool-card);border:1px solid var(--tool-line);border-radius:18px;padding:22px}
+.scaler{position:relative;width:100%;overflow:hidden}
+.scaler>.native{position:absolute;left:0;top:0;transform-origin:0 0}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.cap{margin:10px 0 0;font-size:13px;color:var(--tool-mute)}
+.cap b{color:var(--tool-ink)}
+.yt{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start;margin-top:22px;padding-top:20px;border-top:1px solid var(--tool-line)}
+.yt-item{width:246px}
+.yt-item .t{margin:8px 0 2px;font-size:13px;font-weight:700;line-height:1.35}
+.yt-item .m{font-size:12px;color:var(--tool-mute)}
+.yt-hint{flex:1 1 260px;font-size:13.5px;color:var(--tool-mute);line-height:1.6;max-width:420px}
+.ebook-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.ebook-row .desk{grid-column:1/-1;order:-1}
+.ebook-row .small{max-width:360px;justify-self:center;width:100%}
+.tokens{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.sw{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.sw div{border-radius:12px;padding:56px 12px 10px;font:600 12px "JetBrains Mono",monospace;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35);border:1px solid rgba(0,0,0,.06)}
+.sw div i{display:block;font-style:normal;font-family:"Be Vietnam Pro";font-weight:700;font-size:12px;margin-bottom:2px}
+.rules{font-size:14px;line-height:1.65;color:#2c333b;margin:0;padding-left:18px}
+.rules li{margin-bottom:6px}
+.type-sample{margin-top:14px;padding:16px;border-radius:12px;background:#fff;border:1px solid var(--tool-line)}
+@media (max-width:1100px){.tokens{grid-template-columns:1fr}.ctl{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){.grid-3{grid-template-columns:1fr}.ebook-row{grid-template-columns:1fr}.bar-in,.ctl,main{padding-left:16px;padding-right:16px}.ctl{grid-template-columns:1fr}.sw{grid-template-columns:repeat(3,1fr)}}
+@media (prefers-reduced-motion:no-preference){.T,.E,.CV{transition:background-color .35s ease,color .35s ease}}
+
+/* ============ 4 PHONG CÁCH THƯƠNG HIỆU (token) ============ */
+[data-style=coachio]{--bg:#f4f5f7;--surface:#ffffff;--ink:#0f2547;--text:#1d2633;--mute:#5f6b7a;--line:#e1e5eb;--accent:#f1591f;--accent-ink:#ffffff;--second:#2563eb;--soft:#fdeee6;--soft2:#e8efff;--prompt:#0f2547;--font:"Be Vietnam Pro";--display:"Be Vietnam Pro";--r:14px;--r-lg:22px;--case:uppercase;--track:-.02em}
+[data-style=studio]{--bg:#111418;--surface:#181c22;--ink:#f1f3f4;--text:#d7dce1;--mute:#8d96a1;--line:#2a3039;--accent:#b6e04c;--accent-ink:#111418;--second:#8d96a1;--soft:#232a1a;--soft2:#20252c;--prompt:#0b0d10;--font:"Be Vietnam Pro";--display:"Be Vietnam Pro";--r:8px;--r-lg:12px;--case:none;--track:-.03em}
+[data-style=forest]{--bg:#eef1ec;--surface:#fbfcfa;--ink:#17362a;--text:#24342c;--mute:#5d6d63;--line:#d8dfd8;--accent:#e0a423;--accent-ink:#17362a;--second:#2f6b4f;--soft:#f8edd2;--soft2:#e1ece5;--prompt:#17362a;--font:"Lexend";--display:"Lexend";--r:18px;--r-lg:28px;--case:none;--track:-.025em}
+[data-style=cobalt]{--bg:#f6f7fb;--surface:#ffffff;--ink:#0b1b3f;--text:#1b2540;--mute:#5a6480;--line:#e2e5ef;--accent:#1f4bff;--accent-ink:#ffffff;--second:#ff6b4a;--soft:#e8edff;--soft2:#fff0eb;--prompt:#0b1b3f;--font:"Plus Jakarta Sans";--display:"Plus Jakarta Sans";--r:10px;--r-lg:16px;--case:none;--track:-.035em}
+
+/* ============ THUMBNAIL 1280×720 ============ */
+.T{width:1280px;height:720px;position:relative;overflow:hidden;background:var(--bg);font-family:var(--display),system-ui,sans-serif;color:var(--ink)}
+.T .logo{position:absolute;left:64px;top:52px;height:62px;display:flex;align-items:center;gap:14px;z-index:3}
+.T .logo img{height:62px;width:auto;display:block}
+.mono{display:grid;place-items:center;width:58px;height:58px;border-radius:var(--r);background:var(--accent);color:var(--accent-ink);font:800 24px var(--display);letter-spacing:-.04em}
+.T .logo b{font:800 22px/1.05 var(--display);letter-spacing:-.01em;color:var(--ink)}
+.T .logo b small{display:block;font-size:13px;font-weight:600;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.T .txt{position:absolute;left:64px;top:150px;width:640px;z-index:3;display:flex;flex-direction:column;gap:22px}
+.T .series{font:800 30px/1.1 var(--display);letter-spacing:var(--track);color:var(--ink);text-transform:var(--case);opacity:.92}
+.T .title{font:800 76px/1.04 var(--display);letter-spacing:var(--track);margin:0;color:var(--ink);text-wrap:balance}
+.T .title em{font-style:normal;color:var(--accent)}
+.T .pills{display:flex;gap:12px;align-items:center}
+.pill{display:inline-flex;align-items:center;height:52px;padding:0 22px;border-radius:var(--r);font:800 26px var(--display);letter-spacing:-.01em;white-space:nowrap}
+.pill.part{background:var(--soft2);color:var(--second)}
+.pill.code{background:var(--accent);color:var(--accent-ink)}
+.T .foot{position:absolute;left:64px;bottom:50px;z-index:3;display:flex;align-items:center;gap:22px}
+.T .kicker{font:700 20px var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.T .teacher{font:600 21px var(--display);color:var(--text);padding-left:22px;border-left:2px solid var(--line)}
+/* khung thiết bị chứa ảnh màn hình thật */
+.dev{position:absolute;border-radius:22px;background:#0d1117;padding:14px 14px 18px;box-shadow:0 40px 80px rgba(15,23,40,.28),0 8px 18px rgba(15,23,40,.14)}
+.dev::before{content:"";position:absolute;left:24px;top:22px;width:42px;height:10px;border-radius:6px;background:radial-gradient(circle at 5px 5px,#ff5f57 5px,transparent 5.5px),radial-gradient(circle at 21px 5px,#febc2e 5px,transparent 5.5px),radial-gradient(circle at 37px 5px,#28c840 5px,transparent 5.5px)}
+.dev img{display:block;width:100%;height:100%;object-fit:cover;object-position:top left;border-radius:10px;margin-top:22px}
+.mascot{position:absolute;z-index:2;pointer-events:none}
+
+/* layout A: ảnh màn hình (gần Coachio) */
+.T.A .dev{width:640px;height:400px;right:-40px;top:170px;transform:perspective(1600px) rotateY(-14deg) rotateZ(2deg)}
+.T.A .mascot{width:280px;right:24px;bottom:-28px}
+.T.A.no-mascot .dev{top:150px;right:-20px;width:680px;height:430px}
+/* layout B: mascot / giảng viên lớn */
+.T.B .mascot{width:520px;right:40px;bottom:-24px}
+.T.B .txt{width:700px}
+.T.B .title{font-size:84px}
+/* layout C: số bài lớn, ảnh dạng dải dưới */
+.T.C .bignum{position:absolute;right:56px;top:40px;font:900 300px/1 var(--display);letter-spacing:-.06em;color:var(--accent);opacity:.95;z-index:1}
+.T.C .dev{width:600px;height:300px;right:-120px;bottom:-130px;transform:rotate(-4deg)}
+.T.C .txt{top:170px;width:760px}
+.T.C .title{font-size:80px}
+.T.C .mascot{display:none}
+
+/* trang trí theo phong cách */
+.deco{position:absolute;inset:0;z-index:0;pointer-events:none}
+[data-style=coachio] .deco .a{position:absolute;inset:0;background:var(--accent);clip-path:polygon(70% 0,100% 0,100% 54%)}
+[data-style=coachio] .deco .b{position:absolute;inset:0;background:var(--second);clip-path:polygon(54% 100%,100% 40%,100% 100%)}
+[data-style=coachio] .deco .dots{position:absolute;right:52px;top:40px;width:300px;height:44px;background-image:radial-gradient(var(--ink) 4px,transparent 4.5px);background-size:30px 22px}
+[data-style=coachio] .T .kicker{color:var(--ink);border:3px solid var(--ink);padding:10px 20px;letter-spacing:.14em;font-weight:800}
+[data-style=coachio] .T .teacher{color:var(--ink);font-weight:700;border-left:0;padding-left:0}
+[data-style=studio] .deco .a{position:absolute;right:0;top:0;width:46%;height:100%;background:linear-gradient(180deg,#1b2027,#14181d)}
+[data-style=studio] .deco .b{position:absolute;left:64px;top:132px;width:96px;height:6px;background:var(--accent);border-radius:3px}
+[data-style=studio] .T .series{font-family:"JetBrains Mono";font-size:22px;letter-spacing:.02em;color:var(--accent);font-weight:700;opacity:1}
+[data-style=studio] .pill.part{background:#232931;color:var(--text)}
+[data-style=studio] .T .kicker{font-family:"JetBrains Mono";letter-spacing:.08em;font-size:17px}
+[data-style=studio] .dev{background:#05070a;box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 1px #2a3039}
+[data-style=forest] .deco .a{position:absolute;right:-300px;top:-220px;width:780px;height:780px;border-radius:50%;background:var(--second)}
+[data-style=forest] .deco .b{position:absolute;right:380px;bottom:-170px;width:280px;height:280px;border-radius:50%;background:var(--accent);opacity:.9}
+[data-style=forest] .T .title{font-weight:700}
+[data-style=forest] .T .title em{color:var(--second)}
+[data-style=forest] .pill{border-radius:999px}
+
+[data-style=cobalt] .pill.part{color:#d9431f}
+[data-style=cobalt] .deco .a{position:absolute;right:0;top:0;width:44%;height:100%;background:var(--accent)}
+[data-style=cobalt] .deco .b{position:absolute;right:44%;top:0;width:14px;height:100%;background:var(--second)}
+
+[data-style=cobalt] .T.C .bignum,[data-style=forest] .T.C .bignum{color:#fff}
+[data-style=coachio] .T.C .deco .a{opacity:0}
+[data-style=coachio] .T.C .bignum{color:var(--accent)}
+
+/* ============ EBOOK ============ */
+.E{width:1280px;height:820px;background:var(--bg);color:var(--text);font-family:var(--font),system-ui,sans-serif;display:grid;grid-template-rows:64px 1fr;overflow:hidden;border-radius:var(--r-lg)}
+.E .top{display:flex;align-items:center;gap:16px;padding:0 22px;background:var(--surface);border-bottom:1px solid var(--line)}
+.E .brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--ink);font-size:15px;white-space:nowrap}
+.E .brand .mono{width:36px;height:36px;font-size:14px;border-radius:calc(var(--r) - 4px)}
+.E .crumb{flex:1;color:var(--mute);font-size:14px;padding-left:16px;border-left:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabs{display:flex;gap:4px;padding:4px;border-radius:calc(var(--r) - 2px);background:var(--soft2)}
+.tabs span{height:32px;display:flex;align-items:center;padding:0 14px;border-radius:calc(var(--r) - 5px);font-size:13.5px;font-weight:700;color:var(--second)}
+[data-style=studio] .tabs span{color:var(--text)}
+.tabs span:first-child{background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ibtn{height:36px;min-width:36px;padding:0 12px;border-radius:calc(var(--r) - 4px);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13.5px;color:var(--ink);background:var(--surface)}
+.ibtn.pri{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+[data-style=studio] .ibtn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.E .body{display:grid;grid-template-columns:270px 1fr 230px;min-height:0}
+.toc{border-right:1px solid var(--line);padding:18px 14px;background:var(--surface);overflow:hidden}
+.toc .p{font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:14px 8px 6px}
+.toc .i{display:flex;gap:10px;padding:8px;border-radius:calc(var(--r) - 4px);font-size:13.5px;line-height:1.35;color:var(--text)}
+.toc .i b{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--mute);min-width:20px;padding-top:1px}
+.toc .i.on{background:var(--ink);color:var(--surface)}
+.toc .i.on b{color:var(--accent)}
+[data-style=studio] .toc .i.on{background:var(--soft);color:var(--ink)}
+.read{padding:30px 44px;overflow:hidden}
+.read .k{display:flex;gap:8px;align-items:center;font-size:13px;font-weight:800;color:var(--accent);margin-bottom:8px}
+[data-style=forest] .read .k,[data-style=cobalt] .read .k{color:var(--second)}
+[data-style=cobalt] .read .k{color:var(--accent)}
+.read h1{font:800 38px/1.12 var(--display);letter-spacing:var(--track);color:var(--ink);margin:0 0 10px;max-width:20ch}
+.read .meta{font-size:13px;color:var(--mute);margin-bottom:18px}
+.read p{font-size:16.5px;line-height:1.75;margin:0 0 14px;max-width:62ch}
+.goal{border-radius:var(--r);background:var(--soft2);padding:14px 16px;font-size:15px;line-height:1.6;margin:0 0 16px;max-width:62ch;color:var(--text)}
+.goal b{color:var(--ink)}
+.prompt{border-radius:var(--r);background:var(--prompt);color:#e8eef6;padding:14px 16px 16px;max-width:62ch;margin-bottom:14px}
+[data-style=studio] .prompt{border:1px solid var(--line)}
+.prompt .h{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.prompt .h span{font:700 11.5px "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--accent)}
+[data-style=forest] .prompt .h span{color:#f0c35d}
+[data-style=cobalt] .prompt .h span{color:#9db1ff}
+.prompt .h i{font-style:normal;font-size:12.5px;font-weight:700;padding:5px 10px;border-radius:7px;background:rgba(255,255,255,.12)}
+.prompt div{font-size:15px;line-height:1.6}
+.prompt mark{background:rgba(255,214,102,.22);color:#ffe29a;border-radius:4px;padding:0 3px}
+.tip{display:flex;gap:12px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);padding:12px 16px;font-size:14.5px;line-height:1.6;max-width:62ch}
+.tip b{color:var(--ink)}
+.tip .ic{width:28px;height:28px;flex:none;border-radius:8px;background:var(--soft);display:grid;place-items:center;color:var(--accent);font-weight:900}
+[data-style=forest] .tip .ic{color:#9a6b05}
+.rail{border-left:1px solid var(--line);padding:22px 18px;font-size:13px;color:var(--mute)}
+.rail b{display:block;color:var(--ink);font-size:12px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.rail .o{padding:6px 0 6px 12px;border-left:2px solid var(--line);line-height:1.4}
+.rail .o.on{border-color:var(--accent);color:var(--ink);font-weight:700}
+.prog{height:6px;border-radius:3px;background:var(--line);margin:18px 0 8px;overflow:hidden}
+.prog i{display:block;height:100%;width:38%;background:var(--accent)}
+.vid{border-radius:var(--r);overflow:hidden;position:relative;margin:4px 0 16px;width:440px;aspect-ratio:16/9;background:#000}
+.vid .native{transform-origin:0 0}
+/* mobile */
+.M{width:375px;height:780px;border-radius:34px;background:var(--bg);color:var(--text);font-family:var(--font),system-ui,sans-serif;overflow:hidden;border:10px solid #15181d;display:flex;flex-direction:column}
+.M .mt{height:56px;display:flex;align-items:center;gap:10px;padding:0 14px;background:var(--surface);border-bottom:1px solid var(--line)}
+.M .mt .mono{width:32px;height:32px;font-size:13px;border-radius:9px}
+.M .mt .tabs span{height:28px;padding:0 9px;font-size:12px}
+.M .mb{padding:20px 18px;flex:1;overflow:hidden}
+.M h1{font:800 27px/1.15 var(--display);letter-spacing:var(--track);color:var(--ink);margin:4px 0 10px}
+.M p{font-size:15.5px;line-height:1.7;margin:0 0 12px}
+.M .prompt div{font-size:14px}
+.M .nav{height:62px;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);background:var(--surface);font-size:11.5px;font-weight:700;color:var(--mute);text-align:center;align-items:center}
+.M .nav span:nth-child(2){color:var(--ink)}
+/* cover */
+.CV{width:600px;height:800px;position:relative;overflow:hidden;border-radius:6px;font-family:var(--display),system-ui,sans-serif;background:var(--ink);color:#fff;padding:52px 48px;display:flex;flex-direction:column;gap:22px}
+[data-style=studio] .CV{background:#0b0d10}
+.CV .top{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.85;position:relative;z-index:2}
+.CV .top img{height:34px;background:#fff;border-radius:8px;padding:4px 8px}
+.CV .top .mono{width:40px;height:40px;font-size:16px}
+.CV h2{margin:40px 0 0;font:800 70px/1 var(--display);letter-spacing:var(--track);text-transform:var(--case);position:relative;z-index:2}
+.CV h2 em{display:block;font-style:normal;color:var(--accent);font-size:40px;line-height:1.15;margin-top:12px;text-transform:none}
+[data-style=forest] .CV h2 em{color:#f0c35d}
+[data-style=cobalt] .CV h2 em{color:#ff9478}
+[data-style=cobalt] .tabs{background:var(--soft)}
+[data-style=cobalt] .tabs span{color:var(--accent)}
+.CV p{font-size:19px;line-height:1.5;opacity:.88;max-width:26ch;margin:0;position:relative;z-index:2}
+.CV .shot{position:absolute;left:48px;right:-60px;bottom:110px;height:250px;border-radius:14px;overflow:hidden;box-shadow:0 30px 60px rgba(0,0,0,.4);transform:rotate(-3deg);z-index:1}
+.CV .shot img{width:100%;height:100%;object-fit:cover;object-position:top left}
+.CV .foot{margin-top:auto;display:flex;justify-content:space-between;font-size:14px;opacity:.75;border-top:1px solid rgba(255,255,255,.22);padding-top:14px;position:relative;z-index:2}
+.CV .glow{position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:var(--accent);opacity:.35;filter:blur(10px)}
+[data-style=coachio] .CV .glow{background:var(--accent);opacity:.9;border-radius:0;clip-path:polygon(40% 0,100% 0,100% 60%);filter:none;width:520px;height:520px;right:-100px;top:-100px}
+[data-style=cobalt] .CV .glow{background:var(--accent);opacity:1;border-radius:0;width:40%;height:100%;right:0;top:0;filter:none}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="bar-in">
+    <h1>Phác thảo giao diện ebook và thumbnail video</h1>
+    <div class="seg" id="styleSeg" role="tablist" aria-label="Phong cách thương hiệu">
+      <button class="on" data-s="coachio"><span class="chip" style="background:#f1591f"></span>Coachio</button>
+      <button data-s="studio"><span class="chip" style="background:#b6e04c;outline:2px solid #111418"></span>Studio Đêm</button>
+      <button data-s="forest"><span class="chip" style="background:#2f6b4f"></span>Rừng Xanh</button>
+      <button data-s="cobalt"><span class="chip" style="background:#1f4bff"></span>Cobalt</button>
+    </div>
+  </div>
+  <form class="ctl" onsubmit="return false">
+    <label>Tên bài <small>(bọc **chữ** để tô màu nhấn)</small><input id="fTitle" value="Viết **PRD** cùng AI trong 20 phút"></label>
+    <label>Tên khoá<input id="fSeries" value="Vibe Code phần mềm"></label>
+    <label>Phần<input id="fPart" value="Phần 2 · Quy trình"></label>
+    <label>Mã bài<input id="fCode" value="Bài 9.1"></label>
+    <label class="check"><input type="checkbox" id="fMascot" checked> Mascot</label>
+  </form>
+</header>
+
+<main id="app" data-style="coachio">
+  <section>
+    <div class="sec-h"><h2>Thumbnail bài học</h2><p>1280×720, xuất 1920×1080. Ba bố cục dùng chung một bộ màu.</p></div>
+    <div class="stage">
+      <div class="scaler" data-w="1280" data-h="720"><div class="native" id="tMain"></div></div>
+      <p class="cap"><b>Bố cục chính.</b> Chọn bố cục bằng cách bấm vào một ô bên dưới.</p>
+      <div class="grid-3" style="margin-top:18px" id="layoutPick"></div>
+      <div class="yt" id="ytRow"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Ebook e-learning</h2><p>Bìa, trang đọc trên máy tính và điện thoại.</p></div>
+    <div class="stage ebook-row">
+      <div class="small"><div class="scaler" data-w="600" data-h="800"><div class="native" id="cover"></div></div><p class="cap"><b>Bìa ebook</b> 3:4</p></div>
+      <div class="desk"><div class="scaler" data-w="1280" data-h="820"><div class="native" id="desk"></div></div><p class="cap"><b>Trang đọc máy tính.</b> Tab Mindmap và Bộ prompt luôn ở thanh trên.</p></div>
+      <div class="small"><div class="scaler" data-w="375" data-h="780"><div class="native" id="mobile"></div></div><p class="cap"><b>Điện thoại</b> 375px</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-h"><h2>Bộ token của phong cách</h2><p id="tokName"></p></div>
+    <div class="stage tokens">
+      <div><div class="sw" id="swatches"></div><div class="type-sample" id="typeSample"></div></div>
+      <ul class="rules" id="rules"></ul>
+    </div>
+  </section>
+</main>
+
+<script>
+const STYLES = {
+  coachio: {
+    name: 'Coachio', brand: {logo: 'assets/logo-coachio.png'},
+    kicker: 'Bộ video e-learning', teacher: 'GV Đặng Hữu Sơn',
+    sw: [['Ink','#0f2547'],['Nhấn','#f1591f'],['Phụ','#2563eb'],['Nền','#f4f5f7'],['Mềm','#fdeee6']],
+    font: 'Be Vietnam Pro 800, chữ in hoa cho tên khoá',
+    rules: ['Giữ chữ ký Coachio: hai mảng chéo cam và xanh ở góc phải, lưới chấm, khung kicker viền đậm.',
+            'Tên bài là chữ lớn nhất (76px), tô màu nhấn cho 1 cụm từ khoá. Tên khoá thu nhỏ thành dòng trên, đọc được cả ở cỡ YouTube.',
+            'Ảnh màn hình thật của bài trong khung máy nghiêng, mascot đặt chồng góc dưới.',
+            'Dùng cho mọi khoá của đội Coachio.']
+  },
+  studio: {
+    name: 'Studio Đêm', brand: {mono: 'ND', name: 'Nền Tảng Dev', sub: 'Học lập trình thực chiến'},
+    kicker: 'Khoá học online', teacher: 'GV Trần Quốc Bảo',
+    sw: [['Nền','#111418'],['Bề mặt','#181c22'],['Chữ','#f1f3f4'],['Nhấn','#b6e04c'],['Phụ','#8d96a1']],
+    font: 'Be Vietnam Pro + JetBrains Mono cho nhãn kỹ thuật',
+    rules: ['Nền tối than chì, một màu nhấn xanh chanh duy nhất. Không gradient tím, không phát sáng.',
+            'Nhãn khoá dùng chữ mono như dòng lệnh, hợp khoá kỹ thuật, lập trình, AI agent.',
+            'Bo góc nhỏ 8px, cảm giác công cụ chuyên nghiệp.',
+            'Hợp: khoá thuần kỹ thuật, đối tượng dev, kỹ sư.']
+  },
+  forest: {
+    name: 'Rừng Xanh', brand: {mono: 'MX', name: 'Mầm Xanh Academy', sub: 'Học để làm'},
+    kicker: 'Khoá học cho giáo viên', teacher: 'Cô Nguyễn Thu Hà',
+    sw: [['Ink','#17362a'],['Xanh rừng','#2f6b4f'],['Hổ phách','#e0a423'],['Nền','#eef1ec'],['Mềm','#e1ece5']],
+    font: 'Lexend (dễ đọc, nét tròn, hỗ trợ tiếng Việt)',
+    rules: ['Xanh rừng sâu kết hợp hổ phách, nền xám xanh nhạt. Ấm áp nhưng không dùng tông be/đồng đại trà.',
+            'Hình tròn lớn làm nền, bo góc 18px, nhãn dạng viên thuốc. Thân thiện cho người mới.',
+            'Lexend tăng độ dễ đọc cho người lớn tuổi, giáo viên, phụ huynh.',
+            'Hợp: giáo dục, sức khoẻ, cộng đồng, kỹ năng mềm.']
+  },
+  cobalt: {
+    name: 'Cobalt', brand: {mono: 'L', name: 'Lumen Training', sub: 'Đào tạo doanh nghiệp'},
+    kicker: 'Đào tạo nội bộ', teacher: 'ThS. Lê Minh Khoa',
+    sw: [['Ink','#0b1b3f'],['Cobalt','#1f4bff'],['San hô','#ff6b4a'],['Nền','#f6f7fb'],['Mềm','#e8edff']],
+    font: 'Plus Jakarta Sans, gọn và hiện đại',
+    rules: ['Trắng sạch, khối cobalt đặc một bên, một vạch san hô làm điểm nhấn duy nhất.',
+            'Bo góc 10px, khoảng trắng rộng, cảm giác doanh nghiệp, tin cậy.',
+            'Không trang trí thừa: mọi thứ phục vụ tên bài và ảnh màn hình.',
+            'Hợp: đào tạo nội bộ, B2B, tài chính, quy trình.']
+  }
+};
+const SHOTS = ['assets/vercel-project-overview.jpg','assets/supabase-sql-editor.jpg','assets/github-repo-game.jpg'];
+const LAYOUTS = {A: 'Ảnh màn hình', B: 'Mascot / giảng viên', C: 'Số bài lớn'};
+let state = {style: 'coachio', layout: 'A'};
+const $ = (s) => document.querySelector(s);
+const esc = (t) => t.replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const rich = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, '<em>$1</em>');
+const val = (id) => document.getElementById(id).value;
+
+function logoHtml(S) {
+  return S.brand.logo ? `<img src="${S.brand.logo}" alt="${S.name}">`
+    : `<span class="mono">${S.brand.mono}</span><b>${esc(S.brand.name)}<small>${esc(S.brand.sub)}</small></b>`;
+}
+function thumb(layout, shot) {
+  const S = STYLES[state.style];
+  const mascot = $('#fMascot').checked;
+  const num = (val('fCode').match(/[\d.]+/) || ['1'])[0];
+  return `<div class="T ${layout}${mascot ? '' : ' no-mascot'}">
+    <div class="deco"><span class="a"></span><span class="b"></span><span class="dots"></span></div>
+    <div class="logo">${logoHtml(S)}</div>
+    ${layout === 'C' ? `<div class="bignum">${esc(num)}</div>` : ''}
+    <div class="txt">
+      <div class="series">${esc(val('fSeries'))}</div>
+      <h3 class="title">${rich(val('fTitle'))}</h3>
+      <div class="pills"><span class="pill part">${esc(val('fPart'))}</span><span class="pill code">${esc(val('fCode'))}</span></div>
+    </div>
+    ${layout !== 'B' ? `<div class="dev"><img src="${shot}" alt="Ảnh màn hình bài học"></div>` : ''}
+    ${mascot && layout !== 'C' ? `<img class="mascot" src="assets/mascot.png" alt="">` : ''}
+    <div class="foot"><div class="kicker">${esc(S.kicker)}</div><div class="teacher">${esc(S.teacher)}</div></div>
+  </div>`;
+}
+function ebookTop(S, compact) {
+  const mark = S.brand.logo ? '<span class="mono">CA</span>' : `<span class="mono">${S.brand.mono}</span>`;
+  return compact ? `<div class="mt">${mark}<div style="flex:1"></div><div class="tabs"><span>Mindmap</span><span>Bộ prompt</span></div><span class="ibtn">Aa</span></div>`
+    : `<div class="top"><div class="brand">${mark}<span>${esc(val('fSeries'))}</span></div><div class="crumb">Chương 9 · Viết PRD và chọn phiên bản đầu</div>
+       <div class="tabs"><span>Mindmap</span><span>Bộ prompt</span></div><span class="ibtn">Aa</span><span class="ibtn pri">Tải về</span></div>`;
+}
+const PROMPT = 'Dựa trên research.md, viết PRD cho <mark>[tên sản phẩm]</mark> bằng tiếng Việt dễ hiểu: mục tiêu, người dùng, luồng sử dụng, tính năng chia 3 mức. Dừng để tôi đọc.';
+function desk() {
+  const S = STYLES[state.style];
+  return `<div class="E">${ebookTop(S)}
+  <div class="body">
+    <nav class="toc"><div class="p">Phần II · Quy trình</div>
+      <div class="i"><b>07</b>Ý tưởng và research</div><div class="i"><b>08</b>Trao đổi ý tưởng với AI</div>
+      <div class="i on"><b>09</b>Viết PRD và chọn phiên bản đầu</div><div class="i"><b>10</b>Thiết kế UX/UI</div><div class="i"><b>11</b>Code cùng agent</div>
+      <div class="p">Phần III · Lên mạng</div><div class="i"><b>14</b>GitHub: lưu phiên bản</div><div class="i"><b>15</b>Database và đăng nhập</div></nav>
+    <article class="read"><div class="k">Chương 9 · 6 phút đọc</div>
+      <h1>Viết PRD và chọn phiên bản đầu</h1>
+      <div class="vid" title="Video bài 9.1"><div class="native" style="transform:scale(${440/1280})">${thumb('A', SHOTS[0])}</div></div>
+      <div class="goal"><b>Sau chương này, bạn làm được:</b> nhờ AI viết bản mô tả sản phẩm và chọn 1 đến 2 tính năng cho bản đầu.</div>
+      <p>PRD là bản mô tả sản phẩm: làm gì, cho ai, những tính năng nào, theo thứ tự nào. AI viết, bạn đọc và sửa.</p>
+      <div class="prompt"><div class="h"><span>PROMPT MẪU</span><i>Sao chép</i></div><div>${PROMPT}</div></div>
+    </article>
+    <aside class="rail"><b>Trong chương</b><div class="o">9.1 PRD là gì</div><div class="o on">9.2 Nhờ AI viết PRD</div><div class="o">9.3 Chia v0, v1, v2</div><div class="o">9.4 Dấu hiệu PRD tốt</div>
+      <div class="prog"><i></i></div>Đã đọc 38% khoá học</aside>
+  </div></div>`;
+}
+function mobile() {
+  const S = STYLES[state.style];
+  return `<div class="M">${ebookTop(S, true)}<div class="mb"><div class="read" style="padding:0"><div class="k">Chương 9</div></div>
+    <h1>Viết PRD và chọn phiên bản đầu</h1>
+    <div class="goal" style="font-size:14px"><b>Sau chương này:</b> có bản mô tả sản phẩm và chọn được bản đầu.</div>
+    <p>PRD là bản mô tả sản phẩm. AI viết, bạn đọc và sửa.</p>
+    <div class="prompt"><div class="h"><span>PROMPT MẪU</span><i>Sao chép</i></div><div>${PROMPT}</div></div>
+    <div class="tip"><span class="ic">!</span><div><b>Mẹo:</b> đọc PRD thật kỹ trước khi cho AI viết code.</div></div>
+  </div><div class="nav"><span>‹ Trước</span><span>Mục lục</span><span>Giao diện</span><span>Tiếp ›</span></div></div>`;
+}
+function cover() {
+  const S = STYLES[state.style];
+  const top = S.brand.logo ? `<img src="${S.brand.logo}" alt="">` : `<span class="mono">${S.brand.mono}</span>`;
+  return `<div class="CV"><div class="glow"></div><div class="top">${top}<span>Ebook khoá học</span></div>
+    <h2>${esc(val('fSeries'))}<em>cho người mới bắt đầu</em></h2>
+    <p>Tự làm web, app, công cụ AI cùng Claude Code và Codex.</p>
+    <div class="shot"><img src="${SHOTS[1]}" alt=""></div>
+    <div class="foot"><span>${esc(S.teacher)}</span><span>2026</span></div></div>`;
+}
+function tokens() {
+  const S = STYLES[state.style];
+  $('#tokName').textContent = S.name + ' · ' + S.font;
+  $('#swatches').innerHTML = S.sw.map(([n, c]) => `<div style="background:${c};${c === '#f4f5f7' || c === '#eef1ec' || c === '#f6f7fb' || c === '#f1f3f4' || c === '#e8edff' || c === '#e1ece5' || c === '#fdeee6' ? 'color:#1d2633;text-shadow:none' : ''}"><i>${n}</i>${c}</div>`).join('');
+  $('#typeSample').innerHTML = `<div style="font:800 34px/1.1 var(--display);letter-spacing:var(--track);color:var(--ink)">${rich(val('fTitle'))}</div>
+    <div style="font:400 16px/1.7 var(--font);color:var(--text);margin-top:8px;max-width:60ch">Nội dung chương đọc thoải mái ở cỡ 16 đến 18px, dòng tối đa khoảng 62 ký tự.</div>`;
+  $('#typeSample').style.background = 'var(--surface)';
+  $('#rules').innerHTML = S.rules.map((r) => `<li>${r}</li>`).join('');
+}
+function render() {
+  const app = $('#app');
+  app.dataset.style = state.style;
+  $('#tMain').innerHTML = thumb(state.layout, SHOTS[0]);
+  $('#layoutPick').innerHTML = Object.entries(LAYOUTS).map(([k, n], i) => `<div style="cursor:pointer" data-l="${k}">
+      <div class="scaler" data-w="1280" data-h="720" style="border-radius:10px;outline:${state.layout === k ? '3px solid #2563eb' : '1px solid var(--tool-line)'};outline-offset:2px"><div class="native">${thumb(k, SHOTS[i % SHOTS.length])}</div></div>
+      <p class="cap"><b>${k}. ${n}</b></p></div>`).join('');
+  $('#ytRow').innerHTML = ['A','B','C'].map((k, i) => `<div class="yt-item"><div class="scaler" data-w="1280" data-h="720" style="border-radius:8px"><div class="native">${thumb(k, SHOTS[i])}</div></div>
+      <p class="t">${esc(val('fTitle').replace(/\*\*/g, ''))}</p><p class="m">${esc(STYLES[state.style].brand.name || 'Coachio Academy')}</p></div>`).join('')
+    + `<p class="yt-hint">Kiểm tra ở cỡ YouTube (246px): tên bài vẫn phải đọc được, màu nhấn vẫn nổi. Nếu không đọc được, rút tên bài ngắn lại thay vì thu nhỏ chữ.</p>`;
+  $('#cover').innerHTML = cover();
+  $('#desk').innerHTML = desk();
+  $('#mobile').innerHTML = mobile();
+  tokens();
+  fit();
+}
+function fit() {
+  document.querySelectorAll('.scaler').forEach((s) => {
+    const w = +s.dataset.w, h = +s.dataset.h, k = s.clientWidth / w;
+    s.style.height = h * k + 'px';
+    const n = s.querySelector(':scope>.native');
+    if (n) n.style.transform = `scale(${k})`;
+  });
+}
+new ResizeObserver(fit).observe(document.body);
+document.getElementById('styleSeg').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  state.style = b.dataset.s;
+  document.querySelectorAll('#styleSeg button').forEach((x) => x.classList.toggle('on', x === b));
+  render();
+});
+document.getElementById('layoutPick').addEventListener('click', (e) => {
+  const d = e.target.closest('[data-l]'); if (!d) return;
+  state.layout = d.dataset.l; render();
+});
+document.querySelectorAll('.ctl input').forEach((i) => i.addEventListener('input', render));
+render();
+</script>
+</body>
+</html>
