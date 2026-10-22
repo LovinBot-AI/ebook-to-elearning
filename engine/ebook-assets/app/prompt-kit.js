@@ -50,4 +50,13 @@
   });
   q.addEventListener('input', apply);
   apply();
+  const PK = KEY + '-y';
+  try { const y = +sessionStorage.getItem(PK); if (y) requestAnimationFrame(() => scrollTo(0, y)); } catch (e) {}
+  addEventListener('pagehide', () => { try { sessionStorage.setItem(PK, String(scrollY)); } catch (e) {} });
+  // "← Ebook" → về đúng chương đang đọc dở
+  try {
+    const last = JSON.parse(localStorage.getItem((document.body.dataset.storage || 'ebook-') + 'last') || 'null');
+    const a = document.querySelector('.mm-tabs a[href="index.html"]');
+    if (a && last && last !== 'cover') a.href = 'index.html#/' + last;
+  } catch (e) {}
 })();

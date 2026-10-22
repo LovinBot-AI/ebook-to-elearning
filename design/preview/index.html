@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Phác thảo giao diện · Ebook và Thumbnail</title>
+<title>Chọn mẫu thumbnail và ebook</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=JetBrains+Mono:wght@500;700&family=Lexend:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--tool-bg);color:var(--tool-ink);font-family:"Be Vietnam Pro",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-.bar{position:sticky;top:0;z-index:20;background:rgba(251,251,252,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--tool-line)}
+.bar{position:relative;z-index:20;background:rgba(251,251,252,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--tool-line)}
 .bar-in{max-width:1400px;margin:0 auto;padding:12px 24px;display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
 .bar h1{font-size:16px;margin:0;font-weight:800;letter-spacing:-.01em;flex:1 1 220px}
 .seg{display:flex;gap:4px;padding:4px;background:#e3e6ea;border-radius:12px}
@@ -21,7 +21,17 @@ body{background:var(--tool-bg);color:var(--tool-ink);font-family:"Be Vietnam Pro
 .seg button .chip{width:12px;height:12px;border-radius:4px;display:inline-block}
 .seg button.on{background:#fff;color:var(--tool-ink);box-shadow:0 1px 3px rgba(20,24,30,.14)}
 .seg button:active{transform:translateY(1px)}
-.ctl{max-width:1400px;margin:0 auto;padding:10px 24px 14px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:12px;align-items:end}
+.ctl{max-width:1400px;margin:0 auto;padding:10px 24px 14px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:10px 12px;align-items:end}
+.ctl input[type=file]{padding:7px 8px;height:38px;font-size:12.5px}
+.pick{position:fixed;right:20px;bottom:20px;z-index:30;display:flex;align-items:center;gap:14px;padding:12px 14px 12px 18px;background:#16191d;color:#fff;border-radius:16px;box-shadow:0 16px 40px rgba(20,24,30,.3);font-size:14px}
+  .pick span,.pick b{white-space:nowrap}
+.pick b{font:700 18px "JetBrains Mono",monospace;color:#ffd166}
+.pick button{height:40px;padding:0 16px;border:0;border-radius:10px;background:#fff;color:#16191d;font:inherit;font-weight:800;cursor:pointer;white-space:nowrap}
+.pick button:active{transform:translateY(1px)}
+.pick .ok{background:#b6e04c}
+.how{background:#fff7e0;border:1px solid #f2dfa6;border-radius:14px;padding:14px 18px;font-size:14px;line-height:1.6;color:#4a3d12}
+.how ol{margin:6px 0 0;padding-left:20px}
+@media (max-width:760px){.pick{left:12px;right:12px;bottom:12px;justify-content:space-between}.pick>span{display:none}.seg{overflow-x:auto;max-width:100%;scrollbar-width:none}.seg::-webkit-scrollbar{display:none}.bar h1{flex-basis:100%}}
 .ctl label{display:flex;flex-direction:column;gap:6px;font-size:12.5px;font-weight:700;color:var(--tool-mute)}
 .ctl input,.ctl select{height:38px;border:1px solid var(--tool-line);border-radius:10px;padding:0 12px;font:inherit;font-size:14px;color:var(--tool-ink);background:#fff}
 .ctl input:focus,.ctl select:focus{outline:2px solid #2563eb;outline-offset:1px}
@@ -214,12 +224,12 @@ main{max-width:1400px;margin:0 auto;padding:28px 24px 80px;display:grid;gap:44px
 <body>
 <header class="bar">
   <div class="bar-in">
-    <h1>Phác thảo giao diện ebook và thumbnail video</h1>
+    <h1>Chọn mẫu thumbnail và ebook</h1>
     <div class="seg" id="styleSeg" role="tablist" aria-label="Phong cách thương hiệu">
-      <button class="on" data-s="coachio"><span class="chip" style="background:#f1591f"></span>Coachio</button>
-      <button data-s="studio"><span class="chip" style="background:#b6e04c;outline:2px solid #111418"></span>Studio Đêm</button>
-      <button data-s="forest"><span class="chip" style="background:#2f6b4f"></span>Rừng Xanh</button>
-      <button data-s="cobalt"><span class="chip" style="background:#1f4bff"></span>Cobalt</button>
+      <button class="on" data-s="coachio"><span class="chip" style="background:#f1591f"></span>S1 · Coachio</button>
+      <button data-s="studio"><span class="chip" style="background:#b6e04c;outline:2px solid #111418"></span>S2 · Studio Đêm</button>
+      <button data-s="forest"><span class="chip" style="background:#2f6b4f"></span>S3 · Rừng Xanh</button>
+      <button data-s="cobalt"><span class="chip" style="background:#1f4bff"></span>S4 · Cobalt</button>
     </div>
   </div>
   <form class="ctl" onsubmit="return false">
@@ -228,10 +238,20 @@ main{max-width:1400px;margin:0 auto;padding:28px 24px 80px;display:grid;gap:44px
     <label>Phần<input id="fPart" value="Phần 2 · Quy trình"></label>
     <label>Mã bài<input id="fCode" value="Bài 9.1"></label>
     <label class="check"><input type="checkbox" id="fMascot" checked> Mascot</label>
+    <label>Tên thương hiệu <small>(bỏ trống nếu dùng logo)</small><input id="fBrand" placeholder="Ví dụ: Mầm Xanh Academy"></label>
+    <label>Dòng chữ nhỏ dưới<input id="fKicker"></label>
+    <label>Giảng viên<input id="fTeacher"></label>
+    <label>Logo của bạn <small>(PNG, thử trên máy)</small><input type="file" id="fLogo" accept="image/*"></label>
+    <label>Mascot / ảnh giảng viên<input type="file" id="fMascotFile" accept="image/*"></label>
   </form>
 </header>
 
 <main id="app" data-style="coachio">
+  <div class="how"><b>Cách chọn mẫu</b>
+    <ol><li>Chọn phong cách ở thanh trên (S1 đến S4) và bấm một bố cục thumbnail (A, B, C).</li>
+    <li>Gõ tên khoá, tên giảng viên; thử logo và mascot của bạn (ảnh chỉ hiện trên máy bạn, không gửi đi đâu).</li>
+    <li>Bấm <b>Sao chép lựa chọn</b> ở góc dưới, dán vào khung chat với Claude, đính kèm file logo và mascot, ghi thêm yêu cầu nếu có.</li>
+    <li>Claude dựng 1 thumbnail mẫu từ video thật để bạn duyệt, rồi mới làm cả bộ.</li></ol></div>
   <section>
     <div class="sec-h"><h2>Thumbnail bài học</h2><p>1280×720, xuất 1920×1080. Ba bố cục dùng chung một bộ màu.</p></div>
     <div class="stage">
@@ -259,6 +279,7 @@ main{max-width:1400px;margin:0 auto;padding:28px 24px 80px;display:grid;gap:44px
     </div>
   </section>
 </main>
+<div class="pick"><span>Mẫu đã chọn</span><b id="pickCode">S1-A</b><button type="button" id="copyBtn">Sao chép lựa chọn</button></div>
 
 <script>
 const STYLES = {
@@ -305,15 +326,21 @@ const STYLES = {
 };
 const SHOTS = ['assets/vercel-project-overview.jpg','assets/supabase-sql-editor.jpg','assets/github-repo-game.jpg'];
 const LAYOUTS = {A: 'Ảnh màn hình', B: 'Mascot / giảng viên', C: 'Số bài lớn'};
+const CODES = {coachio: 'S1', studio: 'S2', forest: 'S3', cobalt: 'S4'};
+let LOGO_URL = null, MASCOT_URL = null;
+const dirty = {};
 let state = {style: 'coachio', layout: 'A'};
 const $ = (s) => document.querySelector(s);
 const esc = (t) => t.replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const rich = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, '<em>$1</em>');
 const val = (id) => document.getElementById(id).value;
 
+function brandName(S) { return val('fBrand').trim() || S.brand.name || ''; }
+function monoOf(S) { const n = val('fBrand').trim(); return n ? n.split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase() : S.brand.mono; }
 function logoHtml(S) {
-  return S.brand.logo ? `<img src="${S.brand.logo}" alt="${S.name}">`
-    : `<span class="mono">${S.brand.mono}</span><b>${esc(S.brand.name)}<small>${esc(S.brand.sub)}</small></b>`;
+  if (LOGO_URL) return `<img src="${LOGO_URL}" alt="Logo">`;
+  if (S.brand.logo && !val('fBrand').trim()) return `<img src="${S.brand.logo}" alt="${S.name}">`;
+  return `<span class="mono">${esc(monoOf(S) || 'AB')}</span><b>${esc(brandName(S))}<small>${esc(S.brand.sub || '')}</small></b>`;
 }
 function thumb(layout, shot) {
   const S = STYLES[state.style];
@@ -329,12 +356,12 @@ function thumb(layout, shot) {
       <div class="pills"><span class="pill part">${esc(val('fPart'))}</span><span class="pill code">${esc(val('fCode'))}</span></div>
     </div>
     ${layout !== 'B' ? `<div class="dev"><img src="${shot}" alt="Ảnh màn hình bài học"></div>` : ''}
-    ${mascot && layout !== 'C' ? `<img class="mascot" src="assets/mascot.png" alt="">` : ''}
-    <div class="foot"><div class="kicker">${esc(S.kicker)}</div><div class="teacher">${esc(S.teacher)}</div></div>
+    ${mascot && layout !== 'C' ? `<img class="mascot" src="${MASCOT_URL || 'assets/mascot.png'}" alt="">` : ''}
+    <div class="foot"><div class="kicker">${esc(val('fKicker'))}</div><div class="teacher">${esc(val('fTeacher'))}</div></div>
   </div>`;
 }
 function ebookTop(S, compact) {
-  const mark = S.brand.logo ? '<span class="mono">CA</span>' : `<span class="mono">${S.brand.mono}</span>`;
+  const mark = S.brand.logo ? '<span class="mono">CA</span>' : `<span class="mono">${esc(monoOf(S) || "AB")}</span>`;
   return compact ? `<div class="mt">${mark}<div style="flex:1"></div><div class="tabs"><span>Mindmap</span><span>Bộ prompt</span></div><span class="ibtn">Aa</span></div>`
     : `<div class="top"><div class="brand">${mark}<span>${esc(val('fSeries'))}</span></div><div class="crumb">Chương 9 · Viết PRD và chọn phiên bản đầu</div>
        <div class="tabs"><span>Mindmap</span><span>Bộ prompt</span></div><span class="ibtn">Aa</span><span class="ibtn pri">Tải về</span></div>`;
@@ -371,7 +398,7 @@ function mobile() {
 }
 function cover() {
   const S = STYLES[state.style];
-  const top = S.brand.logo ? `<img src="${S.brand.logo}" alt="">` : `<span class="mono">${S.brand.mono}</span>`;
+  const top = S.brand.logo ? `<img src="${S.brand.logo}" alt="">` : `<span class="mono">${esc(monoOf(S) || "AB")}</span>`;
   return `<div class="CV"><div class="glow"></div><div class="top">${top}<span>Ebook khoá học</span></div>
     <h2>${esc(val('fSeries'))}<em>cho người mới bắt đầu</em></h2>
     <p>Tự làm web, app, công cụ AI cùng Claude Code và Codex.</p>
@@ -387,15 +414,23 @@ function tokens() {
   $('#typeSample').style.background = 'var(--surface)';
   $('#rules').innerHTML = S.rules.map((r) => `<li>${r}</li>`).join('');
 }
+function syncDefaults() {
+  const S = STYLES[state.style];
+  if (!dirty.fKicker) document.getElementById('fKicker').value = S.kicker;
+  if (!dirty.fTeacher) document.getElementById('fTeacher').value = S.teacher;
+}
+function code() { return `${CODES[state.style]}-${state.layout}`; }
 function render() {
+  syncDefaults();
+  $('#pickCode').textContent = code();
   const app = $('#app');
   app.dataset.style = state.style;
   $('#tMain').innerHTML = thumb(state.layout, SHOTS[0]);
   $('#layoutPick').innerHTML = Object.entries(LAYOUTS).map(([k, n], i) => `<div style="cursor:pointer" data-l="${k}">
       <div class="scaler" data-w="1280" data-h="720" style="border-radius:10px;outline:${state.layout === k ? '3px solid #2563eb' : '1px solid var(--tool-line)'};outline-offset:2px"><div class="native">${thumb(k, SHOTS[i % SHOTS.length])}</div></div>
-      <p class="cap"><b>${k}. ${n}</b></p></div>`).join('');
+      <p class="cap"><b>${CODES[state.style]}-${k} · ${n}</b></p></div>`).join('');
   $('#ytRow').innerHTML = ['A','B','C'].map((k, i) => `<div class="yt-item"><div class="scaler" data-w="1280" data-h="720" style="border-radius:8px"><div class="native">${thumb(k, SHOTS[i])}</div></div>
-      <p class="t">${esc(val('fTitle').replace(/\*\*/g, ''))}</p><p class="m">${esc(STYLES[state.style].brand.name || 'Coachio Academy')}</p></div>`).join('')
+      <p class="t">${esc(val('fTitle').replace(/\*\*/g, ''))}</p><p class="m">${esc(brandName(STYLES[state.style]) || 'Coachio Academy')}</p></div>`).join('')
     + `<p class="yt-hint">Kiểm tra ở cỡ YouTube (246px): tên bài vẫn phải đọc được, màu nhấn vẫn nổi. Nếu không đọc được, rút tên bài ngắn lại thay vì thu nhỏ chữ.</p>`;
   $('#cover').innerHTML = cover();
   $('#desk').innerHTML = desk();
@@ -422,7 +457,26 @@ document.getElementById('layoutPick').addEventListener('click', (e) => {
   const d = e.target.closest('[data-l]'); if (!d) return;
   state.layout = d.dataset.l; render();
 });
-document.querySelectorAll('.ctl input').forEach((i) => i.addEventListener('input', render));
+document.querySelectorAll('.ctl input:not([type=file])').forEach((i) => i.addEventListener('input', () => { dirty[i.id] = true; render(); }));
+document.getElementById('fLogo').addEventListener('change', (e) => { const f = e.target.files[0]; LOGO_URL = f ? URL.createObjectURL(f) : null; render(); });
+document.getElementById('fMascotFile').addEventListener('change', (e) => { const f = e.target.files[0]; MASCOT_URL = f ? URL.createObjectURL(f) : null; if (f) document.getElementById('fMascot').checked = true; render(); });
+document.getElementById('copyBtn').addEventListener('click', async () => {
+  const S = STYLES[state.style];
+  const text = [
+    `MẪU THUMBNAIL: ${code()} (${S.name} · ${LAYOUTS[state.layout]})`,
+    `Tên khoá: ${val('fSeries')}`,
+    `Tên thương hiệu: ${brandName(S) || '(dùng logo đính kèm)'}`,
+    `Dòng chữ nhỏ dưới: ${val('fKicker')}`,
+    `Giảng viên: ${val('fTeacher')}`,
+    `Mascot / ảnh giảng viên: ${$('#fMascot').checked ? (MASCOT_URL ? 'có, đính kèm file' : 'có, dùng mascot mẫu') : 'không'}`,
+    `Logo: ${LOGO_URL ? 'đính kèm file' : (S.brand.logo ? 'logo Coachio' : 'chưa có, dùng chữ viết tắt')}`,
+    `Ghi chú thêm: `,
+  ].join('\n');
+  const btn = document.getElementById('copyBtn');
+  try { await navigator.clipboard.writeText(text); } catch (e) { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+  btn.textContent = 'Đã chép, dán vào chat'; btn.classList.add('ok');
+  setTimeout(() => { btn.textContent = 'Sao chép lựa chọn'; btn.classList.remove('ok'); }, 2200);
+});
 render();
 </script>
 </body>

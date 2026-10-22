@@ -89,7 +89,7 @@ def build():
     html_tree = node(tree, P)
     teachers = f'<br>{cfg["teachers"]}' if cfg.get('teachers') else ''
     body = f'''<header class="mm-top">{tabs('mindmap')}
-<div class="mm-act"><button type="button" id="mmAll">Mở hết</button><button type="button" id="mmNone">Thu gọn</button></div></header>
+<div class="mm-act"><button type="button" id="mmAll" aria-label="Mở hết" title="Mở hết">Mở hết</button><button type="button" id="mmNone" aria-label="Thu gọn" title="Thu gọn">Thu gọn</button></div></header>
 <main class="mm-wrap"><ul class="tree">{html_tree}</ul>
 <p class="mm-hint">Bấm một nhánh để mở hoặc thu gọn, bấm <b>i</b> để xem giải thích. Bấm một ý để xem giải thích và prompt sao chép; ý có nhãn <span class="np">prompt</span> là có câu lệnh mẫu.{teachers}</p></main>
 <div class="mm-scrim" id="mmScrim" hidden></div>

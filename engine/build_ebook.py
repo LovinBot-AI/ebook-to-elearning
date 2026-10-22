@@ -55,7 +55,7 @@ def build_web(chs):
                     out.append(head + f'<a class="btn" href="{escape(link)}" target="_blank" rel="noopener">▶ Xem video bài này</a>')
         return f'<aside class="video-box"><span class="vb-k">🎬 Video bài học</span>{"".join(out)}</aside>' if out else ''
 
-    top_tabs = ''.join(f'<a href="{h}" target="_blank" rel="noopener">{t}</a>' for f, h, t in
+    top_tabs = ''.join(f'<a href="{h}">{t}</a>' for f, h, t in
                        [('mindmap.json', 'mindmap.html', 'Mindmap'), ('prompts.json', 'prompt.html', 'Bộ prompt')] if (ROOT / f).exists())
     top_tabs = f'<nav class="top-tabs" aria-label="Tài nguyên">{top_tabs}</nav>' if top_tabs else ''
     cta = BOOK.get('cta')

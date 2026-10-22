@@ -27,7 +27,7 @@
       h += `<div class="pk-card"><header><h3>${esc(p.t)}</h3><button type="button" class="pk-copy" data-k="${k}">Sao chép</button></header>` +
            `<p class="pk-when"><b>Dùng khi:</b> ${esc(p.w)}</p><div class="pk-text">${fill(p.x)}</div></div>`;
     });
-    if (n.c) h += `<a class="mm-read" href="index.html#/${n.c}" target="_blank" rel="noopener">Đọc chương trong ebook ↗</a>`;
+    if (n.c) h += `<a class="mm-read" href="index.html#/${n.c}">Đọc chương trong ebook →</a>`;
     const body = document.getElementById('mmB');
     body.innerHTML = h; body.scrollTop = 0; body._n = n;
     panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false'); scrim.hidden = false;
@@ -59,5 +59,26 @@
     if (e.target.closest('#mmNone')) set(false);
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && panel.classList.contains('open')) hide(); });
+
+  // Nhớ nhánh đang mở + vị trí cuộn khi sang ebook rồi quay lại (cùng tab, không mở tab mới)
+  const KEY = (document.body.dataset.storage || 'ebook-') + 'mm-state';
+  const brs = [...document.querySelectorAll('.br')];
+  function save() {
+    try { sessionStorage.setItem(KEY, JSON.stringify({ open: brs.map((b, i) => (b.classList.contains('closed') ? -1 : i)).filter(i => i >= 0), y: scrollY })); } catch (e) {}
+  }
+  let st = null;
+  try { st = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) {}
   set(false);
+  if (st) {
+    st.open.forEach(i => { if (brs[i]) { brs[i].classList.remove('closed'); brs[i].querySelector(':scope>.br-head>.tog').setAttribute('aria-expanded', 'true'); } });
+    requestAnimationFrame(() => scrollTo(0, st.y || 0));
+  }
+  addEventListener('pagehide', save);
+  document.addEventListener('click', e => { if (e.target.closest('a')) save(); });
+  // "← Ebook" → về đúng chương đang đọc dở
+  try {
+    const last = JSON.parse(localStorage.getItem((document.body.dataset.storage || 'ebook-') + 'last') || 'null');
+    const a = document.querySelector('.mm-tabs a[href="index.html"]');
+    if (a && last && last !== 'cover') a.href = 'index.html#/' + last;
+  } catch (e) {}
 })();

@@ -12,7 +12,22 @@ Hỏi **một lần ở vòng hỏi đáp G0**, dùng cho cả ebook (giao diệ
 | Thương hiệu riêng đã từng làm | Tìm bộ đã duyệt (dự án cũ / thư viện brand của video-to-elearning), cho xem lại, hỏi "dùng lại bộ này?" |
 | Thương hiệu mới hoàn toàn | Thiết kế bộ mới theo các bước dưới |
 
-## Thương hiệu mới: hỏi trong MỘT tin nhắn
+## Cách nhanh: trang chọn mẫu (khuyên dùng)
+
+`e2e templates` mở trang chọn mẫu trên trình duyệt. Có 4 phong cách và 3 bố cục thumbnail, mỗi mẫu có mã:
+
+| Mã | Phong cách | Hợp với |
+|---|---|---|
+| S1 | Coachio | Đội Coachio |
+| S2 | Studio Đêm | Khoá kỹ thuật, dev |
+| S3 | Rừng Xanh | Giáo dục, giáo viên, người lớn tuổi |
+| S4 | Cobalt | Doanh nghiệp, đào tạo nội bộ |
+
+Bố cục: **A** ảnh màn hình · **B** mascot / giảng viên · **C** số bài lớn. Mã đầy đủ ví dụ `S3-B`.
+
+Người dùng thử logo, mascot của họ ngay trên trang, bấm **Sao chép lựa chọn**, dán vào chat, đính kèm file. Claude chạy `e2e brand-apply <dir> --template S3-B --name … --teacher … --kicker … --logo … --mascot …`.
+
+## Thương hiệu mới hoàn toàn (màu riêng): hỏi trong MỘT tin nhắn
 
 1. **Logo:** file PNG, nền trong suốt nếu có; có bản ngang càng tốt.
 2. **Màu thương hiệu:** mã màu (#…), hoặc "lấy từ logo / website" → `e2e brand-colors <logo>` rút màu chính.

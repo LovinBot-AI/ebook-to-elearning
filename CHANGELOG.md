@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.5.0 · 2026-10-22
+- Trang chọn mẫu `design/preview/index.html` (`e2e templates`): 4 phong cách S1 Coachio, S2 Studio Đêm, S3 Rừng Xanh, S4 Cobalt × 3 bố cục thumbnail A/B/C; xem trước thumbnail, bìa, trang đọc máy tính và điện thoại; thử logo/mascot; nút "Sao chép lựa chọn".
+- `e2e brand-apply --template S3-B --name --teacher --kicker --logo --mascot`: áp mẫu cho ebook, chuyển sang thumbnail video qua handoff.
+- Ebook, mindmap, Bộ prompt: chuyển trang trong cùng tab (chỉ link ngoài mở tab mới); mindmap nhớ nhánh đang mở và vị trí cuộn; "← Ebook" về đúng chương đang đọc; trang prompt nhớ vị trí cuộn.
+- Giao diện đa thiết bị: không tràn ngang ở 320/360/390/768/1280px; nút mindmap gọn trên điện thoại; khung "Sau chương này" theo màu thương hiệu.
+
 ## 0.4.0 · 2026-10-22
 - Tải chậm: chưa tới bước video thì không tải skill cắt video, FFmpeg, Remotion, Whisper (trừ khi người dùng yêu cầu). `e2e start` chỉ ghi "⏸ chưa cần" kèm dung lượng; install.sh không hỏi tải nữa.
 - Thương hiệu: hỏi ở G0 "đội Coachio hay thương hiệu riêng". Coachio giữ nguyên. Thương hiệu mới: hỏi logo, màu, cảm giác → 2–3 phương án → `e2e brand-preview` (thumbnail, bìa, trang ebook) → duyệt → `e2e brand-apply`. `e2e brand-colors` rút màu từ logo. docs/THUONG-HIEU.md.

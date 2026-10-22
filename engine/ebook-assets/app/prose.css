@@ -35,9 +35,9 @@
 .prose pre{font-family:var(--mono);font-size:.82em;line-height:1.65;background:#0f1d2e;color:#e4ecf5;border-radius:14px;padding:1.05em 1.2em;overflow:auto;margin:1.2em 0 1.4em}
 .prose pre code{background:transparent;border:0;padding:0;color:inherit;font-size:1em;white-space:pre}
 /* Mục tiêu chương */
-.prose p.goal{background:linear-gradient(135deg,var(--orange-soft),#fff7ef);border:1px solid #f6d7bb;border-radius:16px;padding:1em 1.2em 1em 3.2em;position:relative;color:var(--ink-2)}
+.prose p.goal{background:linear-gradient(135deg,var(--orange-soft),#fff);border:1px solid color-mix(in srgb,var(--orange) 28%,#fff);border-radius:16px;padding:1em 1.2em 1em 3.2em;position:relative;color:var(--ink-2)}
 .prose p.goal::before{content:"🎯";position:absolute;left:1em;top:.95em;font-size:1.15em}
-.prose p.goal strong{color:#a94d0c}
+.prose p.goal strong{color:color-mix(in srgb,var(--orange) 72%,#000)}
 /* Callout */
 .prose .callout{display:flex;gap:.85em;align-items:flex-start;margin:1.4em 0;padding:1em 1.15em;border-radius:16px;border:1px solid var(--line);background:#f7f9fa;font-size:.95em;line-height:1.7}
 .prose .callout-icon{flex:none;font-size:1.25em;line-height:1.35}

@@ -17,6 +17,28 @@ from html import escape
 from pathlib import Path
 
 COACHIO = {'coachio': True, 'name': 'Coachio Academy', 'ink': '#12305a', 'primary': '#1f4c86', 'accent': '#e2711d', 'accent2': '#1f7f79'}
+PREVIEW = Path(__file__).resolve().parent.parent / 'design' / 'preview' / 'index.html'
+# Mẫu trên trang chọn mẫu (design/preview): S1–S4 = phong cách, A/B/C = bố cục thumbnail.
+# Màu cho EBOOK (nền sáng, chữ đủ tương phản); thumbnail dùng đúng bộ màu của mẫu trong Remotion.
+STYLES = {
+    'S1': {'label': 'Coachio', 'coachio': True, **{k: COACHIO[k] for k in ('ink', 'primary', 'accent', 'accent2')}},
+    'S2': {'label': 'Studio Đêm', 'ink': '#181c22', 'primary': '#2b3440', 'accent': '#5f8f1f', 'accent2': '#3d4a59'},
+    'S3': {'label': 'Rừng Xanh', 'ink': '#17362a', 'primary': '#2f6b4f', 'accent': '#b9800f', 'accent2': '#2f6b4f'},
+    'S4': {'label': 'Cobalt', 'ink': '#0b1b3f', 'primary': '#1f4bff', 'accent': '#d9431f', 'accent2': '#1f4bff'},
+}
+LAYOUTS = {'A': 'Ảnh màn hình', 'B': 'Mascot / giảng viên', 'C': 'Số bài lớn'}
+
+
+def cmd_templates(a):
+    """Mở trang chọn mẫu trên trình duyệt của người dùng (macOS: open)."""
+    import subprocess
+    import sys
+    print(f'Trang chọn mẫu: {PREVIEW}')
+    for k, v in STYLES.items():
+        print(f'  {k} · {v["label"]}')
+    print('  Bố cục: ' + ' · '.join(f'{k} {v}' for k, v in LAYOUTS.items()) + '   → mã mẫu dạng S3-B')
+    if sys.platform == 'darwin' and not a.no_open:
+        subprocess.call(['open', str(PREVIEW)])
 
 
 def cmd_colors(a):
@@ -100,7 +122,29 @@ def cmd_apply(a):
     d = Path(a.dir).resolve()
     bj = d / 'book.json'
     cfg = json.loads(bj.read_text(encoding='utf-8'))
-    if a.coachio:
+    if a.template:
+        code = a.template.upper()
+        sid, _, lay = code.partition('-')
+        if sid not in STYLES or (lay and lay not in LAYOUTS):
+            raise SystemExit(f'Mã mẫu không hợp lệ: {a.template} (ví dụ S1-A, S3-B)')
+        st = STYLES[sid]
+        prev = cfg['book'].get('brand') or {}
+        br = {'coachio': st.get('coachio', False), 'name': a.name or prev.get('name') or ('Coachio Academy' if st.get('coachio') else ''),
+              **{k: st[k] for k in ('ink', 'primary', 'accent', 'accent2')}, 'template': code if lay else f'{sid}-A',
+              'teacher': a.teacher or prev.get('teacher') or cfg['book'].get('teacher', ''), 'kicker': a.kicker or prev.get('kicker', '')}
+        for k in ('logo', 'mascot'):
+            v = getattr(a, k) or prev.get(k)
+            if v and (d / v).exists():
+                dst = d / 'ebook-assets' / 'brand' / (k + Path(v).suffix.lower())
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                if (d / v).resolve() != dst.resolve():
+                    shutil.copy2(d / v, dst)
+                br[k] = str(dst.relative_to(d))
+        cfg['book']['brand'] = br
+        if br['name'] and not st.get('coachio'):
+            cfg['book']['org'] = br['name']
+        msg = f'mẫu {br["template"]} ({st["label"]} · {LAYOUTS[br["template"][-1]]})'
+    elif a.coachio:
         cfg['book']['brand'] = dict(COACHIO)
         msg = 'brand Coachio (giữ nguyên bộ nhận diện hiện có)'
     else:

@@ -13,7 +13,7 @@ def fill(text: str) -> str:
 
 
 def card(pid, title, when, text, chap=None):
-    link = f'<a class="pk-ch" href="index.html#/{chap}" target="_blank" rel="noopener">Đọc chương ↗</a>' if chap else ''
+    link = f'<a class="pk-ch" href="index.html#/{chap}">Đọc chương →</a>' if chap else ''
     return (f'<article class="pk-card" id="p-{pid}" data-q="{escape((title + " " + when + " " + text).lower())}">'
             f'<header><h3>{escape(title)}</h3><button type="button" class="pk-copy" aria-label="Sao chép prompt {escape(title)}">Sao chép</button></header>'
             f'<p class="pk-when"><b>Dùng khi:</b> {escape(when)}</p>'

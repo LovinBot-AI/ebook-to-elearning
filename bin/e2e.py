@@ -7,6 +7,8 @@
   e2e brand-colors <logo>            rút màu chính từ logo
   e2e brand-preview <dir>            trang xem trước 2–3 phương án thương hiệu (thumbnail, bìa, trang ebook)
   e2e brand-apply <dir> --option A | --coachio   áp dụng thương hiệu đã được duyệt
+  e2e templates                      mở trang chọn mẫu (S1–S4 × A/B/C, nút "Sao chép lựa chọn")
+  e2e brand-apply <dir> --template S3-B [--name …] [--teacher …] [--kicker …] [--logo f] [--mascot f]
   e2e doctor                         kiểm tra môi trường (không tự cài)
   e2e new <dir> --title … --slug … [--author …] [--mark AB]
   e2e status <dir>                   các cổng G0–G7 đã duyệt chưa, tài liệu kế hoạch nào đã có
@@ -464,7 +466,9 @@ def cmd_handoff(a):
         'video': {'dir': str(vdir), 'file': str(videos[0]) if videos else None, 'transcript': str(subs[0]) if subs else None,
                   'zoomJson': str(vdir / 'zoom.json') if (vdir / 'zoom.json').exists() else None},
         'mux': {'group': b['slug'].lower(), 'course': b['title']},
-        'brand': dict(b.get('brand') or {'coachio': True}, logo=str(d / b['brand']['logo']) if (b.get('brand') or {}).get('logo') else None),
+        'brand': dict(b.get('brand') or {'coachio': True, 'template': 'S1-A'},
+                      logo=str(d / b['brand']['logo']) if (b.get('brand') or {}).get('logo') else None,
+                      mascot=str(d / b['brand']['mascot']) if (b.get('brand') or {}).get('mascot') else None),
     }
     out = d / '00-ke-hoach' / 'handoff-v2e.json'
     out.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -513,7 +517,9 @@ def main():
     sp = ap.add_subparsers(dest='cmd', required=True)
     p = sp.add_parser('brand-colors'); p.add_argument('logo'); p.set_defaults(f=brandmod.cmd_colors)
     p = sp.add_parser('brand-preview'); p.add_argument('dir'); p.set_defaults(f=brandmod.cmd_preview)
-    p = sp.add_parser('brand-apply'); p.add_argument('dir'); p.add_argument('--option'); p.add_argument('--coachio', action='store_true'); p.set_defaults(f=brandmod.cmd_apply)
+    p = sp.add_parser('brand-apply'); p.add_argument('dir'); p.add_argument('--option'); p.add_argument('--coachio', action='store_true')
+    p.add_argument('--template'); p.add_argument('--name'); p.add_argument('--teacher'); p.add_argument('--kicker'); p.add_argument('--logo'); p.add_argument('--mascot'); p.set_defaults(f=brandmod.cmd_apply)
+    p = sp.add_parser('templates'); p.add_argument('--no-open', action='store_true'); p.set_defaults(f=brandmod.cmd_templates)
     p = sp.add_parser('start'); p.add_argument('dir', nargs='?'); p.set_defaults(f=onboard.cmd_start)
     p = sp.add_parser('next'); p.add_argument('dir'); p.set_defaults(f=onboard.cmd_next)
     p = sp.add_parser('setup'); p.add_argument('--yes', action='store_true'); p.set_defaults(f=onboard.cmd_setup)

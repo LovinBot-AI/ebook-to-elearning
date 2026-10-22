@@ -70,3 +70,14 @@ body{margin:0;background:#f4f3ef;font-family:var(--font);color:var(--ink)}
   .mm-top b{font-size:15px}
   .mm-act button{padding:0 10px}
 }
+
+/* điện thoại nhỏ: nút Mở hết / Thu gọn thành biểu tượng để thanh trên không tràn */
+@media (max-width:480px){
+  .mm-top{padding:0 10px;gap:6px}
+  .mm-tabs a{padding:0 9px;font-size:12.5px}
+  .mm-act{gap:4px}
+  .mm-act button{width:36px;padding:0;font-size:0}
+  #mmAll::before{content:"+";font-size:20px}
+  #mmNone::before{content:"−";font-size:20px}
+}
+@media (max-width:340px){.mm-tabs a{padding:0 6px;font-size:12px}.mm-tabs{padding:3px}}

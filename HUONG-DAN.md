@@ -36,7 +36,7 @@ Kết nối tài khoản Mux (một lần, trước khi đăng video): xem **[do
 
 ## Thương hiệu (logo, màu)
 
-Ngay vòng hỏi đáp đầu, Claude hỏi: khoá thuộc **đội Coachio** (giữ nguyên bộ nhận diện Coachio) hay **thương hiệu riêng**. Nếu riêng: bạn gửi logo và màu (hoặc website để Claude lấy màu), Claude làm 2–3 phương án, gửi ảnh xem trước (thumbnail, bìa, trang ebook) để bạn chọn. Thương hiệu đã chọn dùng luôn cho thumbnail video; tới bước video bạn chỉ duyệt 1 thumbnail thử.
+Ngay vòng hỏi đáp đầu, Claude hỏi: khoá thuộc **đội Coachio** (giữ nguyên bộ nhận diện Coachio) hay **thương hiệu riêng**. Claude mở **trang chọn mẫu** trên trình duyệt: 4 phong cách (S1 Coachio, S2 Studio Đêm, S3 Rừng Xanh, S4 Cobalt) × 3 bố cục thumbnail (A, B, C). Bạn thử logo, mascot của mình ngay trên trang, bấm **Sao chép lựa chọn**, dán vào chat, đính kèm file logo/mascot, ghi thêm yêu cầu. Muốn màu riêng hoàn toàn thì gửi logo và màu, Claude làm 2–3 phương án để bạn chọn. Thương hiệu đã chọn dùng luôn cho thumbnail video; tới bước video bạn chỉ duyệt 1 thumbnail thử.
 
 ## Lấy video từ Zoom
 
