@@ -10,6 +10,8 @@
   e2e cover <dir>                    sinh ebook-assets/cover.png từ book.json → cover
   e2e free <dir> --config free.json --out <dir-free>   dựng bản free (công khai) từ bản full
   e2e sync-engine <dir>              cập nhật bộ máy build của dự án lên bản mới nhất của skill
+  e2e handoff <dir>                  xuất 00-ke-hoach/handoff-v2e.json cho video-to-elearning + tạo thư mục quay-video/
+  e2e attach-video <dir> --from course.json   gắn video đã đăng (Mux/YouTube) vào đầu từng chương
 """
 from __future__ import annotations
 
@@ -29,6 +31,7 @@ TPL = SKILL / 'templates'
 GATES = {
     'G0': 'Brief + tư liệu', 'G1': 'Thiết kế: đối tượng, trọng tâm, mục tiêu', 'G2': 'Dàn ý + phác thảo + mindmap nháp',
     'G3': 'Chương mẫu', 'G4': 'Ebook đầy đủ', 'G5': 'Kịch bản quay', 'G6': 'Đẩy GitHub / Pages', 'G7': 'Bản free',
+    'G8': 'Video: dán video → video-to-elearning (PLAN, thumbnail, bài mẫu, render)', 'G9': 'Đăng Mux + gắn video vào ebook',
 }
 PLAN_FILES = {'G0': ['BRIEF.md', 'TU-LIEU.md'], 'G1': ['THIET-KE.md'], 'G2': ['DAN-Y.md', 'PHAC-THAO.md'], 'G5': ['KICH-BAN-QUAY.md']}
 ENGINE_ITEMS = ['build', 'build_ebook.py', 'requirements.txt', 'ebook-assets/app', 'ebook-assets/fonts', '.github']
@@ -137,7 +140,7 @@ def cmd_approve(a):
         sys.exit(f'✗ Cổng không hợp lệ: {g}. Có: {", ".join(GATES)}')
     order = list(GATES)
     st = load_state(d)
-    missing = [x for x in order[:order.index(g)] if x not in st['gates'] and x not in ('G6', 'G7')]
+    missing = [x for x in order[:order.index(g)] if x not in st['gates'] and x not in ('G6', 'G7', 'G9')]
     if missing and not a.force:
         sys.exit(f'✗ Chưa duyệt các cổng trước: {", ".join(missing)}. Không được nhảy cổng (dùng --force chỉ khi người dùng yêu cầu rõ).')
     st['gates'][g] = {'at': dt.datetime.now().strftime('%Y-%m-%d %H:%M'), 'note': a.note or ''}
@@ -341,6 +344,160 @@ def cmd_free(a):
     print(f'  Build: e2e build "{out}" web site   (bản công khai, không mật khẩu). HỎI NGƯỜI DÙNG trước khi đẩy lên mạng.')
 
 
+# ------------------------------------------------------------------ handoff → video-to-elearning
+VIDEO_DIR = 'quay-video'
+VIDEO_README = """# Dán video buổi quay vào thư mục này
+
+Sau khi quay xong, chép vào đây (tên file tuỳ ý):
+
+| File | Bắt buộc | Lấy ở đâu |
+|---|---|---|
+| Video `.mp4` | Có | Zoom: zoom.us → Recordings → Cloud recordings → buổi quay → Download "Shared screen with speaker view". Ghi trên máy: thư mục Zoom trong Documents. OBS/QuickTime: file .mp4 / .mov. |
+| Transcript `.vtt` | Rất nên có | Zoom Cloud: tải file "Audio transcript" (.vtt). Có file này thì chép lời chính xác và nhanh hơn nhiều. Không có thì skill tự chép lời bằng Whisper (chậm hơn). |
+| `zoom.json` | Không | Chỉ khi Zoom cho tải "Timeline" (tên người nói). |
+
+Không cần đổi tên, không cần cắt gì. Chép xong, nói với Claude: **"Đã dán video vào quay-video, làm tiếp"**.
+
+Lưu ý: thư mục này không đưa lên GitHub (video rất nặng và có thể lộ thông tin).
+"""
+
+
+def _chap_meta(d: Path, f: Path) -> dict:
+    t = f.read_text(encoding='utf-8')
+    n = int(re.match(r'chuong-(\d+)', f.name).group(1))
+    title = re.search(r'^# (.+)$', t, re.M).group(1).strip()
+    short = title.split(' — ', 1)[-1]
+    goal = re.search(r'\*\*Sau chương này, bạn làm được:\*\*\s*(.+)', t)
+    objectives = [x.strip(' .') for x in re.split(r';|, và | và (?=[a-zđ])', goal.group(1))] if goal else []
+    sections = [re.sub(r'^\d+\.\d+\.\s*', '', h) for h in re.findall(r'^## (\d+\.\d+\..+)$', t, re.M)]
+    intro = next((ln.strip() for ln in t.splitlines()[1:] if ln.strip() and not ln.startswith(('#', '>', '|', '!', '*', '-'))), '')
+    checklist = [x.strip() for x in re.findall(r'^- \[ \] (.+)$', t, re.M)]
+    return {'chapter': n, 'id': f'chap-{n:02d}', 'title': short, 'fullTitle': title, 'intro': re.sub(r'\*\*', '', intro),
+            'objectives': [o for o in objectives if o], 'sections': sections, 'checklist': checklist, 'text': t}
+
+
+def _run_of_show(d: Path) -> dict:
+    """Đọc bảng trong KICH-BAN-QUAY.md: cột Đoạn = Chương, Phút, Câu mở đoạn, Không được chiếu."""
+    f = d / '00-ke-hoach' / 'KICH-BAN-QUAY.md'
+    out = {}
+    if not f.exists():
+        return out
+    rows = [r for r in f.read_text(encoding='utf-8').splitlines() if r.startswith('|') and not r.startswith('|---')]
+    if not rows:
+        return out
+    head = [c.strip().lower() for c in rows[0].strip('|').split('|')]
+
+    def col(*keys):
+        return next((i for i, h in enumerate(head) if any(k in h for k in keys)), None)
+    ci, cm, cp, cn = col('chương', 'đoạn'), col('câu mở'), col('phút'), col('không được')
+    for r in rows[1:]:
+        c = [x.strip() for x in r.strip('|').split('|')]
+        m = re.search(r'Chương (\d+)', c[ci] if ci is not None and ci < len(c) else '')
+        if not m:
+            continue
+        out[int(m.group(1))] = {'marker': c[cm].strip('"“” ') if cm is not None and cm < len(c) else '',
+                               'minutes': int(re.sub(r'\D', '', c[cp]) or 0) if cp is not None and cp < len(c) else 0,
+                               'mustCut': c[cn] if cn is not None and cn < len(c) and c[cn] not in ('—', '-', '') else ''}
+    return out
+
+
+def cmd_handoff(a):
+    d = Path(a.dir).resolve()
+    cfg = json.loads((d / 'book.json').read_text(encoding='utf-8'))
+    b = cfg['book']
+    terms = list(b.get('proper_nouns', []))
+    gf = d / b.get('glossary_file', '') if b.get('glossary_file') else None
+    if gf and gf.exists():
+        for r in gf.read_text(encoding='utf-8').splitlines():
+            if r.startswith('|') and not r.startswith(('|---', '| Thuật ngữ')):
+                term = r.strip('|').split('|')[0].strip().replace('`', '')
+                if term and len(term) <= 40:
+                    terms.append(term)
+    prompts = {}
+    if (d / 'prompts.json').exists():
+        for s in json.loads((d / 'prompts.json').read_text(encoding='utf-8')).get('steps', []):
+            prompts.setdefault(s.get('chap'), []).extend(p[1] for p in s['prompts'])
+    ros = _run_of_show(d)
+    parts = {}
+    lessons = []
+    for f in sorted(d.glob('chuong-[0-9][0-9]-*.md')):
+        m = _chap_meta(d, f)
+        n = m['chapter']
+        part = next((p for p in cfg['parts'] if p['chapters'][0] <= n <= p['chapters'][1]), None)
+        pkey = (part or {}).get('label', 'Phần').replace('Phần ', '') or 'A'
+        if part:
+            parts[pkey] = part['title']
+        r = ros.get(n, {})
+        low = m['text'].lower()
+        lessons.append({
+            'chapter': n, 'code': f'{n}.1', 'part': pkey, 'title': m['title'], 'chapterTitle': m['fullTitle'],
+            'teacher': (part or {}).get('teacher') or b.get('teacher', ''),
+            'marker': r.get('marker') or f'Chương {n}', 'targetMinutes': r.get('minutes') or None,
+            'mustCut': r.get('mustCut', ''),
+            'summary': m['intro'], 'objectives': m['objectives'], 'bullets': m['sections'][:3], 'checklist': m['checklist'],
+            'keyTerms': sorted({t for t in terms if t.lower() in low})[:12], 'prompts': prompts.get(m['id'], []),
+            'ebook': {'id': m['id'], 'url': (b.get('site_url', '').rstrip('/') + f'/#/{m["id"]}') if b.get('site_url') else f'#/{m["id"]}'},
+        })
+    vdir = d / VIDEO_DIR
+    vdir.mkdir(exist_ok=True)
+    (vdir / 'HUONG-DAN-DAN-VIDEO.md').write_text(VIDEO_README, encoding='utf-8')
+    gi = d / '.gitignore'
+    if gi.exists() and VIDEO_DIR not in gi.read_text(encoding='utf-8'):
+        gi.write_text(gi.read_text(encoding='utf-8').rstrip() + f'\n{VIDEO_DIR}/\nvideo-elearning/\n', encoding='utf-8')
+    videos = sorted([p for p in vdir.iterdir() if p.suffix.lower() in ('.mp4', '.mov', '.m4v')], key=lambda p: p.stat().st_size, reverse=True)
+    subs = [p for p in vdir.iterdir() if p.suffix.lower() in ('.vtt', '.srt', '.sbv')]
+    data = {
+        'schema': 'e2e.handoff/1', 'createdAt': dt.datetime.now().isoformat(timespec='seconds'),
+        'ebookDir': str(d), 'course': b['title'], 'subtitle': b.get('subtitle', ''), 'slug': b['slug'],
+        'org': b.get('org', ''), 'author': b.get('author', ''), 'mode': b.get('mode', ''), 'audience': b.get('audience', ''),
+        'parts': parts, 'glossaryTerms': sorted(set(terms)), 'lessons': lessons,
+        'targetMinutes': sum(l['targetMinutes'] or 0 for l in lessons) or None,
+        'video': {'dir': str(vdir), 'file': str(videos[0]) if videos else None, 'transcript': str(subs[0]) if subs else None,
+                  'zoomJson': str(vdir / 'zoom.json') if (vdir / 'zoom.json').exists() else None},
+        'mux': {'group': b['slug'].lower(), 'course': b['title']},
+    }
+    out = d / '00-ke-hoach' / 'handoff-v2e.json'
+    out.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+    print(f'✔ {out.relative_to(d)} · {len(lessons)} bài dự kiến · {len(data["glossaryTerms"])} thuật ngữ')
+    if videos:
+        print(f'  Video: {videos[0].name}' + (f' · transcript: {subs[0].name}' if subs else ' · chưa có transcript (.vtt) → sẽ chép lời bằng Whisper'))
+        print(f'  Tiếp: v2e init "{d / "video-elearning"}" --from-ebook "{d}"')
+    else:
+        print(f'  Chưa có video. Hướng dẫn giảng viên dán video vào: {vdir}  (xem HUONG-DAN-DAN-VIDEO.md)')
+
+
+# ------------------------------------------------------------------ attach-video ← video-to-elearning / mux-publisher
+def cmd_attach_video(a):
+    """Gắn video đã đăng (Mux/YouTube) vào chương ebook: ghi videos.json, engine hiện khung 'Video bài học' đầu chương."""
+    d = Path(a.dir).resolve()
+    src = json.loads(Path(a.source).read_text(encoding='utf-8'))
+    items = src.get('lessons', [])
+    out = {}
+    for l in items:
+        code = str(l.get('code', ''))
+        m = re.match(r'(\d+)(?:\.\d+)?$', code)
+        chap = l.get('ebook', {}).get('id') if isinstance(l.get('ebook'), dict) else None
+        chap = chap or (f'chap-{int(m.group(1)):02d}' if m else None)
+        if not chap:
+            continue
+        mx = l.get('mux') or {}
+        v = l.get('video') or {}
+        signed = mx.get('policy') == 'signed'
+        url = None if signed else (mx.get('playerUrl') or v.get('url') or l.get('url'))
+        embed = mx.get('playbackId') if mx.get('policy') == 'public' else None
+        if signed and not l.get('lmsUrl'):
+            print(f'  ⚠ {code}: video Mux "signed" cần token để xem → chỉ gắn khi có lmsUrl (link bài trên LMS)')
+            continue
+        out.setdefault(chap, []).append({'code': code, 'title': l.get('title', ''), 'duration': l.get('duration', ''),
+                                         'url': url, 'muxPlaybackId': embed, 'lmsUrl': l.get('lmsUrl', '')})
+    (d / 'videos.json').write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding='utf-8')
+    n = sum(len(v) for v in out.values())
+    print(f'✔ videos.json · {n} video gắn vào {len(out)} chương. Build lại: e2e build "{d}" web site  (HỎI trước khi đẩy lên mạng)')
+    skipped = [str(l.get('code')) for l in items if not re.match(r'\d+(\.\d+)?$', str(l.get('code', ''))) and not isinstance(l.get('ebook'), dict)]
+    if skipped:
+        print(f'  ⚠ Không gắn được (mã không theo dạng <chương>.<n>): {", ".join(skipped)}')
+
+
 def main():
     ap = argparse.ArgumentParser(prog='e2e', description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sp = ap.add_subparsers(dest='cmd', required=True)
@@ -354,6 +511,8 @@ def main():
     p = sp.add_parser('build'); p.add_argument('dir'); p.add_argument('targets', nargs='*'); p.set_defaults(f=cmd_build)
     p = sp.add_parser('cover'); p.add_argument('dir'); p.set_defaults(f=cmd_cover)
     p = sp.add_parser('sync-engine'); p.add_argument('dir'); p.set_defaults(f=cmd_sync)
+    p = sp.add_parser('handoff'); p.add_argument('dir'); p.set_defaults(f=cmd_handoff)
+    p = sp.add_parser('attach-video'); p.add_argument('dir'); p.add_argument('--from', dest='source', required=True); p.set_defaults(f=cmd_attach_video)
     p = sp.add_parser('free'); p.add_argument('dir'); p.add_argument('--config', required=True); p.add_argument('--out', required=True)
     p.add_argument('--force', action='store_true'); p.set_defaults(f=cmd_free)
     a = ap.parse_args()

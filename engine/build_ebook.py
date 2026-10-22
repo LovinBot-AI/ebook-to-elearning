@@ -7,12 +7,14 @@
 from __future__ import annotations
 
 import datetime as dt
+import json
 import re
 import shutil
 import sys
 import uuid
 import zipfile
 from html import escape
+from urllib.parse import quote
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / 'build'))
@@ -35,6 +37,24 @@ def toc_num(c):
 
 # ============================================================== WEB
 def build_web(chs):
+    vids = json.loads((ROOT / 'videos.json').read_text(encoding='utf-8')) if (ROOT / 'videos.json').exists() else {}
+
+    def video_box(cid):
+        items = vids.get(cid) or []
+        if not items:
+            return ''
+        out = []
+        for v in items:
+            head = f'<p class="vb-title"><b>{escape(v["code"])}</b> {escape(v["title"])}' + (f' <small>{escape(v["duration"])}</small>' if v.get('duration') else '') + '</p>'
+            if v.get('muxPlaybackId'):
+                src = f'https://player.mux.com/{v["muxPlaybackId"]}?metadata-video-title={quote(v["title"])}&metadata-video-id={quote(v["code"])}'
+                out.append(head + f'<div class="vb-frame"><iframe src="{src}" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen title="{escape(v["title"])}"></iframe></div>')
+            else:
+                link = v.get('lmsUrl') or v.get('url')
+                if link:
+                    out.append(head + f'<a class="btn" href="{escape(link)}" target="_blank" rel="noopener">▶ Xem video bài này</a>')
+        return f'<aside class="video-box"><span class="vb-k">🎬 Video bài học</span>{"".join(out)}</aside>' if out else ''
+
     top_tabs = ''.join(f'<a href="{h}" target="_blank" rel="noopener">{t}</a>' for f, h, t in
                        [('mindmap.json', 'mindmap.html', 'Mindmap'), ('prompts.json', 'prompt.html', 'Bộ prompt')] if (ROOT / f).exists())
     top_tabs = f'<nav class="top-tabs" aria-label="Tài nguyên">{top_tabs}</nav>' if top_tabs else ''
@@ -69,7 +89,7 @@ def build_web(chs):
                  + (f'<button class="next" type="button"><small>Tiếp →</small><span>{escape(next_c.label)} · {escape(next_c.short)}</span></button>' if next_c else '<button class="next" type="button" hidden></button>')
                  + '</nav>')
         sections.append(f'<section class="chapter" id="{c.id}" data-title="{escape(c.label)} — {escape(c.short)}">{head}'
-                        f'<article class="article prose">{bodies[c.id]}{cta_box}</article>{pager}</section>')
+                        f'<article class="article prose">{video_box(c.id)}{bodies[c.id]}{cta_box}</article>{pager}</section>')
 
     part_cards = []
     for p, items in parts_with(chs):

@@ -49,4 +49,8 @@ Tổng 180–240 phút. Nếu dàn ý vượt, đưa phần ít quan trọng san
 
 ## Sau khi quay
 
-Giao video + transcript cho skill `video-to-elearning`. Dùng `KICH-BAN-QUAY.md` làm gợi ý cho PLAN: tên bài lấy theo tên chương, đoạn bị lỗi/nhạy cảm đã ghi chú. (Bước ráp nối hai skill sẽ làm sau.)
+1. Tải về và chép vào thư mục `quay-video/` của dự án (có hướng dẫn trong `HUONG-DAN-DAN-VIDEO.md`):
+   - **Zoom Cloud:** zoom.us → Recordings → Cloud recordings → chọn buổi → tải **Shared screen with speaker view (MP4)** và **Audio transcript (VTT)**. Có VTT là tốt nhất: chép lời nhanh và chính xác.
+   - **Zoom ghi trên máy / OBS / QuickTime:** chỉ có file video, skill tự chép lời (lâu hơn).
+2. Nói với Claude: "Đã dán video, làm tiếp". Claude dò câu mở đoạn để chia bài theo chương, gửi bạn PLAN, thumbnail, một bài mẫu để duyệt, rồi render cả bộ.
+3. Khi đã kết nối Mux (docs/KET-NOI-MUX.md), Claude hỏi xác nhận rồi mới đăng, sau đó gắn video vào từng chương ebook.

@@ -1,8 +1,12 @@
 # Quy trình ebook-to-elearning
 
 ```
-Hỏi đáp tư liệu ─► Thiết kế ─► Dàn ý + phác thảo ─► Chương mẫu ─► Ebook đầy đủ ─► Kịch bản quay ─► QUAY ─► (video-to-elearning)
+Hỏi đáp tư liệu ─► Thiết kế ─► Dàn ý + phác thảo ─► Chương mẫu ─► Ebook đầy đủ ─► Kịch bản quay ─► QUAY
      G0               G1              G2                G3             G4               G5
+                                                                                             │ dán mp4 + .vtt vào quay-video/
+                                                                                             ▼
+     Gắn video vào ebook ◄─ Đăng Mux (hỏi trước) ◄─ Render bộ bài ◄─ Bài mẫu ◄─ Thumbnail ◄─ PLAN (dò mốc theo chương)
+             G9                    G9                            G8 (video-to-elearning)
                                                                          │
                                                                          ├─► Đẩy GitHub Pages (G6, hỏi trước)
                                                                          └─► Bản free cho workshop (G7, nội bộ)
@@ -33,9 +37,16 @@ Hỏi đáp tư liệu ─► Thiết kế ─► Dàn ý + phác thảo ─► 
 | G6 | Repo GitHub, GitHub Pages, mật khẩu | Link thật, thử mật khẩu |
 | G7 | `free.json` → dự án bản free | Link xem thử bản free, nút mời học bản đầy đủ |
 
-## Kết nối với video-to-elearning (làm sau)
+## Kết nối với video-to-elearning và Mux
 
-Sau khi quay, skill `video-to-elearning` cắt video thành bài. Dự kiến ráp nối:
-- Tên bài trong PLAN lấy từ tên chương / đoạn trong `KICH-BAN-QUAY.md`.
-- Câu chuyển đoạn trong transcript dùng làm mốc cắt.
-- Link video từng bài gắn ngược vào chương ebook (mục "Xem video bài này").
+| Bước | Lệnh (Claude chạy) | Kết quả |
+|---|---|---|
+| Trước ngày quay | `e2e handoff` | `handoff-v2e.json` (bài dự kiến, câu mở đoạn, thuật ngữ, thứ phải cắt) + thư mục `quay-video/` |
+| Có video | `v2e init … --from-ebook` | Dự án cắt video đã điền sẵn brief, thuật ngữ, danh sách bài |
+| Chép lời xong | `v2e align` | Bảng dự kiến ↔ thực tế: mỗi chương bắt đầu lúc nào, chương nào thiếu, chương nào cần tách |
+| PLAN → render | các cổng của video-to-elearning | Thumbnail, bài mẫu, bộ video bài học |
+| Sau edl | `v2e align --content` | Mô tả, mục tiêu, checklist từng bài lấy từ ebook |
+| Đăng Mux | `mux-pub init --from-v2e` → `plan` → `upload` | Video trên Mux, mã nhúng, thư mục bàn giao |
+| Gắn ngược | `e2e attach-video` | Khung "Video bài học" đầu mỗi chương ebook |
+
+Mã bài thống nhất `<chương>.<n>` (7.1, 7.2) cho ebook, PLAN, thumbnail, Mux và LMS.
