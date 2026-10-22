@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 · 2026-10-22
+- Khởi động: `e2e start [dir]` — liệt kê thiếu skill/phần mềm/kết nối nào, chia "cần ngay" và "cần ở bước sau", mỗi mục ghi 👉 người dùng làm gì và 🤖 Claude làm gì.
+- `e2e setup --yes`: tải `sonlovinbot/video-to-elearning` và gắn video-to-elearning + mux-publisher (chỉ sau khi người dùng đồng ý). install.sh hỏi luôn khi chạy.
+- `e2e next <dir>`: việc tiếp theo bằng lời thường cho mọi bước, từ hỏi đáp tới đăng Mux và gắn video.
+- SKILL.md: mục START HERE; mọi câu trả lời kết thúc bằng "👉 Việc tiếp theo của bạn: …".
+
 ## 0.2.0 · 2026-10-22
 - Trọn gói sau khi quay: cổng G8 (video → bài học qua video-to-elearning) và G9 (đăng Mux qua mux-publisher, gắn video ngược vào ebook).
 - `e2e handoff`: xuất `handoff-v2e.json` (bài dự kiến mã `<chương>.<n>`, câu mở đoạn, phút, thuật ngữ, thứ phải cắt, nội dung bài) + thư mục `quay-video/` có hướng dẫn dán video Zoom (mp4 + .vtt).

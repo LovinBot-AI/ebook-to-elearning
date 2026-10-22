@@ -11,6 +11,15 @@ Talk to the user in Vietnamese. The rules below are in English on purpose — fo
 
 The video is recorded LAST, in one 3–4 hour take. Everything this skill produces exists so the speaker walks into that recording fully prepared: outline, detailed mindmap, prompts, case studies, glossary, run-of-show. **No slides** at this stage.
 
+## ▶ START HERE — every new conversation
+
+1. Run `e2e start` (add the project dir if one exists: `e2e start <dir>`). It lists what is missing — companion skills, Python packages, Chrome, Node, video tools, Mux connection — and for each item says what the USER does (👉) and what YOU do (🤖).
+2. Tell the user, in plain Vietnamese, only what matters now: "Cần ngay" items first; "cần ở bước sau" items in one short line ("phần cắt video/đăng Mux sẽ cần cài thêm X, tôi sẽ hỏi khi tới bước đó"). Offer to set up everything at once if they prefer.
+3. Missing companion skills → ask once: "Cần cài thêm video-to-elearning và mux-publisher để cắt video và đăng Mux. Tôi tải về và gắn nhé?" → on yes: `e2e setup --yes`. Missing Python packages → ask, then `pip install -r engine/requirements.txt`. Never install anything without a yes.
+4. Then continue at the step `e2e next <dir>` reports (new user → G0 intake).
+
+**Always end every reply with ONE line:** `👉 Việc tiếp theo của bạn: …` — a concrete action in plain words (answer these questions / read X and say "duyệt" / drop the video into `quay-video/` / create a Mux token…). Take it from `e2e next <dir>` when unsure. If the user asks "giờ làm gì?", "tiếp theo là gì?", "tôi không hiểu bước này", run `e2e next <dir>` and explain that step in 2–3 simple sentences — no commands, no jargon.
+
 ## ⛔ NON-NEGOTIABLE GATES — read before doing anything
 
 Stop and wait for explicit user approval at every gate. Never skip, merge, or "assume approval". Record each approval with `e2e approve <dir> G<n>` ONLY after the user said yes.
@@ -38,6 +47,8 @@ Stop and wait for explicit user approval at every gate. Never skip, merge, or "a
 - If the user explicitly says to continue past a gate unattended, you may proceed, but still self-check against the gate checklist and report what you checked.
 
 ## 0. Setup (first use)
+
+Covered by START HERE above (`e2e start`, `e2e setup --yes`). Details:
 
 `e2e doctor` → shows Python packages (markdown-it-py, bs4, pillow, playwright, pymupdf, pypdf, cryptography) and Chrome. Install ONLY after the user agrees (`pip install -r engine/requirements.txt`). PDF needs Chrome; web/EPUB/site do not.
 

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """e2e — ebook-to-elearning CLI.
 
+  e2e start [dir]                    KHỞI ĐỘNG: thiếu skill/phần mềm/kết nối nào, ai làm gì; có dir thì báo luôn việc tiếp theo
+  e2e next <dir>                     việc tiếp theo của người dùng và của Claude (lời thường)
+  e2e setup [--yes]                  tải + gắn skill đi kèm (video-to-elearning, mux-publisher) — chỉ --yes sau khi người dùng đồng ý
   e2e doctor                         kiểm tra môi trường (không tự cài)
   e2e new <dir> --title … --slug … [--author …] [--mark AB]
   e2e status <dir>                   các cổng G0–G7 đã duyệt chưa, tài liệu kế hoạch nào đã có
@@ -26,6 +29,8 @@ import sys
 from pathlib import Path
 
 SKILL = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import onboard  # noqa: E402
 ENGINE = SKILL / 'engine'
 TPL = SKILL / 'templates'
 GATES = {
@@ -501,6 +506,9 @@ def cmd_attach_video(a):
 def main():
     ap = argparse.ArgumentParser(prog='e2e', description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sp = ap.add_subparsers(dest='cmd', required=True)
+    p = sp.add_parser('start'); p.add_argument('dir', nargs='?'); p.set_defaults(f=onboard.cmd_start)
+    p = sp.add_parser('next'); p.add_argument('dir'); p.set_defaults(f=onboard.cmd_next)
+    p = sp.add_parser('setup'); p.add_argument('--yes', action='store_true'); p.set_defaults(f=onboard.cmd_setup)
     sp.add_parser('doctor').set_defaults(f=cmd_doctor)
     p = sp.add_parser('new'); p.add_argument('dir'); p.add_argument('--title', required=True); p.add_argument('--slug')
     p.add_argument('--author'); p.add_argument('--mark'); p.add_argument('--force', action='store_true'); p.set_defaults(f=cmd_new)

@@ -22,9 +22,13 @@ if [[ -n "$V2E" && -f "$V2E/bin/v2e.mjs" ]]; then
   link video-to-elearning "$V2E"
   link mux-publisher "$V2E/skills/mux-publisher"
 else
-  echo "⚠ Chưa có video-to-elearning (cần cho bước cắt video + đăng Mux). Tải về cạnh thư mục này rồi chạy lại:"
-  echo "    git clone https://github.com/sonlovinbot/video-to-elearning.git \"$DIR/../video-to-elearning\""
+  echo "⚠ Chưa có video-to-elearning (cần cho bước cắt video + đăng Mux)."
 fi
 
-python3 "$DIR/bin/e2e.py" doctor
-[[ -n "$V2E" ]] && echo "\nBước cắt video: Claude sẽ chạy 'v2e doctor' và HỎI bạn trước khi cài ffmpeg/Whisper/Remotion."
+if [[ -z "$V2E" ]]; then
+  printf "\nTải luôn video-to-elearning + mux-publisher (cần quyền vào repo GitHub)? [y/N] "
+  read ans
+  [[ "$ans" == [yY]* ]] && python3 "$DIR/bin/e2e.py" setup --yes
+fi
+echo ""
+python3 "$DIR/bin/e2e.py" start

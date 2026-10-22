@@ -14,6 +14,16 @@ Skill giúp chuyên gia, giảng viên chuẩn bị **toàn bộ nội dung kho�
 
 Bạn không cần gõ lệnh nào. Claude chạy mọi lệnh và luôn hỏi trước khi cài phần mềm, đăng video hay đẩy lên mạng.
 
+## Lần đầu dùng
+
+Nói với Claude: **"Khởi động ebook-to-elearning"** (hoặc nói luôn chủ đề khoá học). Claude kiểm tra máy và báo bằng lời thường:
+
+- ✅ cái gì đã có, ❌ cái gì còn thiếu;
+- với mỗi thứ thiếu: **👉 bạn cần làm gì** (thường chỉ là trả lời "đồng ý", hoặc tạo token Mux) và **🤖 Claude sẽ làm gì**;
+- thứ nào cần ngay, thứ nào chỉ cần khi tới bước cắt video, đăng Mux.
+
+Cuối mỗi câu trả lời, Claude luôn ghi một dòng **"👉 Việc tiếp theo của bạn: …"**. Lúc nào không rõ, cứ hỏi: **"Giờ tôi làm gì tiếp?"**
+
 ## Cài đặt (một lần)
 
 ```bash
