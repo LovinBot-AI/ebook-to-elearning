@@ -1,0 +1,64 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0f2547;--org:#f1591f;--blue:#2563eb;--teal:#0f766e;--bg:#f4f5f7;--line:#dfe3ea}
+*{box-sizing:border-box}html,body{margin:0}
+body{width:1700px;background:var(--bg);font-family:"Be Vietnam Pro",sans-serif;color:var(--ink);padding:44px 44px 40px}
+h1{margin:0 0 6px;font-size:40px;letter-spacing:-.02em}
+.sub{margin:0 0 26px;font-size:21px;color:#4b5868}
+.legend{display:flex;gap:18px;margin:0 0 26px;font-size:18px;font-weight:700}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.tag{display:inline-block;font-size:14px;font-weight:800;padding:3px 9px;border-radius:7px;white-space:nowrap}
+.you{background:#fde7dc;color:#b33c0c}.ai{background:#e3ebff;color:#1d3fb3}.gate{background:var(--ink);color:#fff}
+.lanes{display:grid;grid-template-columns:repeat(5,1fr);gap:22px;align-items:start;position:relative}
+.lane{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.lh{padding:18px 20px 16px;color:#fff}
+.lh b{display:block;font-size:15px;letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.lh h2{margin:4px 0 0;font-size:25px;line-height:1.2}
+.l1 .lh{background:#0f2547}.l2 .lh{background:#1f4c86}.l3 .lh{background:#0f766e}.l4 .lh{background:#c2410c}.l5 .lh{background:#7c3aed}
+.steps{padding:14px 14px 16px;display:flex;flex-direction:column;gap:10px}
+.st{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fafbfc}
+.st h3{margin:0 0 6px;font-size:19px;line-height:1.3}
+.st p{margin:0;font-size:15.5px;line-height:1.45;color:#4b5868}
+.st .row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.arrow{position:absolute;top:34px;width:22px;height:22px;display:grid;place-items:center;font-size:26px;font-weight:800;color:#9aa5b4}
+.foot{margin-top:26px;display:flex;gap:16px;font-size:18px;color:#4b5868;align-items:center}
+.foot b{color:var(--ink)}
+</style></head><body>
+<h1>Quy trình từ A đến Z</h1>
+<p class="sub">Soạn nội dung trước, quay video sau cùng. Mỗi ô có nhãn "Duyệt" là Claude dừng lại chờ bạn đồng ý rồi mới làm tiếp.</p>
+<div class="legend"><span><i class="tag you">Bạn</i> việc của giảng viên</span><span><i class="tag ai">Claude</i> Claude tự làm</span><span><i class="tag gate">Duyệt</i> chờ bạn đồng ý</span></div>
+<div class="lanes">
+ <section class="lane l1"><div class="lh"><b>Chặng 1</b><h2>Lên kế hoạch</h2></div><div class="steps">
+  <div class="st"><h3>Khởi động</h3><p>Kiểm tra máy, báo thiếu gì. Công cụ video chưa tải.</p><div class="row"><i class="tag ai">Claude</i></div></div>
+  <div class="st"><h3>Hỏi đáp và tư liệu</h3><p>Ý tưởng, học viên, bài giảng cũ, mindmap, tài liệu. Đội Coachio hay thương hiệu riêng.</p><div class="row"><i class="tag you">Bạn</i><i class="tag gate">Duyệt G0</i></div></div>
+  <div class="st"><h3>Đối tượng và trọng tâm</h3><p>Kỹ thuật, người mới, trung lập hay cả hai. Mục tiêu theo framework.</p><div class="row"><i class="tag gate">Duyệt G1</i></div></div>
+  <div class="st"><h3>Dàn ý và phác thảo</h3><p>Dàn ý từng chương, mindmap nháp, ước lượng 3 đến 4 giờ video.</p><div class="row"><i class="tag gate">Duyệt G2</i></div></div>
+ </div></section>
+ <section class="lane l2"><div class="lh"><b>Chặng 2</b><h2>Biên soạn ebook</h2></div><div class="steps">
+  <div class="st"><h3>Chương mẫu</h3><p>Viết 1 chương hoàn chỉnh để chốt giọng văn, độ sâu.</p><div class="row"><i class="tag gate">Duyệt G3</i></div></div>
+  <div class="st"><h3>Chọn mẫu giao diện</h3><p>Trang chọn mẫu S1 đến S4, thử logo, bấm sao chép lựa chọn.</p><div class="row"><i class="tag you">Bạn</i></div></div>
+  <div class="st"><h3>Ebook đầy đủ</h3><p>Chương, mindmap, bộ prompt, case, thuật ngữ, giáo án.</p><div class="row"><i class="tag ai">Claude</i><i class="tag gate">Duyệt G4</i></div></div>
+  <div class="st"><h3>Kịch bản quay</h3><p>Đoạn quay theo chương, câu mở đoạn, thứ không được chiếu.</p><div class="row"><i class="tag gate">Duyệt G5</i></div></div>
+ </div></section>
+ <section class="lane l3"><div class="lh"><b>Chặng 3</b><h2>Phát hành ebook</h2></div><div class="steps">
+  <div class="st"><h3>Đưa lên mạng</h3><p>GitHub Pages, có mật khẩu. Hỏi tên repo, riêng tư hay công khai.</p><div class="row"><i class="tag gate">Duyệt G6</i></div></div>
+  <div class="st"><h3>Bản free cho workshop</h3><p>Mindmap, vài chương, case. Nút mời học bản đầy đủ.</p><div class="row"><i class="tag gate">Duyệt G7</i></div></div>
+  <div class="st"><h3>Link chia sẻ</h3><p>Mỗi bài, mỗi mục có link riêng để gửi học viên.</p><div class="row"><i class="tag ai">Claude</i></div></div>
+ </div></section>
+ <section class="lane l4"><div class="lh"><b>Chặng 4</b><h2>Quay và dựng video</h2></div><div class="steps">
+  <div class="st"><h3>Quay một mạch</h3><p>3 đến 4 giờ theo kịch bản, mở sẵn ebook và mindmap.</p><div class="row"><i class="tag you">Bạn</i></div></div>
+  <div class="st"><h3>Dán video</h3><p>File mp4 và transcript .vtt của Zoom vào thư mục quay-video.</p><div class="row"><i class="tag you">Bạn</i></div></div>
+  <div class="st"><h3>Chia bài theo chương</h3><p>Dò câu mở đoạn, cắt đoạn thừa, khử ồn. Gửi bảng PLAN.</p><div class="row"><i class="tag gate">Duyệt G8</i></div></div>
+  <div class="st"><h3>Thumbnail mẫu</h3><p>1 thumbnail từ video thật theo mẫu đã chọn.</p><div class="row"><i class="tag gate">Duyệt</i></div></div>
+  <div class="st"><h3>Render cả bộ</h3><p>1 bài mẫu, duyệt xong chạy hàng loạt.</p><div class="row"><i class="tag ai">Claude</i></div></div>
+ </div></section>
+ <section class="lane l5"><div class="lh"><b>Chặng 5</b><h2>Đăng và hoàn thiện</h2></div><div class="steps">
+  <div class="st"><h3>Kết nối Mux</h3><p>Tạo token, dán vào hộp thoại trên máy, không qua chat.</p><div class="row"><i class="tag you">Bạn</i></div></div>
+  <div class="st"><h3>Đăng video</h3><p>Bảng xác nhận, đăng thử 1 video, rồi cả bộ.</p><div class="row"><i class="tag gate">Duyệt G9</i></div></div>
+  <div class="st"><h3>Gắn video vào ebook</h3><p>Mỗi chương có video bài học. Hỏi trước khi đẩy lên mạng.</p><div class="row"><i class="tag ai">Claude</i></div></div>
+  <div class="st"><h3>Bàn giao</h3><p>Bảng bài học, link video, nội dung từng bài cho LMS.</p><div class="row"><i class="tag ai">Claude</i></div></div>
+ </div></section>
+</div>
+<p class="foot"><b>Không biết làm gì tiếp?</b> Hỏi Claude: "Giờ tôi làm gì tiếp?" · Mỗi câu trả lời luôn kết thúc bằng dòng "Việc tiếp theo của bạn".</p>
+</body></html>

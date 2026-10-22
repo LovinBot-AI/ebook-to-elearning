@@ -201,7 +201,7 @@
     if (h) { const b = document.createElement('button'); b.type = 'button'; b.className = 'link-btn'; b.dataset.link = sec.id; b.dataset.what = 'bài'; b.textContent = 'Sao chép link bài'; h.appendChild(b); }
     sec.querySelectorAll('.article h2[id]').forEach((h2) => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'h-link'; b.dataset.link = h2.id; b.dataset.what = 'mục';
-      b.setAttribute('aria-label', 'Sao chép link mục này'); b.title = 'Sao chép link mục này'; b.textContent = '#'; h2.appendChild(b);
+      b.setAttribute('aria-label', 'Sao chép link mục này'); b.title = 'Sao chép link mục này'; h2.appendChild(b);
     });
   });
   document.addEventListener('click', (e) => {

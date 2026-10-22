@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1 · 2026-10-23
+- README viết lại: sơ đồ quy trình A–Z, 5 việc của giảng viên, 20 bước theo 5 chặng, ảnh chụp thật (trang chọn mẫu, thumbnail, ebook, mindmap, bộ prompt, điện thoại), cài đặt, các skill trong bộ, những gì sẽ tải về.
+- Sửa: mục lục chương không còn dính ký tự "#"; bảng trong bảng đọc mindmap không ngắt giữa từ trên điện thoại; nút "Xem chi tiết" gọn trên điện thoại.
+
 ## 0.6.0 · 2026-10-22
 - Mindmap thành bảng đọc cho người trình bày: bấm ý nào có nội dung là hiện nội dung ebook thật (đúng mục, tổng quan chương cho nhánh lớn, cả chương nếu không khớp mục; `"sec"` để chỉ định). Cuối bảng: "Xem chi tiết trong ebook ↗" và "Sao chép link". Máy tính: bảng nằm cạnh cây, không che; điện thoại: bảng trượt từ dưới.
 - Mỗi loại trang một tab cố định (ebook, mindmap, Bộ prompt): mở chi tiết luôn dùng lại một tab ebook.

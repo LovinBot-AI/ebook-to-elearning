@@ -108,6 +108,9 @@ body{margin:0;background:#f4f3ef;font-family:var(--font);color:var(--ink)}
 .mm-pb{min-height:0}
 .mm-ph,.mm-pf{flex:none}
 .mm-pb{overflow-x:hidden}
-.mm-prose{max-width:100%;min-width:0;overflow-wrap:anywhere}
+.mm-prose{max-width:100%;min-width:0;overflow-wrap:break-word}
+.mm-prose td,.mm-prose th{word-break:normal;overflow-wrap:normal;min-width:5.5em}
 .mm-prose>*{max-width:100%}
 .mm-prose pre{white-space:pre-wrap}
+@media (max-width:480px){.mm-pf{padding:10px 12px;gap:8px}.mm-open{font-size:14px;padding:0 10px}.mm-copy{font-size:14px;padding:0 12px}}
+@media (max-width:480px){.mm-long{display:none}}

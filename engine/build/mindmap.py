@@ -166,7 +166,7 @@ def build():
 <div class="mm-scrim" id="mmScrim" hidden></div>
 <aside class="mm-panel" id="mmPanel" aria-hidden="true" role="dialog" aria-label="Chi tiết">
 <div class="mm-ph"><b id="mmT"></b><button type="button" id="mmX" aria-label="Đóng">✕</button></div><div class="mm-pb" id="mmB"></div>
-<div class="mm-pf" id="mmF"><a class="mm-open" id="mmOpen" target="{BOOK["storage"]}ebook">Xem chi tiết trong ebook ↗</a><button type="button" class="mm-copy" id="mmCopy">Sao chép link</button></div></aside>
+<div class="mm-pf" id="mmF"><a class="mm-open" id="mmOpen" target="{BOOK["storage"]}ebook">Xem chi tiết<span class="mm-long"> trong ebook</span> ↗</a><button type="button" class="mm-copy" id="mmCopy">Sao chép link</button></div></aside>
 <div class="pk-toast" id="pkToast" role="status"></div>
 <script id="mmData" type="application/json">{json.dumps({'nodes': DATA, 'content': CONTENT}, ensure_ascii=False).replace("</", "<\\/")}</script>'''
     html = f'''<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
