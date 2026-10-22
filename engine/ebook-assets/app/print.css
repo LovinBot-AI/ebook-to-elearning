@@ -1,0 +1,68 @@
+/* Bản in PDF (A4) */
+@page{size:A4;margin:20mm 18mm 22mm 18mm}
+@page cover{margin:0}
+@page part{margin:0}
+html,body{margin:0;padding:0;background:#fff}
+body{font-family:var(--font);color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.prose{--fs:10.6pt;line-height:1.7;orphans:3;widows:3}
+.prose h2{break-after:avoid;margin-top:1.8em;padding-top:.8em}
+.prose h3{break-after:avoid}
+.prose figure,.prose .table-wrap,.prose .prompt,.prose .callout,.prose p.goal,.prose li.task{break-inside:avoid}
+.prose .table-wrap{overflow:visible}
+.prose table{font-size:.84em}
+.prose figure img{max-height:120mm;width:auto;box-shadow:none}
+.prose figure img[src$=".svg"]{width:100%;max-height:none}
+.prose .prompt{background:#f3f6fa;color:var(--ink);border:1px solid #cfdae8}
+.prose .prompt-head{background:#e5edf7;border-bottom:1px solid #cfdae8}
+.prose .prompt-label{color:var(--navy-2)}
+.prose .prompt strong{color:var(--ink)}
+.prose .prompt code{background:#fff;border-color:#cfdae8;color:#2a3a4a}
+.prose pre{background:#f3f6fa;color:#1e2833;border:1px solid #cfdae8}
+.prose a{color:var(--navy-2)}
+
+/* Bìa */
+.pdf-cover{page:cover;height:297mm;width:210mm;position:relative;overflow:hidden;background:radial-gradient(120mm 120mm at 85% 15%,rgba(226,113,29,.35),transparent 70%),radial-gradient(160mm 160mm at 10% 100%,rgba(31,127,121,.45),transparent 70%),linear-gradient(160deg,#0c1f3a 0%,#12305a 55%,#0d2340 100%);color:#fff;break-after:page}
+.pdf-cover .c-top{position:absolute;left:20mm;top:22mm;right:20mm;display:flex;justify-content:space-between;font-size:9pt;letter-spacing:.18em;text-transform:uppercase;opacity:.85}
+.pdf-cover .c-img{position:absolute;right:14mm;top:34mm;width:88mm;filter:drop-shadow(0 14mm 18mm rgba(0,0,0,.45))}
+.pdf-cover .c-text{position:absolute;left:20mm;bottom:40mm;width:120mm}
+.pdf-cover .c-tag{display:inline-block;padding:2mm 4mm;border-radius:20mm;background:rgba(111,214,201,.18);color:#9fe8de;font-size:8.5pt;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.pdf-cover h1{margin:6mm 0 4mm;font-size:44pt;line-height:1;letter-spacing:-.03em;font-weight:800}
+.pdf-cover h1 span{display:block;color:#ffb877}
+.pdf-cover .c-sub{font-size:13pt;line-height:1.45;opacity:.92;margin:0 0 8mm}
+.pdf-cover .c-author{font-size:10pt;opacity:.8}
+.pdf-cover .c-foot{position:absolute;left:20mm;right:20mm;bottom:16mm;display:flex;justify-content:space-between;font-size:8.5pt;opacity:.7;border-top:1px solid rgba(255,255,255,.25);padding-top:4mm}
+
+/* Trang thông tin + mục lục */
+.pdf-info{break-after:page;font-size:9.5pt;line-height:1.7;color:var(--ink-2)}
+.pdf-info h2{font-size:20pt;color:var(--navy);margin:0 0 6mm}
+.pdf-info .box{margin-top:8mm;padding:5mm 6mm;border-radius:4mm;background:#f6f7f9;border:1px solid var(--line)}
+.pdf-toc{break-after:page}
+.pdf-toc h2{font-size:24pt;color:var(--navy);margin:0 0 8mm;letter-spacing:-.02em}
+.pdf-toc .tp{margin:7mm 0 2mm;font-size:8.5pt;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
+.pdf-toc .tp b{color:var(--navy);margin-left:2mm}
+.pdf-toc .row{display:flex;align-items:baseline;gap:3mm;padding:1.6mm 0;font-size:10.5pt;border-bottom:1px dotted #cfd5db;text-decoration:none;color:var(--ink)}
+.pdf-toc .row .n{flex:none;width:12mm;font-weight:800;color:var(--teal)}
+.pdf-toc .row .t{flex:1}
+.pdf-toc .row .p{flex:none;font-weight:700;color:var(--navy)}
+
+/* Trang phần */
+.pdf-part{page:part;height:297mm;width:210mm;position:relative;break-before:page;break-after:page;background:linear-gradient(160deg,#12305a,#0c1f3a);color:#fff;overflow:hidden}
+.pdf-part.adv{background:linear-gradient(160deg,#145e59,#0c2f3a)}
+.pdf-part .pl{position:absolute;left:22mm;top:70mm;font-size:12pt;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#ffb877}
+.pdf-part h2{position:absolute;left:22mm;right:22mm;top:82mm;margin:0;font-size:34pt;line-height:1.1;letter-spacing:-.02em}
+.pdf-part p{position:absolute;left:22mm;right:40mm;top:132mm;margin:0;font-size:12pt;line-height:1.6;opacity:.88}
+.pdf-part ol{position:absolute;left:22mm;right:22mm;top:165mm;margin:0;padding:0;list-style:none;font-size:11pt;line-height:1.5}
+.pdf-part li{padding:2mm 0;border-top:1px solid rgba(255,255,255,.2);display:flex;gap:4mm}
+.pdf-part li b{width:14mm;color:#9fe8de}
+
+/* Mở đầu chương */
+.pdf-chapter{break-before:page}
+.pdf-ch-head{margin:0 0 8mm;padding:0 0 6mm;border-bottom:2px solid var(--navy)}
+.pdf-ch-head .k{font-size:8.5pt;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--orange)}
+.pdf-ch-head .k i{font-style:normal;color:var(--teal);margin-left:2mm}
+.pdf-ch-head h1{margin:3mm 0 3mm;font-size:24pt;line-height:1.15;letter-spacing:-.02em;color:var(--navy)}
+.pdf-ch-head .m{font-size:9pt;color:var(--muted)}
+.pdf-ch-head ol{margin:4mm 0 0;padding:3mm 5mm 3mm 9mm;columns:2;column-gap:8mm;font-size:8.8pt;line-height:1.5;background:#f6f7f9;border-radius:3mm;color:var(--ink-2)}
+.pdf-marker{display:block;font-size:2pt;line-height:2pt;height:2pt;margin:0;color:#fff}
+
+.part-teacher{font-size:.95em;opacity:.9}

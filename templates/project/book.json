@@ -1,0 +1,44 @@
+{
+  "book": {
+    "title": "{{TITLE}}",
+    "subtitle": "Một câu: học xong làm được gì",
+    "edition": "Ebook khoá e-learning · Bản 0.1 · {{MONTH}}",
+    "author": "{{AUTHOR}}",
+    "teacher": "{{AUTHOR}}",
+    "org": "Coachio Academy",
+    "org_url": "academy.coachio.ai",
+    "tagline": "Ebook khoá e-learning",
+    "slug": "{{SLUG}}",
+    "brand_mark": "{{MARK}}",
+    "mode": "nguoi-moi",
+    "audience": "Dành cho người mới",
+    "keywords": "",
+    "info": "Ebook đi kèm khoá e-learning. Viết một đoạn giới thiệu các phần ở đây.",
+    "glossary_file": "phu-luc-a-tu-dien-thuat-ngu.md",
+    "prompt_appendix": "phu-luc-b-bo-prompt-sao-chep.md",
+    "proper_nouns": ["GitHub", "Vercel", "Supabase"],
+    "prompt_teachers": "",
+    "resources": [
+      ["Mindmap tương tác toàn khoá", "mindmap.html", "Mở bản đồ"],
+      ["Bộ prompt sao chép theo từng bước", "prompt.html", "Mở bộ prompt"]
+    ],
+    "downloads": ["pdf", "epub"],
+    "cover": {
+      "title": "{{COVER_TITLE}}",
+      "title2": "dòng phụ của tên khoá",
+      "tag": "Dành cho người mới",
+      "sub": "Một câu lời hứa của khoá học.",
+      "q": "Câu học viên hay hỏi nhất…",
+      "a_who": "Giảng viên",
+      "a": "Câu trả lời ngắn thể hiện cách khoá giải quyết…",
+      "flow": ["Bước 1", "Bước 2", "Bước 3", "Bước 4", "Bước 5"],
+      "pills": ["Công cụ 1", "Công cụ 2", "Công cụ 3"]
+    }
+  },
+  "parts": [
+    {"id": "part-1", "label": "Phần I", "title": "Nền tảng", "chapters": [1, 1], "accent": false,
+     "desc": "Mô tả một câu cho phần này."}
+  ],
+  "appendix_title": "Tra cứu và giảng dạy",
+  "appendix_desc": "Từ điển thuật ngữ, bộ prompt sao chép, giáo án, checklist và mindmap."
+}

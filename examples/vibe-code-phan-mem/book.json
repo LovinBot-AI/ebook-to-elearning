@@ -1,0 +1,149 @@
+{
+  "book": {
+    "title": "Vibe Code phần mềm cho người mới",
+    "subtitle": "Tự làm web, app, công cụ AI cùng Claude Code và Codex, không cần biết lập trình",
+    "edition": "Ebook khoá e-learning · Bản 1.0 · 10/2026",
+    "author": "GV Đặng Hữu Sơn · Phần nâng cao: GV Nguyễn Thành Công · Coachio Academy",
+    "publisher": "Coachio Academy",
+    "lang": "vi",
+    "slug": "Vibe-Code-Phan-Mem-Cho-Nguoi-Moi",
+    "brand_mark": "VC",
+    "hero_title_html": "Vibe Code <em>phần mềm</em> cho người mới",
+    "cover_title_html": "Vibe Code<span>phần mềm</span>",
+    "cover_tag": "Dành cho người không biết code",
+    "second_cta": [
+      "Xem quy trình",
+      "part-2"
+    ],
+    "storage": "vibecode-sw-",
+    "uuid_seed": "coachio-vibe-code-phan-mem",
+    "keywords": "Vibe Code, Claude Code, Codex, Antigravity, Superpowers, Supabase, Vercel, API, PRD, no-code",
+    "info": "Ebook đi kèm khoá e-learning Vibe Code phần mềm của Coachio Academy, viết cho người mới hoàn toàn: không cần biết lập trình, không dùng cửa sổ lệnh. Phần I giúp hiểu vibe code và các thành phần của một phần mềm; Phần II là quy trình làm phần mềm cùng AI theo ba luồng; Phần III đưa sản phẩm lên mạng, gắn dữ liệu và API; Phần IV là case thật và bài tập; Phần V nâng cao với skill, vibe design và một app thực hành. Phụ lục có từ điển thuật ngữ, bộ prompt sao chép, giáo án và mindmap.",
+    "resources": [
+      [
+        "Mindmap tương tác toàn khoá",
+        "mindmap.html",
+        "Mở bản đồ"
+      ],
+      [
+        "Bộ prompt sao chép theo từng bước",
+        "prompt.html",
+        "Mở bộ prompt"
+      ],
+      [
+        "Superpowers (bộ kỹ năng cho agent)",
+        "https://github.com/obra/superpowers",
+        "GitHub ↗"
+      ],
+      [
+        "Dự án mẫu Hạt Mầm · 20 game giáo dục",
+        "https://github.com/sonlovinbot-team/du-an-game-giao-duc-cho-giao-vien",
+        "GitHub ↗"
+      ]
+    ],
+    "org": "Coachio Academy",
+    "org_url": "academy.coachio.ai",
+    "tagline": "Cẩm nang thực hành cùng AI",
+    "mode": "ca-hai",
+    "teacher": "GV Đặng Hữu Sơn",
+    "glossary_file": "phu-luc-a-tu-dien-thuat-ngu.md",
+    "prompt_appendix": "phu-luc-b-bo-prompt-sao-chep.md",
+    "proper_nouns": [
+      "Vercel",
+      "GitHub",
+      "Luồng",
+      "Superpowers",
+      "Supabase"
+    ],
+    "prompt_teachers": "Giảng viên: <b>GV Đặng Hữu Sơn</b> (ba luồng cơ bản) · <b>GV Nguyễn Thành Công</b> (nâng cao · vibe design)",
+    "cover": {
+      "title": "VIBE CODE",
+      "title2": "phần mềm cho người mới",
+      "tag": "Dành cho người không biết code",
+      "sub": "Tự làm web, app, công cụ AI cùng Claude Code và Codex. Từ ý tưởng đến sản phẩm chạy trên mạng.",
+      "q": "Tôi muốn làm công cụ tạo banner cho shop. Đừng viết code vội, hãy hỏi tôi 5 câu.",
+      "a_who": "Agent",
+      "a": "Được! 1) Banner dùng cho kênh nào? 2) Bạn có ảnh sản phẩm chưa? 3) Cần mấy kích thước?…",
+      "flow": [
+        "Ý tưởng",
+        "Trao đổi",
+        "PRD",
+        "UX/UI",
+        "Code",
+        "Database",
+        "Deploy"
+      ],
+      "pills": [
+        "Claude Code",
+        "Codex",
+        "Superpowers",
+        "Supabase",
+        "Vercel"
+      ]
+    }
+  },
+  "parts": [
+    {
+      "id": "part-1",
+      "teacher": "GV Đặng Hữu Sơn",
+      "label": "Phần I",
+      "title": "Hiểu vibe code",
+      "chapters": [
+        1,
+        5
+      ],
+      "accent": false,
+      "desc": "Vibe code là gì, một phần mềm gồm những thành phần nào, API hoạt động ra sao, chọn công cụ nào và chuẩn bị Claude Code, Codex, Superpowers."
+    },
+    {
+      "id": "part-2",
+      "teacher": "GV Đặng Hữu Sơn",
+      "label": "Phần II",
+      "title": "Quy trình làm phần mềm cùng AI",
+      "chapters": [
+        6,
+        13
+      ],
+      "accent": true,
+      "desc": "Ba luồng làm việc: quy trình đầy đủ, luồng nhanh và luồng từ repo có sẵn. Ý tưởng, research, trao đổi với AI, PRD, thiết kế giao diện, code."
+    },
+    {
+      "id": "part-3",
+      "teacher": "GV Đặng Hữu Sơn",
+      "label": "Phần III",
+      "title": "Lên mạng, dữ liệu và API",
+      "chapters": [
+        14,
+        17
+      ],
+      "accent": true,
+      "desc": "GitHub lưu phiên bản, Supabase lưu dữ liệu và đăng nhập, gắn API và AI vào sản phẩm, đưa lên mạng bằng Vercel."
+    },
+    {
+      "id": "part-4",
+      "teacher": "GV Đặng Hữu Sơn",
+      "label": "Phần IV",
+      "title": "Case thật và bài tập",
+      "chapters": [
+        18,
+        19
+      ],
+      "accent": false,
+      "desc": "Sáu sản phẩm làm bằng vibe code và các bài tập theo quy trình, có prompt từng bước."
+    },
+    {
+      "id": "part-5",
+      "teacher": "GV Nguyễn Thành Công",
+      "label": "Phần V",
+      "title": "Nâng cao: skill, vibe design và thực hành",
+      "chapters": [
+        20,
+        22
+      ],
+      "accent": true,
+      "desc": "Skill và workflow cho agent, vibe design với DESIGN.md và Claude Design, thực hành app lên kế hoạch du lịch. Chọn lọc từ bài giảng Buổi 3, Bootcamp 10/2026."
+    }
+  ],
+  "appendix_title": "Tra cứu và giảng dạy",
+  "appendix_desc": "Từ điển thuật ngữ, bộ prompt sao chép, giáo án bài giảng, checklist và lỗi thường gặp, mindmap toàn khoá."
+}

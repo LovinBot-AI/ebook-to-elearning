@@ -1,0 +1,17 @@
+{
+  "flows": {
+    "A": ["Cơ bản", "Các bước cho người mới bắt đầu"]
+  },
+  "steps": [
+    {"id": "bat-dau", "name": "Bắt đầu", "flows": "A", "chap": "chap-01",
+     "intro": "Mở công cụ AI, dán prompt, thay chỗ [ ] bằng nội dung của bạn.",
+     "prompts": [
+       ["gioi-thieu", "Làm quen", "Lần đầu mở công cụ",
+        "Tôi là người mới. Giới thiệu ngắn gọn bạn có thể giúp tôi làm gì với [chủ đề khoá học]. Chưa làm gì cả, chỉ giải thích."]
+     ]}
+  ],
+  "templates": [
+    ["the-y-tuong", "Mẫu thẻ ý tưởng 5 dòng", "Điền trước khi hỏi AI",
+     "Vấn đề: [việc gì đang khó]\nNgười dùng: [ai gặp vấn đề]\nGiải pháp: [sẽ làm gì]\nMột lần dùng: [bấm gì, thấy gì]\nThành công là: [đo bằng gì]"]
+  ]
+}

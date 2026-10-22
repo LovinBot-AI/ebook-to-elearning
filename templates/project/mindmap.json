@@ -1,0 +1,11 @@
+{
+  "label": "{{TITLE}}",
+  "teachers": "",
+  "glossary_branch": true,
+  "kids": [
+    {"label": "1 · Nền tảng", "chap": "chap-01", "d": "Mô tả ngắn của nhánh.", "kids": [
+      {"label": "Khái niệm chính", "chap": "chap-01", "d": "Giải thích một câu bằng ví dụ đời thường.", "p": ["gioi-thieu"]},
+      {"label": "Ví dụ thật", "chap": "chap-01", "d": "…"}
+    ]}
+  ]
+}

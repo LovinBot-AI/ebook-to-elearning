@@ -1,0 +1,14 @@
+{
+  "title_suffix": " · Bản giới thiệu",
+  "chapters": [1],
+  "appendices": ["a"],
+  "mindmap_branches": "all",
+  "mindmap_locked_note": "Có trong bản đầy đủ",
+  "prompt_steps": ["bat-dau"],
+  "cta": {
+    "label": "Học bản đầy đủ →",
+    "url": "https://LINK-LANDING-PAGE-KHOA-HOC",
+    "text": "Bạn đang đọc bản giới thiệu. Bản đầy đủ có quy trình từng bước, toàn bộ prompt, bài tập, case study và video hướng dẫn."
+  },
+  "downloads": []
+}

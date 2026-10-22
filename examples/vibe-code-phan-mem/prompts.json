@@ -1,0 +1,618 @@
+{
+  "flows": {
+    "A": [
+      "Luồng A · Đầy đủ",
+      "Ý tưởng → skill → research → trao đổi → PRD → UX/UI → code → database → deploy"
+    ],
+    "B": [
+      "Luồng B · Nhanh",
+      "Ý tưởng → skill → trao đổi → AI viết mô tả → preview UI (tuỳ) → code thẳng"
+    ],
+    "C": [
+      "Luồng C · Repo có sẵn",
+      "Tìm repo → kéo về → chạy thử → tuỳ biến → GitHub → deploy"
+    ],
+    "N": [
+      "Nâng cao · Vibe design",
+      "Cài skill → DESIGN.md mẫu → design system → thiết kế các trang → dựng app (plan mode) → sửa bằng skill"
+    ]
+  },
+  "steps": [
+    {
+      "id": "bat-dau",
+      "name": "Bắt đầu và làm quen",
+      "flows": "ABC",
+      "chap": "chap-05",
+      "intro": "Mở Claude Code, Codex hoặc Antigravity, chọn thư mục dự án, rồi dùng các câu sau.",
+      "prompts": [
+        [
+          "gioi-thieu",
+          "Chào agent lần đầu",
+          "Mới mở công cụ với một thư mục trống",
+          "Đây là thư mục dự án mới của tôi. Tôi là người mới, không biết lập trình. Giới thiệu ngắn gọn bạn có thể giúp tôi làm gì. Chưa tạo file nào."
+        ],
+        [
+          "cai-superpowers",
+          "Nhờ cài Superpowers",
+          "Chưa cài được Superpowers bằng tay",
+          "Cài giúp tôi plugin Superpowers (github.com/obra/superpowers) cho công cụ tôi đang dùng. Tôi là người mới: hướng dẫn tôi từng bước bấm, giải thích mỗi bước để làm gì."
+        ],
+        [
+          "hoi-truoc",
+          "Hỏi trước, làm sau",
+          "Chưa có Superpowers, hoặc muốn agent chậm lại để hỏi bạn",
+          "Đừng viết code vội. Hãy hỏi tôi 5 câu để hiểu rõ, rồi đề xuất 3 hướng làm kèm ưu nhược điểm. Tôi sẽ chọn."
+        ],
+        [
+          "sau-phan",
+          "Giải thích dự án theo 6 phần",
+          "Mở một dự án và chưa hiểu nó gồm gì",
+          "Giải thích dự án này cho tôi theo sáu phần: giao diện, tính năng, dữ liệu, API, hosting, AI. Mỗi phần 2 câu, dùng ví dụ đời thường."
+        ],
+        [
+          "tu-kho",
+          "Hỏi từ khó",
+          "Agent dùng một từ bạn không hiểu",
+          "Câu bạn vừa nói có từ tôi không hiểu: [từ]. Giải thích bằng ví dụ đời thường trong 2 câu."
+        ]
+      ]
+    },
+    {
+      "id": "y-tuong",
+      "name": "Ý tưởng và gọi skill",
+      "flows": "AB",
+      "chap": "chap-07",
+      "intro": "Điền thẻ ý tưởng 5 dòng (xem mẫu cuối trang), rồi gọi skill brainstorming.",
+      "prompts": [
+        [
+          "goi-skill",
+          "Gọi skill brainstorming",
+          "Bắt đầu một ý tưởng mới",
+          "Dùng skill brainstorming. Tôi có ý tưởng: [dán thẻ ý tưởng 5 dòng]. Chưa viết code. Trước tiên giúp tôi nghiên cứu ý tưởng."
+        ],
+        [
+          "lam-ro-y-tuong",
+          "Biến ý tưởng mơ hồ thành thẻ ý tưởng",
+          "Mới chỉ có một câu kiểu \"làm app quản lý\"",
+          "Tôi muốn làm [một câu ý tưởng]. Hỏi tôi từng câu một để điền đủ thẻ ý tưởng 5 dòng: vấn đề, người dùng, giải pháp, một lần dùng, thành công là gì. Xong thì viết lại thẻ cho tôi."
+        ]
+      ]
+    },
+    {
+      "id": "research",
+      "name": "Research cơ bản",
+      "flows": "A",
+      "chap": "chap-07",
+      "intro": "Bốn câu hỏi: đã có ai làm chưa, họ làm tốt và chưa tốt gì, người dùng cần gì nhất, mình khác ở đâu.",
+      "prompts": [
+        [
+          "doi-thu",
+          "Tìm và so sánh đối thủ",
+          "Muốn biết đã có ai làm chưa",
+          "Tìm 5 sản phẩm đang giải quyết vấn đề này. Với mỗi sản phẩm: tên, link, tính năng chính, giá. So sánh trong một bảng: điểm mạnh, điểm yếu, người dùng phàn nàn gì."
+        ],
+        [
+          "nhu-cau",
+          "Nhu cầu người dùng",
+          "Muốn biết người dùng cần gì nhất",
+          "Liệt kê 10 nhu cầu hay gặp của [người dùng], xếp theo mức quan trọng. Đánh dấu 3 nhu cầu mà các sản phẩm hiện có chưa đáp ứng tốt."
+        ],
+        [
+          "khac-biet",
+          "Điểm khác biệt",
+          "Đã có bảng đối thủ",
+          "Đề xuất 3 điểm khác biệt khả thi cho sản phẩm của tôi, phù hợp người mới tự làm bằng AI."
+        ],
+        [
+          "anh-giao-dien",
+          "Học từ giao diện mẫu",
+          "Có ảnh chụp vài sản phẩm bạn thích",
+          "Đây là ảnh 3 giao diện tôi thích. Phân tích bố cục, màu, phông chữ, cách đặt nút chính. Nên học gì, không nên học gì cho sản phẩm của tôi."
+        ],
+        [
+          "research-md",
+          "Tổng hợp research",
+          "Kết thúc bước research",
+          "Tổng hợp những gì vừa nghiên cứu vào research.md gồm: thẻ ý tưởng, bảng đối thủ, nhu cầu người dùng, 3 điểm khác biệt đã chọn, ghi chú giao diện. Ngắn gọn, tiếng Việt dễ hiểu."
+        ]
+      ]
+    },
+    {
+      "id": "trao-doi",
+      "name": "Trao đổi ý tưởng với AI",
+      "flows": "AB",
+      "chap": "chap-08",
+      "intro": "Bốn bộ prompt: để AI hỏi, tìm chỗ mơ hồ, phản biện, đề xuất hướng. Cuối cùng chốt lại thành file.",
+      "prompts": [
+        [
+          "ai-hoi",
+          "Bộ 1 · Để AI hỏi bạn",
+          "Mở đầu buổi trao đổi",
+          "Tôi muốn làm [mô tả chi tiết]. Đừng viết code vội. Hãy hỏi tôi 5 câu để hiểu rõ sản phẩm, sau đó đề xuất 3 hướng làm kèm ưu điểm và nhược điểm của từng hướng. Tôi sẽ quyết định."
+        ],
+        [
+          "mo-ho",
+          "Bộ 2 · Tìm chỗ mơ hồ",
+          "Thấy ý tưởng còn chung chung",
+          "Chỉ ra 3 chỗ còn mơ hồ nhất trong ý tưởng của tôi. Hỏi từng câu một, đợi tôi trả lời rồi mới hỏi tiếp."
+        ],
+        [
+          "phan-bien",
+          "Bộ 3 · Phản biện",
+          "Muốn biết ý tưởng có thể thất bại ở đâu",
+          "Đóng vai người dùng khó tính và nhà đầu tư thận trọng. Mỗi vai nêu 3 lý do ý tưởng này có thể thất bại, rồi đề xuất cách giảm rủi ro."
+        ],
+        [
+          "ba-huong",
+          "Bộ 4 · Ba hướng làm",
+          "Cần chọn mức độ làm",
+          "Đề xuất 3 hướng: (A) đơn giản nhất, làm trong 1 ngày; (B) cân bằng; (C) đầy đủ nhất. Bảng so sánh tính năng, thời gian, độ khó, chi phí, rủi ro."
+        ],
+        [
+          "chot-y-tuong",
+          "Chốt ý tưởng",
+          "Đã chọn được hướng",
+          "Tôi chọn hướng [A/B/C], điều chỉnh: [nếu có]. Tóm tắt lại những gì đã thống nhất trong 10 dòng. Chưa viết code. Ghi vào y-tuong-da-chot.md."
+        ]
+      ]
+    },
+    {
+      "id": "prd",
+      "name": "Viết PRD (mô tả sản phẩm)",
+      "flows": "A",
+      "chap": "chap-09",
+      "intro": "PRD là bản mô tả sản phẩm: làm gì, cho ai, những tính năng nào, theo thứ tự nào. AI viết, bạn đọc và sửa.",
+      "prompts": [
+        [
+          "viet-prd",
+          "Viết PRD",
+          "Đã có research.md và y-tuong-da-chot.md",
+          "Dựa trên research.md và y-tuong-da-chot.md, viết PRD vào PRD.md bằng tiếng Việt dễ hiểu: mục tiêu, người dùng, luồng sử dụng từng bước, tính năng chia 3 mức (bắt buộc, nên có, để sau), màn hình, dữ liệu cần lưu, kết nối bên ngoài, tiêu chí xong, những gì chưa làm. Dừng để tôi đọc."
+        ],
+        [
+          "sua-prd",
+          "Sửa PRD",
+          "Đọc PRD thấy chỗ chưa đúng ý",
+          "Tôi đã đọc PRD. Sửa các điểm sau: [liệt kê]. Sau đó hỏi tôi nếu còn gì chưa rõ."
+        ],
+        [
+          "chia-phien-ban",
+          "Chia v0, v1, v2",
+          "PRD quá nhiều tính năng",
+          "Chia PRD thành v0, v1, v2. v0 chỉ có 1–2 tính năng quan trọng nhất. Giải thích vì sao chọn."
+        ]
+      ]
+    },
+    {
+      "id": "mo-ta",
+      "name": "Nhờ AI dựng mô tả ngắn",
+      "flows": "B",
+      "chap": "chap-12",
+      "intro": "Luồng nhanh không cần PRD đầy đủ: nửa trang mô tả là đủ để AI làm đúng.",
+      "prompts": [
+        [
+          "skill-nhanh",
+          "Gọi skill cho công cụ nhỏ",
+          "Ý tưởng nhỏ, chỉ mình bạn dùng",
+          "Dùng skill brainstorming. Tôi muốn công cụ nhỏ: [3–5 dòng]. Chỉ mình tôi dùng trên máy. Đừng viết code vội: hỏi tôi tối đa 3 câu quan trọng nhất."
+        ],
+        [
+          "viet-mo-ta",
+          "Viết MO-TA.md",
+          "Đã trả lời xong câu hỏi của AI",
+          "Viết mô tả nửa trang vào MO-TA.md: mục tiêu, các bước sử dụng, 3–5 tính năng, những gì chưa làm. Dừng để tôi đọc."
+        ]
+      ]
+    },
+    {
+      "id": "ux-ui",
+      "name": "Thiết kế UX/UI",
+      "flows": "AB",
+      "chap": "chap-10",
+      "intro": "Xem trước giao diện bằng một bản tĩnh, chọn phương án, rồi chốt bộ quy tắc giao diện. Luồng B có thể bỏ qua bước này.",
+      "prompts": [
+        [
+          "hai-phuong-an",
+          "Hai phương án giao diện",
+          "Đã có PRD",
+          "Dựa trên PRD.md, tạo bản xem thử giao diện v0: file HTML tĩnh, chưa có tính năng, làm 2 phương án bố cục, mở cả hai cho tôi xem."
+        ],
+        [
+          "preview-nhanh",
+          "Xem thử nhanh",
+          "Luồng B, muốn nhìn giao diện trước khi code",
+          "Tạo nhanh một bản xem thử giao diện, chưa cần tính năng, mở cho tôi xem."
+        ],
+        [
+          "design-md",
+          "Chốt design system",
+          "Đã chọn được phương án",
+          "Tôi chọn phương án [1/2], sửa: [liệt kê]. Tạo file DESIGN.md ghi màu, phông chữ, cỡ chữ, bo góc, khoảng cách, kiểu nút. Từ nay giao diện mới theo file này."
+        ],
+        [
+          "hoc-phong-cach",
+          "Học phong cách từ ảnh",
+          "Có ảnh một giao diện bạn thích",
+          "Đây là ảnh giao diện tôi thích. Rút ra phong cách: màu, phông chữ, cách sắp xếp, độ đậm nhạt. Áp phong cách đó vào bản xem thử của tôi, nhưng không sao chép logo, chữ hay hình ảnh của họ."
+        ],
+        [
+          "tu-kiem-ui",
+          "Tự kiểm giao diện",
+          "Trước khi chuyển sang code",
+          "Tự kiểm bản xem thử: người mới biết bấm đâu không, nút chính nổi bật không, điện thoại có tràn ngang không, chữ tiếng Việt có lỗi dấu không, có thông báo khi đang xử lý và khi lỗi không. Chụp màn hình máy tính và điện thoại, báo chỗ chưa đạt."
+        ]
+      ]
+    },
+    {
+      "id": "code",
+      "name": "Code cùng agent",
+      "flows": "AB",
+      "chap": "chap-11",
+      "intro": "Làm từng bước nhỏ, thử ngay, báo lỗi bằng phiếu 5 dòng.",
+      "prompts": [
+        [
+          "ke-hoach",
+          "Lập kế hoạch",
+          "Luồng A, đã có PRD và DESIGN.md",
+          "Dựa trên PRD.md và DESIGN.md, lập kế hoạch làm v0, chia bước nhỏ, mỗi bước xong là thử được. Ghi vào KE-HOACH.md. Chưa code, để tôi duyệt."
+        ],
+        [
+          "lam-buoc",
+          "Làm một bước",
+          "Đã duyệt kế hoạch",
+          "Làm bước [số] trong kế hoạch. Xong thì chạy trên máy, mở trình duyệt cho tôi và nói tôi cần bấm gì để kiểm tra. Dừng chờ tôi xác nhận."
+        ],
+        [
+          "code-thang",
+          "Code thẳng theo mô tả",
+          "Luồng B, đã có MO-TA.md",
+          "Làm theo MO-TA.md. Giao diện gọn, dùng tốt trên điện thoại. Chạy trên máy và chỉ tôi thử từng tính năng."
+        ],
+        [
+          "phieu-loi",
+          "Phiếu lỗi 5 dòng",
+          "Có gì đó không chạy đúng",
+          "Mong muốn: [điều cần thấy]. Thực tế: [điều đã thấy]. Cách tái hiện: [các bước]. Bằng chứng: ảnh đính kèm. Chỉ sửa: lỗi này, không đổi phần khác."
+        ],
+        [
+          "ngung-sua",
+          "Khi sửa mãi không xong",
+          "Agent sửa 2 lần cùng một lỗi vẫn chưa được",
+          "Ngừng sửa. Tóm tắt nguyên nhân bạn nghĩ tới, những gì đã thử, và đề xuất 2 cách khác."
+        ],
+        [
+          "chung-minh",
+          "Đòi bằng chứng",
+          "Agent báo \"xong\" nhưng bạn chưa thấy",
+          "Hãy tự chạy thử và chụp màn hình chứng minh trước khi báo xong."
+        ],
+        [
+          "mo-lai",
+          "Mở lại sản phẩm trên máy",
+          "Tắt máy xong không biết mở lại",
+          "Khởi động lại localhost cho tôi. Tạo thêm một file bấm đúp để lần sau tôi tự mở được."
+        ],
+        [
+          "nang-cap",
+          "Nâng từ luồng B lên luồng A",
+          "Công cụ nhỏ giờ cần cho nhiều người",
+          "Công cụ này giờ cần cho cả nhóm [số] người dùng. Hãy đọc MO-TA.md và mã hiện có, viết PRD đầy đủ cho v1 (có đăng nhập và lưu dữ liệu). Chưa code."
+        ]
+      ]
+    },
+    {
+      "id": "repo",
+      "name": "Làm từ repo có sẵn",
+      "flows": "C",
+      "chap": "chap-13",
+      "intro": "Tìm dự án mã nguồn mở gần giống, kéo về (tải ZIP hoặc đưa link cho agent), chạy thử, rồi tuỳ biến dần.",
+      "prompts": [
+        [
+          "tim-repo",
+          "Tìm repo",
+          "Muốn xem đã có mã nguồn mở gần giống chưa",
+          "Tôi muốn làm [sản phẩm]. Tìm 5 repo mã nguồn mở gần giống nhất: link, làm được gì, số sao, cập nhật lần cuối, giấy phép có cho dùng thương mại không, độ khó tuỳ biến cho người mới."
+        ],
+        [
+          "tai-repo",
+          "Kéo repo về bằng link",
+          "Đã chọn được repo, muốn agent tải về",
+          "Tải repo này về thư mục hiện tại: [link]. Đọc README, tóm tắt 10 dòng. Chưa sửa gì."
+        ],
+        [
+          "mo-zip",
+          "Mở repo đã tải ZIP",
+          "Bạn đã bấm Code → Download ZIP và giải nén",
+          "Tôi vừa tải ZIP một dự án từ GitHub và giải nén vào thư mục này. Đọc README, tóm tắt 10 dòng, cho tôi biết cần gì để chạy. Chưa sửa gì."
+        ],
+        [
+          "an-toan",
+          "Kiểm tra an toàn",
+          "Trước khi chạy mã của người khác",
+          "Đọc qua repo này: có đoạn nào đáng ngờ (gửi dữ liệu ra ngoài, tải file lạ) không?"
+        ],
+        [
+          "chay-repo",
+          "Chạy thử",
+          "Đã đọc README",
+          "Chạy dự án trên máy, mở trình duyệt cho tôi. Cần cài gì thì liệt kê và giải thích để tôi đồng ý."
+        ],
+        [
+          "noi-fork",
+          "Nối với bản fork",
+          "Đã bấm Fork trên GitHub",
+          "Tôi đã fork repo về tài khoản của tôi: [link bản fork]. Kết nối thư mục này với bản fork để từ nay tôi lưu phiên bản lên đó."
+        ],
+        [
+          "doi-giao-dien",
+          "Tuỳ biến giao diện",
+          "Bước tuỳ biến đầu tiên",
+          "Đổi tên sản phẩm thành [tên], màu chủ đạo [màu], logo là file [file]. Chỉ đổi giao diện."
+        ],
+        [
+          "them-tinh-nang",
+          "Thêm tính năng theo mẫu có sẵn",
+          "Giao diện đã ổn, muốn thêm chức năng",
+          "Đừng viết code vội. Tôi muốn thêm [tính năng], theo cách các phần có sẵn đang làm. Hỏi tôi 3 câu, rồi nói bạn sẽ sửa những file nào."
+        ]
+      ]
+    },
+    {
+      "id": "github",
+      "name": "GitHub: lưu phiên bản",
+      "flows": "ABC",
+      "chap": "chap-14",
+      "intro": "Mỗi bước ổn thì lưu một phiên bản. Hỏng thì quay lại, không mất gì.",
+      "prompts": [
+        [
+          "day-github",
+          "Đẩy lên GitHub lần đầu",
+          "Dự án chưa có trên GitHub",
+          "Đẩy dự án lên GitHub: tạo repo mới tên [ten-khong-dau], chế độ [Private/Public]. Trước khi đẩy, kiểm tra không có file chứa khoá bí mật bị đưa lên."
+        ],
+        [
+          "luu-ban",
+          "Lưu phiên bản",
+          "Mỗi khi một bước đã chạy ổn",
+          "Bước này đã ổn. Lưu phiên bản với ghi chú tiếng Việt mô tả việc vừa làm, rồi đẩy lên GitHub."
+        ],
+        [
+          "quay-lai",
+          "Quay lại bản cũ",
+          "Bản mới bị hỏng",
+          "Cho tôi xem 5 phiên bản gần nhất kèm ghi chú. Tôi muốn quay lại bản [chọn], đừng xoá các bản mới hơn."
+        ],
+        [
+          "nhanh-thu",
+          "Thử nghiệm an toàn",
+          "Muốn thử tính năng mà không làm hỏng bản chính",
+          "Tạo nhánh thu-nghiem cho tính năng [tên]. Đẩy lên để Vercel tạo bản xem thử. Khi tôi duyệt xong thì gộp vào bản chính."
+        ]
+      ]
+    },
+    {
+      "id": "database",
+      "name": "Gắn database và đăng nhập",
+      "flows": "A",
+      "chap": "chap-15",
+      "intro": "Dùng Supabase để lưu dữ liệu và cho người dùng đăng nhập. Khoá luôn dán vào file .env, không dán vào chat.",
+      "prompts": [
+        [
+          "dang-nhap",
+          "Thêm đăng nhập",
+          "Sản phẩm cần biết ai là ai",
+          "Thêm đăng nhập bằng email dùng Supabase: đăng ký, đăng nhập, đăng xuất, quên mật khẩu. Tạo file .env rồi mở cho tôi tự dán địa chỉ project và khoá công khai. Đừng hỏi khoá trong chat."
+        ],
+        [
+          "bang-du-lieu",
+          "Thiết kế bảng dữ liệu",
+          "Cần lưu dữ liệu theo từng người",
+          "Thiết kế phần lưu [dữ liệu] theo từng người dùng. Liệt kê bảng và cột cho tôi duyệt trước. Sau đó viết file SQL và mở sẵn để tôi chạy trong SQL Editor."
+        ],
+        [
+          "rls",
+          "Khoá dữ liệu từng người",
+          "Trước khi cho người khác dùng",
+          "Kiểm tra: mỗi người dùng chỉ đọc và sửa được dữ liệu của chính họ chưa? Nếu chưa, viết câu lệnh bật RLS, giải thích bằng lời, mở file cho tôi chạy, rồi hướng dẫn tôi thử bằng hai tài khoản."
+        ],
+        [
+          "them-du-lieu",
+          "Thêm tính năng có dữ liệu mới",
+          "Tính năng mới cần lưu thêm thông tin",
+          "Thêm [tính năng]. Nếu cần câu lệnh dữ liệu mới, hãy mở sẵn file cho tôi chạy và chờ tôi báo \"đã chạy\" rồi mới tiếp tục."
+        ]
+      ]
+    },
+    {
+      "id": "api",
+      "name": "Gắn API và AI",
+      "flows": "ABC",
+      "chap": "chap-16",
+      "intro": "API là cửa để sản phẩm gọi dịch vụ bên ngoài (AI, tìm kiếm, email). Khoá API tính tiền vào tài khoản bạn.",
+      "prompts": [
+        [
+          "chon-api",
+          "Chọn dịch vụ API",
+          "Cần một tính năng từ bên ngoài",
+          "Tôi muốn tính năng [mô tả]. Đề xuất 2–3 dịch vụ API phù hợp, so sánh giá ước tính cho 100 lượt, độ dễ cài cho người mới, giới hạn gói miễn phí."
+        ],
+        [
+          "gan-api",
+          "Gắn API an toàn",
+          "Đã chọn dịch vụ và có khoá",
+          "Gắn API [dịch vụ] để làm [tính năng]. Tạo sẵn tên biến trong .env, mở cho tôi tự dán khoá. Khoá chỉ dùng phía máy chủ, không lộ ra giao diện."
+        ],
+        [
+          "tinh-nang-ai",
+          "Thêm nút dùng AI",
+          "Muốn sản phẩm có tính năng AI",
+          "Thêm vào trang chính: ô nhập [nội dung], nút \"[tên nút]\". Khi bấm, gửi tới API [dịch vụ] để [việc cần làm], hiện kết quả kèm nút sao chép. Có chữ \"Đang xử lý…\" khi chờ, có thông báo dễ hiểu khi lỗi. Xong thì chạy thử và mở cho tôi xem."
+        ],
+        [
+          "sua-loi-dan",
+          "Chỉnh lời dặn AI",
+          "Kết quả AI chưa đúng giọng",
+          "Cho tôi xem lời dặn (prompt) sản phẩm đang gửi cho AI. Sửa để: [yêu cầu giọng văn, độ dài]. Giải thích từng thay đổi."
+        ],
+        [
+          "gioi-han",
+          "Giới hạn chi phí",
+          "Trước khi mở cho nhiều người dùng",
+          "Giới hạn mỗi người dùng tối đa [số] lượt mỗi ngày, dùng model nhẹ nhất đủ tốt."
+        ]
+      ]
+    },
+    {
+      "id": "deploy",
+      "name": "Deploy lên server",
+      "flows": "ABC",
+      "chap": "chap-17",
+      "intro": "Vercel cho sản phẩm có tính năng và dữ liệu; GitHub Pages cho trang tĩnh như landing page.",
+      "prompts": [
+        [
+          "vercel-env",
+          "Nhập biến vào Vercel",
+          "Đã import dự án vào Vercel",
+          "Tôi đã import dự án vào Vercel. Hướng dẫn tôi nhập các biến trong .env vào Vercel từng bước, và nhắc việc cần làm sau đó."
+        ],
+        [
+          "vercel-loi",
+          "Sửa lỗi deploy",
+          "Vercel báo lỗi đỏ",
+          "Dự án deploy lên Vercel bị lỗi như ảnh. Tìm nguyên nhân từ Build Logs và cài đặt dự án, nói chỗ cần sửa, rồi chỉ tôi làm."
+        ],
+        [
+          "github-pages",
+          "Xuất bản GitHub Pages",
+          "Trang tĩnh, không cần máy chủ",
+          "Chuẩn bị dự án để xuất bản lên GitHub Pages: kiểm tra đường dẫn ảnh, đẩy lên main, rồi chỉ tôi bấm gì trong Settings → Pages."
+        ],
+        [
+          "kiem-tra-live",
+          "Kiểm tra bản trên mạng",
+          "Vừa có đường link",
+          "Đây là đường link sản phẩm: [link]. Mở trên máy tính và điện thoại, thử luồng chính từ đầu đến cuối như một khách lạ, báo chỗ lỗi hoặc khó hiểu."
+        ]
+      ]
+    },
+    {
+      "id": "skill-nang-cao",
+      "name": "Nâng cao: skill cho agent",
+      "flows": "N",
+      "chap": "chap-20",
+      "intro": "Cài và gọi skill thiết kế giao diện, review code. Chọn lọc từ bài giảng của GV Nguyễn Thành Công.",
+      "prompts": [
+        [
+          "cai-skill",
+          "Nhờ agent cài một skill",
+          "Có link GitHub của một skill",
+          "Cài giúp tôi skill từ [link GitHub của skill] cho công cụ tôi đang dùng. Tôi là người mới: giải thích skill này dùng để làm gì, cài vào đâu, và sau khi cài tôi gọi nó bằng cách nào. Hướng dẫn tôi từng bước bấm nếu cần."
+        ],
+        [
+          "liet-ke-skill",
+          "Xem các skill đang có",
+          "Vừa cài xong, hoặc quên tên skill",
+          "Liệt kê các skill bạn đang có, mỗi skill một dòng: tên, dùng để làm gì, gọi bằng cách nào."
+        ],
+        [
+          "evon-dark",
+          "Thêm dark mode bằng skill UI/UX",
+          "Đã cài Evondev UI/UX",
+          "/evon:ui-ux Thêm dark mode cho app, có nút đổi sáng / tối trên header."
+        ],
+        [
+          "taste-sua",
+          "Làm giao diện bớt \"mùi AI\"",
+          "Đã cài Taste-skill, giao diện trông đại trà",
+          "/design-taste-frontend thiết kế lại [phần giao diện] chuyên nghiệp, có gu, thu hút hơn. Tránh gradient tím, ba thẻ giống hệt, chữ trang trí vô nghĩa."
+        ],
+        [
+          "review-code",
+          "Nhờ review code",
+          "Xong một phần, muốn kiểm tra chất lượng",
+          "Review phần vừa làm như một lập trình viên giàu kinh nghiệm: lỗi có thể xảy ra, chỗ chưa an toàn, chỗ khó bảo trì. Giải thích bằng lời dễ hiểu, xếp theo mức quan trọng. Chưa sửa, để tôi chọn."
+        ]
+      ]
+    },
+    {
+      "id": "vibe-design",
+      "name": "Nâng cao: vibe design",
+      "flows": "N",
+      "chap": "chap-21",
+      "intro": "Mượn phong cách từ DESIGN.md của trang mẫu, tạo design system, thiết kế đủ trang rồi chuyển sang agent code.",
+      "prompts": [
+        [
+          "ds-tu-mau",
+          "Tạo design system từ DESIGN.md mẫu",
+          "Đã có file DESIGN.md của trang bạn thích",
+          "Tôi đính kèm file DESIGN.md, đây là design system của một app khác mà tôi rất thích phong cách. Hãy tạo một Design System mới cho app của tôi, kế thừa đúng \"cảm giác\" của file tham chiếu (màu, phông chữ, bo góc, đổ bóng, chuyển động), nhưng điều chỉnh cho sản phẩm của tôi.\nApp của tôi: [app làm gì, chạy trên thiết bị nào, các màn hình chính].\nGiữ tinh thần và phong cách thành phần của file tham chiếu. Thành phần app tôi cần mà app kia không có thì thiết kế mới theo đúng phong cách. Có xung đột thì ưu tiên nhu cầu app tôi, nói rõ chỗ lệch và vì sao.\nCần có: (1) màu, chữ, khoảng cách, bo góc, đổ bóng cụ thể; (2) quy tắc cho nút, ô nhập, [thẻ chính], cửa sổ chi tiết, trạng thái đang tải, mỗi thành phần đủ trạng thái bình thường, rê chuột, đang bấm, bị khoá, đang tải; (3) bố cục trên điện thoại, máy tính bảng, máy tính.\nTrước hết làm 2 phương án cho trang chủ."
+        ],
+        [
+          "ds-trang-con-lai",
+          "Thiết kế các trang còn lại",
+          "Đã chọn một phương án trang chủ",
+          "Thêm các trang UI còn lại cho phương án [A/B]. Trong đó: [điều cần bỏ hoặc sửa]. Khi người dùng bấm [nút chính] thì mở trang kết quả mới. Nối các trang với nhau để tôi bấm thử như một bản demo."
+        ],
+        [
+          "ds-tinh-chinh",
+          "Tinh chỉnh một chỗ",
+          "Bản thiết kế gần ưng",
+          "Sửa [phần cụ thể]: [thay đổi mong muốn, ví dụ thêm gradient nền nhẹ cho bớt nhàm chán]. Giữ nguyên các phần khác."
+        ],
+        [
+          "ds-xuat",
+          "Chuyển bộ thiết kế sang agent code",
+          "Thiết kế đã duyệt xong",
+          "Xuất toàn bộ bộ thiết kế này (design system và các trang) để tôi đưa cho một coding agent như Claude Code hoặc Codex xây app. Kèm một file hướng dẫn ngắn: các trang, cách chuyển trang, thành phần dùng chung, và những điểm agent phải giữ đúng."
+        ]
+      ]
+    },
+    {
+      "id": "dung-app-nang-cao",
+      "name": "Nâng cao: dựng app từ bộ thiết kế",
+      "flows": "N",
+      "chap": "chap-22",
+      "intro": "Bật plan mode, đính kèm bộ thiết kế, viết prompt theo năm phần. Duyệt kế hoạch xong thì hạ effort xuống vừa.",
+      "prompts": [
+        [
+          "prompt-5-phan",
+          "Prompt dựng app 5 phần (plan mode)",
+          "Đã có bộ thiết kế .zip và danh sách tính năng",
+          "Hãy xây [loại app] ở mức demo, chạy tốt trên cả máy tính và điện thoại. Chỉ làm đúng Phase 1 dưới đây.\nÝ tưởng: [app làm gì, cho ai, một lần dùng diễn ra thế nào].\nTính năng Phase 1: [liệt kê từng màn hình và việc người dùng làm].\nGiao diện: áp dụng chính xác design system đính kèm, dùng tốt trên mọi thiết bị.\nTrạng thái và lỗi: có khung chờ khi đang tải; lỗi thì báo nhẹ nhàng, app vẫn chạy tiếp, không màn hình trắng.\nPhạm vi: chưa làm [đăng nhập, thanh toán, ...].\nLập kế hoạch trước, chưa code, để tôi duyệt."
+        ],
+        [
+          "chay-thu",
+          "Chạy thử dự án",
+          "Agent báo đã làm xong",
+          "Chạy dự án trên localhost và mở trình duyệt cho tôi xem."
+        ],
+        [
+          "du-lieu-co-san",
+          "Thêm danh sách có sẵn để tìm nhanh",
+          "Người dùng cần chọn từ một danh sách cố định",
+          "[Tên trường] lấy từ danh sách dưới đây, cho người dùng gõ vào ô nhập để tìm: [dán danh sách]."
+        ],
+        [
+          "gon-tuy-chon",
+          "Làm gọn phần tuỳ chọn",
+          "Màn hình có quá nhiều lựa chọn",
+          "Mặc định chỉ chọn [1–2 lựa chọn quan trọng nhất], không điền sẵn giá trị khác. Người dùng mở bảng tuỳ chọn mới áp dụng. Chọn xong thì hiện các thông tin đã chọn ở đầu ô nhập."
+        ]
+      ]
+    }
+  ],
+  "templates": [
+    [
+      "the-y-tuong",
+      "Mẫu thẻ ý tưởng 5 dòng",
+      "Điền trước khi mở AI, rồi dán vào prompt gọi skill",
+      "Vấn đề: [việc gì đang khó, tốn thời gian]\nNgười dùng: [ai gặp vấn đề đó]\nGiải pháp: [công cụ sẽ làm gì]\nMột lần dùng: [bấm gì, thấy gì, từ đầu đến cuối]\nThành công là: [đo bằng gì]"
+    ],
+    [
+      "phieu-loi-mau",
+      "Mẫu phiếu lỗi 5 dòng",
+      "Báo lỗi cho agent",
+      "Mong muốn: [điều cần thấy]\nThực tế: [điều đã thấy]\nCách tái hiện: [các bước]\nBằng chứng: [ảnh chụp màn hình]\nChỉ sửa: [lỗi này, không đổi phần khác]"
+    ]
+  ]
+}

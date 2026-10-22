@@ -1,0 +1,532 @@
+{
+  "label": "Vibe Code phần mềm cho người mới",
+  "kids": [
+    {
+      "label": "1 · Hiểu vibe code",
+      "chap": "chap-01",
+      "d": "Vibe code là gì, vì sao người không biết code vẫn làm được phần mềm.",
+      "kids": [
+        {
+          "label": "Định nghĩa: mô tả bằng lời, AI viết mã",
+          "chap": "chap-01",
+          "d": "Vibe code là làm phần mềm bằng cách mô tả điều mình muốn bằng lời; AI (agent) viết mã, chạy thử và sửa."
+        },
+        {
+          "label": "Cách cũ 3 tháng vs AI-code 1–2 tuần",
+          "chap": "chap-01",
+          "d": "Trước đây: thuê đội lập trình, nhiều tháng, nhiều chi phí. Nay: một người mô tả rõ, AI làm bản đầu trong vài ngày."
+        },
+        {
+          "label": "Bạn: mô tả, chọn, kiểm tra · AI: làm",
+          "chap": "chap-01",
+          "d": "Việc của bạn là nói rõ muốn gì, chọn hướng, và kiểm tra bằng mắt. Việc của AI là viết mã, chạy thử, sửa lỗi.",
+          "p": [
+            "hoi-truoc"
+          ]
+        },
+        {
+          "label": "Ví dụ: mini tool, landing page, app học, agent",
+          "chap": "chap-18",
+          "d": "Sáu sản phẩm thật ở Chương 18: tạo banner, video người que, học tiếng Anh, landing page, thư viện thời trang, agent nghiên cứu."
+        }
+      ]
+    },
+    {
+      "label": "2 · Thành phần phần mềm",
+      "chap": "chap-02",
+      "d": "Sáu bộ phận của một phần mềm, ví như một nhà hàng.",
+      "p": [
+        "sau-phan"
+      ],
+      "kids": [
+        {
+          "label": "Front end · giao diện (layout, nút, màu)",
+          "chap": "chap-02",
+          "d": "Những gì người dùng nhìn thấy và chạm vào. Như phòng ăn của nhà hàng."
+        },
+        {
+          "label": "Back end · tính năng (PRD → MVP)",
+          "chap": "chap-02",
+          "d": "Chuyện gì xảy ra khi bấm nút. Như nhà bếp: nhận đơn, nấu, trả món."
+        },
+        {
+          "label": "Database · lưu tạm trên máy → Supabase",
+          "chap": "chap-15",
+          "d": "Kho dữ liệu để không mất khi tải lại trang. Bản đầu lưu tạm trên máy, khi nhiều người dùng thì lên Supabase.",
+          "p": [
+            "bang-du-lieu"
+          ]
+        },
+        {
+          "label": "API · cầu nối dịch vụ ngoài",
+          "chap": "chap-03",
+          "d": "API giúp phần mềm của bạn nói chuyện với phần mềm khác.",
+          "kids": [
+            {
+              "label": "Request · response",
+              "chap": "chap-03",
+              "d": "Sản phẩm gửi một yêu cầu (request), dịch vụ trả lời (response). Như gọi món và nhận món qua người phục vụ."
+            },
+            {
+              "label": "API key cất trong .env",
+              "chap": "chap-03",
+              "d": "API key là chìa khoá, dùng tốn tiền vào tài khoản bạn. Chỉ dán vào file .env, không dán vào chat hay đưa lên GitHub.",
+              "p": [
+                "gan-api"
+              ]
+            },
+            {
+              "label": "Gemini, OpenAI, Serper, Coachio AI",
+              "chap": "chap-16",
+              "d": "Một số dịch vụ hay dùng: AI viết chữ và tạo ảnh, tìm kiếm Google.",
+              "p": [
+                "chon-api"
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Hosting · localhost / Vercel",
+          "chap": "chap-17",
+          "d": "Localhost: chạy trên máy bạn, chỉ bạn thấy. Server (Vercel, GitHub Pages): ai có link đều dùng được."
+        },
+        {
+          "label": "AI · tạo ảnh, chatbot, nội dung",
+          "chap": "chap-16",
+          "d": "Gắn AI vào chính sản phẩm, thường đi qua API.",
+          "p": [
+            "tinh-nang-ai"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "3 · Công cụ",
+      "chap": "chap-04",
+      "d": "Hai nhóm công cụ và cách chọn.",
+      "kids": [
+        {
+          "label": "Nhóm 1 · Lovable, v0, Google AI Studio, Rork",
+          "chap": "chap-04",
+          "d": "Tạo nhanh trên trình duyệt, dễ bắt đầu, nhưng phụ thuộc nền tảng và giới hạn tuỳ biến."
+        },
+        {
+          "label": "Nhóm 2 · Claude Code, Codex (chính)",
+          "chap": "chap-05",
+          "d": "Agent làm việc trên máy bạn: đọc, tạo, sửa file, chạy thử. Công cụ chính của khoá.",
+          "p": [
+            "gioi-thieu"
+          ]
+        },
+        {
+          "label": "Antigravity · giới thiệu cơ bản",
+          "chap": "chap-05",
+          "d": "Công cụ agent của Google, cách dùng tương tự: chọn thư mục, giao việc bằng lời."
+        },
+        {
+          "label": "Skill · Superpowers: hỏi trước, làm sau",
+          "chap": "chap-05",
+          "d": "Superpowers là bộ skill khiến agent hỏi bạn, viết mô tả, lập kế hoạch rồi mới làm.",
+          "p": [
+            "cai-superpowers",
+            "hoi-truoc"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "4 · Luồng A · Đầy đủ",
+      "chap": "chap-06",
+      "d": "Cho sản phẩm nhiều người dùng, có đăng nhập và dữ liệu.",
+      "kids": [
+        {
+          "label": "Ý tưởng · thẻ 5 dòng",
+          "chap": "chap-07",
+          "d": "Điền vấn đề, người dùng, giải pháp, một lần dùng, thành công là gì.",
+          "p": [
+            "the-y-tuong",
+            "lam-ro-y-tuong"
+          ]
+        },
+        {
+          "label": "Gọi skill brainstorming",
+          "chap": "chap-07",
+          "p": [
+            "goi-skill"
+          ]
+        },
+        {
+          "label": "Research cơ bản · đối thủ, giao diện",
+          "chap": "chap-07",
+          "p": [
+            "doi-thu",
+            "nhu-cau",
+            "khac-biet",
+            "anh-giao-dien",
+            "research-md"
+          ]
+        },
+        {
+          "label": "Trao đổi ý tưởng · 4 bộ prompt",
+          "chap": "chap-08",
+          "p": [
+            "ai-hoi",
+            "mo-ho",
+            "phan-bien",
+            "ba-huong",
+            "chot-y-tuong"
+          ]
+        },
+        {
+          "label": "Viết PRD · chia v0, v1, v2",
+          "chap": "chap-09",
+          "d": "PRD là bản mô tả sản phẩm. MVP (v0) chỉ có 1–2 tính năng quan trọng nhất.",
+          "p": [
+            "viet-prd",
+            "sua-prd",
+            "chia-phien-ban"
+          ]
+        },
+        {
+          "label": "Thiết kế UX/UI · design system",
+          "chap": "chap-10",
+          "p": [
+            "hai-phuong-an",
+            "design-md",
+            "hoc-phong-cach",
+            "tu-kiem-ui"
+          ]
+        },
+        {
+          "label": "Code · kế hoạch, thử, phiếu lỗi",
+          "chap": "chap-11",
+          "p": [
+            "ke-hoach",
+            "lam-buoc",
+            "phieu-loi",
+            "ngung-sua",
+            "chung-minh",
+            "luu-ban"
+          ]
+        },
+        {
+          "label": "Gắn database · Supabase",
+          "chap": "chap-15",
+          "p": [
+            "dang-nhap",
+            "bang-du-lieu",
+            "rls"
+          ]
+        },
+        {
+          "label": "Deploy lên server · Vercel",
+          "chap": "chap-17",
+          "p": [
+            "day-github",
+            "vercel-env",
+            "vercel-loi",
+            "kiem-tra-live"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "5 · Luồng B · Nhanh",
+      "chap": "chap-12",
+      "d": "Cho công cụ nhỏ, một người dùng, cần nhanh.",
+      "kids": [
+        {
+          "label": "Ý tưởng → gọi skill",
+          "chap": "chap-12",
+          "p": [
+            "skill-nhanh"
+          ]
+        },
+        {
+          "label": "Trao đổi ý tưởng",
+          "chap": "chap-08",
+          "p": [
+            "ai-hoi",
+            "mo-ho"
+          ]
+        },
+        {
+          "label": "Nhờ AI dựng mô tả (MO-TA.md)",
+          "chap": "chap-12",
+          "p": [
+            "viet-mo-ta"
+          ]
+        },
+        {
+          "label": "Preview UX/UI (có thể bỏ qua)",
+          "chap": "chap-10",
+          "p": [
+            "preview-nhanh"
+          ]
+        },
+        {
+          "label": "Code thẳng",
+          "chap": "chap-12",
+          "p": [
+            "code-thang",
+            "phieu-loi",
+            "nang-cap"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "6 · Luồng C · Repo có sẵn",
+      "chap": "chap-13",
+      "d": "Không bắt đầu từ số 0: lấy dự án mã nguồn mở gần giống rồi sửa.",
+      "kids": [
+        {
+          "label": "Tìm repo: README, stars, license",
+          "chap": "chap-13",
+          "d": "Repo là kho mã của một dự án trên GitHub. Xem README (giới thiệu), số sao, lần cập nhật cuối, giấy phép.",
+          "p": [
+            "tim-repo"
+          ]
+        },
+        {
+          "label": "Kéo về: tải ZIP hoặc đưa link cho agent",
+          "chap": "chap-13",
+          "d": "Cách 1: trên GitHub bấm Code → Download ZIP, giải nén, mở thư mục bằng agent. Cách 2: dán link repo cho agent tải về.",
+          "p": [
+            "tai-repo",
+            "mo-zip"
+          ]
+        },
+        {
+          "label": "Kiểm tra an toàn",
+          "chap": "chap-13",
+          "p": [
+            "an-toan"
+          ]
+        },
+        {
+          "label": "Fork: bản sao của riêng bạn",
+          "chap": "chap-13",
+          "d": "Fork tạo một bản sao repo trong tài khoản GitHub của bạn để tự sửa và lưu phiên bản.",
+          "p": [
+            "noi-fork"
+          ]
+        },
+        {
+          "label": "Chạy thử, giải thích 6 thành phần",
+          "chap": "chap-13",
+          "p": [
+            "chay-repo",
+            "sau-phan"
+          ]
+        },
+        {
+          "label": "Tuỳ biến: chữ, màu → nội dung → tính năng",
+          "chap": "chap-13",
+          "p": [
+            "doi-giao-dien",
+            "them-tinh-nang"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "7 · Lên mạng & dữ liệu",
+      "chap": "chap-14",
+      "d": "Từ máy bạn lên mạng: GitHub lưu phiên bản, Supabase lưu dữ liệu, Vercel chạy sản phẩm.",
+      "kids": [
+        {
+          "label": "GitHub · lưu phiên bản, public/private",
+          "chap": "chap-14",
+          "p": [
+            "day-github",
+            "luu-ban",
+            "quay-lai",
+            "nhanh-thu"
+          ]
+        },
+        {
+          "label": "Supabase · đăng nhập, bảng, SQL Editor, RLS",
+          "chap": "chap-15",
+          "p": [
+            "dang-nhap",
+            "bang-du-lieu",
+            "rls",
+            "them-du-lieu"
+          ]
+        },
+        {
+          "label": "API & AI · .env, giới hạn chi phí",
+          "chap": "chap-16",
+          "p": [
+            "chon-api",
+            "gan-api",
+            "tinh-nang-ai",
+            "sua-loi-dan",
+            "gioi-han"
+          ]
+        },
+        {
+          "label": "Vercel · build, deploy, staging, production",
+          "chap": "chap-17",
+          "p": [
+            "vercel-env",
+            "vercel-loi",
+            "kiem-tra-live"
+          ]
+        },
+        {
+          "label": "GitHub Pages · trang tĩnh",
+          "chap": "chap-17",
+          "p": [
+            "github-pages"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "8 · Case & bài tập",
+      "chap": "chap-18",
+      "d": "Học từ sản phẩm thật, rồi tự làm theo quy trình.",
+      "kids": [
+        {
+          "label": "AI Banner Pro",
+          "chap": "chap-18",
+          "d": "Tải ảnh sản phẩm, mô tả, AI tạo banner quảng cáo nhiều kích thước."
+        },
+        {
+          "label": "VibeSketch · video người que",
+          "chap": "chap-18",
+          "d": "Nhập ý tưởng, AI chia cảnh, vẽ người que, ghép thành video ngắn."
+        },
+        {
+          "label": "English City · học tiếng Anh",
+          "chap": "chap-18",
+          "d": "Luyện nghe theo trình độ, AI tạo bài và câu hỏi."
+        },
+        {
+          "label": "Landing page Hapaku",
+          "chap": "chap-18",
+          "d": "Trang bán hàng một trang, đưa lên GitHub Pages."
+        },
+        {
+          "label": "Web link fashion",
+          "chap": "chap-18",
+          "d": "Thư viện ảnh người mẫu và sản phẩm, có lọc và lưu."
+        },
+        {
+          "label": "Research Agent",
+          "chap": "chap-18",
+          "d": "Nhập chủ đề, agent tìm kiếm Google qua API rồi tổng hợp báo cáo."
+        },
+        {
+          "label": "5 bài tập theo quy trình",
+          "chap": "chap-19",
+          "d": "Khởi động, luồng nhanh, landing page, luồng đầy đủ, luồng repo."
+        }
+      ]
+    },
+    {
+      "label": "9 · Nâng cao: skill & vibe design",
+      "chap": "chap-20",
+      "d": "Giảng viên: GV Nguyễn Thành Công. Chọn lọc từ bài giảng Buổi 3, Bootcamp 10/2026.",
+      "kids": [
+        {
+          "label": "Skill vs workflow",
+          "chap": "chap-20",
+          "d": "Skill là tay nghề (làm một việc giỏi hơn). Workflow là quy trình (làm đúng thứ tự, tự gọi skill hợp từng bước)."
+        },
+        {
+          "label": "Bộ skill: Superpowers, Evondev UI/UX, Taste-skill, UI UX Pro Max",
+          "chap": "chap-20",
+          "d": "Superpowers: quy trình hỏi trước làm sau. Evondev UI/UX: làm giao diện như designer, đưa 2–3 wireframe. Taste-skill: tránh giao diện \"mùi AI\". UI UX Pro Max: landing page chuẩn UX.",
+          "p": [
+            "cai-skill",
+            "liet-ke-skill"
+          ]
+        },
+        {
+          "label": "Tránh \"AI slop\": gradient tím, 3 thẻ giống hệt",
+          "chap": "chap-20",
+          "d": "Nền trung tính + một màu nhấn; bố cục so le thay vì 3 thẻ đều; ảnh chụp thật thay vì giao diện giả; bỏ nhãn BETA, mũi tên \"cuộn xuống\", chữ trang trí vô nghĩa.",
+          "p": [
+            "taste-sua"
+          ]
+        },
+        {
+          "label": "Model & effort: plan cao, làm vừa",
+          "chap": "chap-20",
+          "d": "Lên kế hoạch và thiết kế: model mạnh, effort cao. Làm theo kế hoạch đã duyệt: effort vừa để nhanh và tiết kiệm hạn mức."
+        },
+        {
+          "label": "DESIGN.md: mượn gu trang mẫu",
+          "chap": "chap-21",
+          "d": "File chữ ghi phong cách giao diện (màu, chữ, bo góc, nút, thẻ). Lấy từ trang tổng hợp như designmd.me, đặt vào thư mục dự án. Mượn phong cách, không chép logo hay nội dung."
+        },
+        {
+          "label": "Claude Design: design system → 2 phương án → các trang",
+          "chap": "chap-21",
+          "p": [
+            "ds-tu-mau",
+            "ds-trang-con-lai",
+            "ds-tinh-chinh"
+          ]
+        },
+        {
+          "label": "Xuất bộ thiết kế sang Claude Code / Codex",
+          "chap": "chap-21",
+          "p": [
+            "ds-xuat"
+          ]
+        },
+        {
+          "label": "Dựng app: prompt 5 phần trong plan mode",
+          "chap": "chap-22",
+          "d": "Ý tưởng · tính năng Phase 1 · giao diện · trạng thái và lỗi · phạm vi (những gì chưa làm).",
+          "p": [
+            "prompt-5-phan",
+            "chay-thu"
+          ]
+        },
+        {
+          "label": "Sửa bằng skill: /evon:ui-ux, /design-taste-frontend",
+          "chap": "chap-22",
+          "p": [
+            "evon-dark",
+            "taste-sua",
+            "gon-tuy-chon",
+            "du-lieu-co-san"
+          ]
+        },
+        {
+          "label": "Case: app du lịch Vivu (GV Nguyễn Thành Công)",
+          "chap": "chap-22",
+          "d": "Gợi ý địa điểm bằng AI dạng thẻ có ảnh, thời tiết theo ngày, lịch trình Sáng/Trưa/Chiều/Tối. API miễn phí: Wikipedia (ảnh), Open-Meteo (thời tiết). Mã nguồn: github.com/CongNguyen086/vivu-trip-planner"
+        }
+      ]
+    },
+    {
+      "label": "10 · Tra cứu & giảng dạy",
+      "chap": "phu-luc-a",
+      "kids": [
+        {
+          "label": "Bộ prompt sao chép",
+          "chap": "phu-luc-b",
+          "d": "Toàn bộ prompt theo từng bước. Có trang riêng để tìm và sao chép nhanh (nút \"Bộ prompt\" ở trên cùng)."
+        },
+        {
+          "label": "Giáo án 6 buổi",
+          "chap": "phu-luc-c",
+          "d": "Kế hoạch dạy 6 buổi: mục tiêu, nội dung từng phút, demo, câu hỏi kiểm tra."
+        },
+        {
+          "label": "Checklist & lỗi thường gặp",
+          "chap": "phu-luc-d",
+          "d": "Danh sách kiểm tra trước khi đưa lên mạng và cách xử lý lỗi hay gặp."
+        }
+      ]
+    }
+  ],
+  "glossary_branch": true,
+  "teachers": "Giảng viên: <b>GV Đặng Hữu Sơn</b> (nhánh 1–8, 10–11) · <b>GV Nguyễn Thành Công</b> (nhánh 9 · Nâng cao)."
+}

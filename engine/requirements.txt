@@ -1,0 +1,7 @@
+beautifulsoup4
+markdown-it-py
+pillow
+playwright
+pypdf
+pymupdf
+cryptography

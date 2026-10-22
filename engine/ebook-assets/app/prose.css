@@ -1,0 +1,83 @@
+/* Kiểu chữ nội dung — dùng chung cho bản web, PDF và EPUB */
+:root{
+  --font:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --navy:#12305a;--navy-2:#1f4c86;--navy-soft:#eaf0f9;
+  --teal:#1f7f79;--teal-soft:#e3f2f0;
+  --orange:#e2711d;--orange-soft:#fdf0e4;
+  --red:#b93a1e;--red-soft:#fcebe5;
+  --violet:#5b47b6;--violet-soft:#efecfb;
+  --ink:#1e2833;--ink-2:#3a4754;--muted:#66727d;--line:#e2e5e8;--line-2:#d4d9de;
+  --paper:#ffffff;--bg:#f4f3ef;--code-bg:#f4f6f8;
+  --prompt-bg:#0f2238;--prompt-ink:#e7eef7;--prompt-line:#24405f;
+}
+.prose{font-family:var(--font);color:var(--ink);line-height:1.78;font-size:var(--fs,18px);font-weight:400;font-feature-settings:"kern" 1;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;overflow-wrap:break-word}
+.prose>*:first-child{margin-top:0}
+.prose p{margin:0 0 1.05em}
+.prose strong,.prose b{font-weight:700;color:var(--ink)}
+.prose em{font-style:italic}
+.prose a{color:var(--navy-2);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.prose h2{font-size:1.42em;line-height:1.3;font-weight:800;letter-spacing:-.01em;color:var(--navy);margin:2.3em 0 .8em;padding-top:1.1em;border-top:1px solid var(--line)}
+.prose h3{font-size:1.14em;line-height:1.4;font-weight:700;color:var(--ink);margin:1.7em 0 .6em}
+.prose .h-num{display:inline-block;min-width:2.6em;margin-right:.35em;padding:.05em .45em;border-radius:8px;background:var(--navy-soft);color:var(--navy-2);font-size:.78em;font-weight:800;text-align:center;vertical-align:.12em;letter-spacing:0}
+.prose h3 .h-num{background:transparent;padding:0;min-width:0;color:var(--teal)}
+.prose h2.h-checkpoint{border-top:0;margin-top:2.4em;padding:1em 1.1em .2em;background:var(--teal-soft);border-radius:16px 16px 0 0;color:var(--teal);font-size:1.15em}
+.prose h2.h-checkpoint+ul.tasks{margin-top:0;background:var(--teal-soft);border-radius:0 0 16px 16px;padding:.2em 1.1em 1em}
+.prose ul,.prose ol{margin:0 0 1.15em;padding-left:1.35em}
+.prose li{margin:.32em 0}
+.prose li::marker{color:var(--teal)}
+.prose ol>li::marker{font-weight:700}
+.prose ul.tasks{list-style:none;padding-left:0}
+.prose li.task{display:flex;gap:.65em;align-items:flex-start;margin:.45em 0}
+.prose .task-box,.prose .task-box-print{flex:none;width:1.15em;height:1.15em;margin-top:.33em;accent-color:var(--teal)}
+.prose .task-box-print{margin-top:0;font-size:1.15em;line-height:1.4;color:var(--teal)}
+.prose code{font-family:var(--mono);font-size:.84em;background:var(--code-bg);border:1px solid var(--line);border-radius:6px;padding:.08em .38em;color:#2a3a4a;white-space:break-spaces}
+.prose pre{font-family:var(--mono);font-size:.82em;line-height:1.65;background:#0f1d2e;color:#e4ecf5;border-radius:14px;padding:1.05em 1.2em;overflow:auto;margin:1.2em 0 1.4em}
+.prose pre code{background:transparent;border:0;padding:0;color:inherit;font-size:1em;white-space:pre}
+/* Mục tiêu chương */
+.prose p.goal{background:linear-gradient(135deg,var(--orange-soft),#fff7ef);border:1px solid #f6d7bb;border-radius:16px;padding:1em 1.2em 1em 3.2em;position:relative;color:var(--ink-2)}
+.prose p.goal::before{content:"🎯";position:absolute;left:1em;top:.95em;font-size:1.15em}
+.prose p.goal strong{color:#a94d0c}
+/* Callout */
+.prose .callout{display:flex;gap:.85em;align-items:flex-start;margin:1.4em 0;padding:1em 1.15em;border-radius:16px;border:1px solid var(--line);background:#f7f9fa;font-size:.95em;line-height:1.7}
+.prose .callout-icon{flex:none;font-size:1.25em;line-height:1.35}
+.prose .callout-body>*:last-child{margin-bottom:0}
+.prose .callout p{margin-bottom:.6em}
+.prose .callout.video{background:var(--violet-soft);border-color:#d7d0f4}
+.prose .callout.video strong{color:var(--violet)}
+.prose .callout.tip{background:var(--teal-soft);border-color:#c5e5e0}
+.prose .callout.tip strong{color:var(--teal)}
+.prose .callout.rule{background:var(--navy-soft);border-color:#d1def0}
+.prose .callout.rule strong{color:var(--navy-2)}
+.prose .callout.note{background:#f6f7f9;border-color:var(--line)}
+.prose .callout.warn{background:var(--red-soft);border-color:#f3cdbf}
+.prose .callout.warn strong{color:var(--red)}
+.prose .callout-title{font-weight:700;margin:0 0 .3em}
+/* Prompt */
+.prose .prompt{margin:1.4em 0 1.6em;border-radius:16px;background:var(--prompt-bg);color:var(--prompt-ink);border:1px solid var(--prompt-line);overflow:hidden;font-size:.94em;line-height:1.72}
+.prose .prompt-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:.55em 1em;background:#16304d;border-bottom:1px solid var(--prompt-line)}
+.prose .prompt-label{font-size:.72em;font-weight:800;letter-spacing:.14em;color:#8fd3cb}
+.prose .prompt-body{padding:.95em 1.15em}
+.prose .prompt-body>*:last-child{margin-bottom:0}
+.prose .prompt p{margin:0 0 .7em}
+.prose .prompt strong{color:#fff}
+.prose .prompt code{background:#1c3756;border-color:#2c4c70;color:#e7eef7}
+.prose .prompt a{color:#9fd8ff}
+/* Bảng */
+.prose .table-wrap{margin:1.3em 0 1.6em;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
+.prose table{width:100%;border-collapse:collapse;font-size:.86em;line-height:1.55}
+.prose th{background:var(--navy);color:#fff;text-align:left;font-weight:700;padding:.75em .9em;vertical-align:bottom}
+.prose td{padding:.7em .9em;border-top:1px solid var(--line);vertical-align:top}
+.prose tr:nth-child(even) td{background:#f8f9fa}
+.prose td:first-child{font-weight:600;color:var(--ink)}
+.prose td code{white-space:nowrap}
+/* Hình */
+.prose figure{margin:1.6em 0 1.8em;text-align:center}
+.prose figure img,.prose figure video{display:block;max-width:100%;height:auto;margin:0 auto;border-radius:14px;border:1px solid var(--line);background:#fff;box-shadow:0 10px 30px rgba(18,48,90,.08)}
+.prose figure img[src$=".svg"]{box-shadow:none}
+.prose figcaption{margin:.75em auto 0;max-width:46em;font-size:.84em;line-height:1.6;color:var(--muted);text-align:left}
+.prose figcaption b{color:var(--navy-2);font-weight:700;margin-right:.15em}
+.prose table img{display:block;width:100%;min-width:120px;max-width:170px;aspect-ratio:2/3;object-fit:contain;margin:auto;background:#fff;border:0;box-shadow:none}
+.prose hr{border:0;height:1px;background:var(--line);margin:2em 0}
+.prose .video-frame{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}
+.prose .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
