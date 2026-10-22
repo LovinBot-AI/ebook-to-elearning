@@ -154,7 +154,9 @@ Build: `e2e build <dir> [web pdf epub site]` · Cover: `e2e cover <dir>` · Stat
 - Beginners: one analogy per concept (e.g. software = restaurant), tables over paragraphs, a copy-paste prompt for every action, checklist at the end of every chapter.
 - One source of truth for prompts (`prompts.json`) — the ebook appendix, the prompt page and the mindmap stay in sync.
 - Mindmap leaves that open a panel with explanation + prompts + "read chapter" (new tab) were the most praised feature.
-- Header tabs "Mindmap" and "Bộ prompt" must be visible on every page. Internal navigation (ebook ↔ mindmap ↔ prompt page ↔ chapter) stays in the SAME tab — the user found many new tabs annoying; mindmap remembers open branches + scroll, "← Ebook" returns to the chapter being read. Only external links open a new tab.
+- Header tabs "Mindmap" and "Bộ prompt" must be visible on every page. **One fixed browser tab per page type** (ebook / mindmap / prompt page, via named targets + `window.name`): "Xem chi tiết trong ebook" always reuses the same ebook tab, so the presenter keeps the mindmap open and never ends up with many tabs. Only external links open extra tabs.
+- Mindmap = presenter's reading view: clicking any node with content shows the real ebook content in the side panel (matched section; branch → chapter overview; unmatched leaf → whole chapter; optional `"sec"` in mindmap.json to force a section), prompts with copy buttons, and at the bottom "Xem chi tiết trong ebook ↗" + "Sao chép link". On desktop the panel docks beside the tree (no overlay), on phones it is a bottom sheet.
+- Every chapter and every section has a shareable link (`index.html#/chap-09` or `#/chap-09--9-2-…`) with a copy button ("Sao chép link bài" under the chapter title, `#` next to each section heading).
 - Check every page at 360, 390, 768 and 1280 px: no horizontal scroll.
 - Credit each teacher per part (`teacher` field) — the user asked for this explicitly.
 - Build and preview before every push; PDF can wait if the user says so.

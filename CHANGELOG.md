@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.0 · 2026-10-22
+- Mindmap thành bảng đọc cho người trình bày: bấm ý nào có nội dung là hiện nội dung ebook thật (đúng mục, tổng quan chương cho nhánh lớn, cả chương nếu không khớp mục; `"sec"` để chỉ định). Cuối bảng: "Xem chi tiết trong ebook ↗" và "Sao chép link". Máy tính: bảng nằm cạnh cây, không che; điện thoại: bảng trượt từ dưới.
+- Mỗi loại trang một tab cố định (ebook, mindmap, Bộ prompt): mở chi tiết luôn dùng lại một tab ebook.
+- Link chia sẻ cho từng bài và từng mục (`#/chap-09--9-2-…`), nút "Sao chép link bài" và `#` cạnh tiêu đề mục; mở link là tới đúng chỗ.
+
 ## 0.5.0 · 2026-10-22
 - Trang chọn mẫu `design/preview/index.html` (`e2e templates`): 4 phong cách S1 Coachio, S2 Studio Đêm, S3 Rừng Xanh, S4 Cobalt × 3 bố cục thumbnail A/B/C; xem trước thumbnail, bìa, trang đọc máy tính và điện thoại; thử logo/mascot; nút "Sao chép lựa chọn".
 - `e2e brand-apply --template S3-B --name --teacher --kicker --logo --mascot`: áp mẫu cho ebook, chuyển sang thumbnail video qua handoff.

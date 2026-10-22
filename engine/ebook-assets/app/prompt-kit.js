@@ -1,5 +1,6 @@
 (() => {
   const KEY = (document.body.dataset.storage || 'ebook-') + 'pk-flow';
+  try { window.name = (document.body.dataset.storage || 'ebook-') + 'prompt'; } catch (e) {}
   const q = document.getElementById('pkQ');
   const count = document.getElementById('pkCount');
   const empty = document.getElementById('pkEmpty');

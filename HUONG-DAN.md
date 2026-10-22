@@ -76,7 +76,8 @@ Bài kiểm tra (quiz) cho từng bài sẽ được bổ sung ở bản sau.
 ## Sản phẩm bạn nhận được
 
 - **Ebook web** đọc trên máy tính và điện thoại: mục lục, tìm nhanh, chế độ sáng/tối, đọc tiếp chỗ cũ.
-- **Mindmap tương tác:** bấm từng ý để xem giải thích, prompt sao chép, mở chương ở tab mới.
+- **Mindmap tương tác (dùng để trình bày):** bấm một ý là bảng bên phải hiện luôn nội dung bài để đọc, kèm prompt sao chép. Cuối bảng có nút **Xem chi tiết trong ebook** (mở đúng mục, luôn dùng lại một tab ebook, không mở thêm tab) và **Sao chép link**.
+- **Link chia sẻ:** mỗi bài, mỗi mục có link riêng và nút sao chép, gửi cho học viên là mở đúng chỗ.
 - **Trang Bộ prompt:** lọc theo nhóm, tìm kiếm, nút Sao chép.
 - **PDF và EPUB** (khi bạn cần).
 - **Bản có mật khẩu** trên GitHub Pages (nội dung được mã hoá thật, sai mật khẩu không đọc được).

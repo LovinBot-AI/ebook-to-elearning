@@ -242,3 +242,11 @@ dialog.zoom button{position:absolute;top:10px;right:10px}
 
 /* điện thoại nhỏ: nút Aa đã có ở thanh dưới (Giao diện) */
 @media (max-width:420px){#fontBtn{display:none}.top-tabs a{padding:0 8px;font-size:12.5px}.topbar{gap:6px}}
+
+/* link chia sẻ chương / mục */
+.link-btn{margin-left:auto;height:30px;padding:0 12px;border-radius:9px;border:1px solid var(--line);background:var(--paper);color:var(--navy-2);font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+.link-btn:hover{border-color:var(--navy-2)}
+.ch-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.prose h2 .h-link{margin-left:.35em;border:0;background:none;color:var(--muted);font:inherit;font-size:.8em;cursor:pointer;opacity:0;transition:opacity .15s;padding:0 .2em}
+.prose h2:hover .h-link,.prose h2 .h-link:focus{opacity:1}
+@media (hover:none){.prose h2 .h-link{opacity:.55}}

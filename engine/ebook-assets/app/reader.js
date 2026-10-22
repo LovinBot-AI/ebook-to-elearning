@@ -137,7 +137,7 @@
   document.addEventListener('click', e => {
     const t = e.target;
     const sc = t.closest('[data-scroll]');
-    if (sc) { e.preventDefault(); const el = document.getElementById(sc.dataset.scroll); if (el) el.scrollIntoView({ block: 'start' }); closeAll(); return; }
+    if (sc) { e.preventDefault(); const el = document.getElementById(sc.dataset.scroll); if (el) { el.scrollIntoView({ block: 'start' }); history.replaceState(null, '', '#/' + sc.dataset.scroll); } closeAll(); return; }
     const go = t.closest('[data-target]');
     if (go && go.dataset.target) { e.preventDefault(); show(go.dataset.target, { restore: go.id === 'continueBtn' }); return; }
     if (t.closest('#menuBtn') || t.closest('#navToc')) { const open = !document.body.classList.contains('toc-open'); closeAll(); document.body.classList.toggle('toc-open', open); return; }
@@ -181,9 +181,36 @@
     const p = e.changedTouches[0]; const dx = p.clientX - sx, dy = p.clientY - sy;
     if (Date.now() - st < 500 && Math.abs(dx) > 90 && Math.abs(dy) < 40 && !e.target.closest('.table-wrap,pre,.toc,dialog')) step(dx < 0 ? 1 : -1);
   }, { passive: true });
-  addEventListener('hashchange', () => { const id = location.hash.replace(/^#\/?/, ''); if (id && id !== current) show(id, { push: false }); });
-
-  const start = location.hash.replace(/^#\/?/, '');
-  show(ids.includes(start) ? start : 'cover', { push: true, restore: true });
+  /* ---------- link chia sẻ: #/chap-09 (chương) hoặc #/chap-09--9-2-... (đúng mục) ---------- */
+  function route(h, first) {
+    const id = decodeURIComponent(h.replace(/^#\/?/, ''));
+    if (!id) return first && show('cover', { push: true, restore: true });
+    const chap = id.includes('--') ? id.split('--')[0] : id;
+    if (!ids.includes(chap)) return first && show('cover', { push: true, restore: true });
+    if (id !== chap) { show(chap, { push: false, scroll: id }); history.replaceState(null, '', '#/' + id); }
+    else if (chap !== current || first) show(chap, { push: !first, restore: first });
+  }
+  const linkOf = (id) => location.href.split('#')[0] + '#/' + id;
+  function copyLink(id, what) {
+    const url = linkOf(id);
+    (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject()).then(() => toast('Đã sao chép link ' + what)).catch(() => prompt('Sao chép link:', url));
+  }
+  // nút sao chép link cho mỗi chương và mỗi mục
+  document.querySelectorAll('.chapter').forEach((sec) => {
+    const h = sec.querySelector('.ch-meta');
+    if (h) { const b = document.createElement('button'); b.type = 'button'; b.className = 'link-btn'; b.dataset.link = sec.id; b.dataset.what = 'bài'; b.textContent = 'Sao chép link bài'; h.appendChild(b); }
+    sec.querySelectorAll('.article h2[id]').forEach((h2) => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'h-link'; b.dataset.link = h2.id; b.dataset.what = 'mục';
+      b.setAttribute('aria-label', 'Sao chép link mục này'); b.title = 'Sao chép link mục này'; b.textContent = '#'; h2.appendChild(b);
+    });
+  });
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-link]');
+    if (b) { e.preventDefault(); e.stopPropagation(); copyLink(b.dataset.link, b.dataset.what || ''); }
+  }, true);
+  addEventListener('hashchange', () => route(location.hash, false));
+  // mỗi loại trang một tab cố định: mindmap / Bộ prompt mở "Xem chi tiết" sẽ dùng lại tab này
+  try { window.name = KEY + 'ebook'; } catch (e) {}
+  route(location.hash, true);
   addEventListener('load', () => { if (!(store.get('pos', {})[current] > 0)) scrollTo(0, 0); });
 })();
