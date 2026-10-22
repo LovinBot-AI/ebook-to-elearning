@@ -30,9 +30,13 @@ Cuối mỗi câu trả lời, Claude luôn ghi một dòng **"👉 Việc tiế
 zsh "/đường/dẫn/tới/ebook-to-elearning/install.sh"
 ```
 
-Lệnh này liên kết 3 skill vào Claude Code: **ebook-to-elearning** (soạn nội dung), **video-to-elearning** (cắt video thành bài) và **mux-publisher** (đăng Mux). Nếu máy chưa có video-to-elearning, lệnh sẽ in câu lệnh tải về. Không có gì được cài thêm khi bạn chưa đồng ý.
+Lệnh này gắn skill **ebook-to-elearning** vào Claude Code. Phần cắt video (**video-to-elearning**, **mux-publisher**, FFmpeg, Remotion, Whisper; tổng ~0,5–2 GB) **chỉ được tải khi bạn tới bước video** hoặc khi bạn yêu cầu, và Claude hỏi trước từng mục. Có file transcript Zoom (.vtt) thì không cần Whisper (1,6 GB).
 
 Kết nối tài khoản Mux (một lần, trước khi đăng video): xem **[docs/KET-NOI-MUX.md](docs/KET-NOI-MUX.md)**. Tóm tắt: tạo Access Token trong dashboard.mux.com, nói với Claude "Kết nối Mux", rồi dán token vào **hộp thoại hiện trên máy** (không dán vào chat). Muốn hỏi Claude về video trên Mux thì thêm connector `https://mcp.mux.com` trong Claude (Settings → Connectors).
+
+## Thương hiệu (logo, màu)
+
+Ngay vòng hỏi đáp đầu, Claude hỏi: khoá thuộc **đội Coachio** (giữ nguyên bộ nhận diện Coachio) hay **thương hiệu riêng**. Nếu riêng: bạn gửi logo và màu (hoặc website để Claude lấy màu), Claude làm 2–3 phương án, gửi ảnh xem trước (thumbnail, bìa, trang ebook) để bạn chọn. Thương hiệu đã chọn dùng luôn cho thumbnail video; tới bước video bạn chỉ duyệt 1 thumbnail thử.
 
 ## Lấy video từ Zoom
 

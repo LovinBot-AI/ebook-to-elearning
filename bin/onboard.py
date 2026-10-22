@@ -55,11 +55,11 @@ def checks() -> list[dict]:
     v2e = _v2e_dir()
     for name, why, must in COMPANIONS:
         ok = bool(_skill_ok(name, must))
-        out.append({'ok': ok, 'level': 'later', 'what': f'Skill {name}: {why}',
+        out.append({'ok': ok, 'level': 'video', 'what': f'Skill {name}: {why}',
                     'you': 'Trả lời "đồng ý" khi Claude hỏi tải về (cần quyền vào repo trên GitHub).',
                     'claude': ('Gắn bản đã có trên máy: ' + str(v2e)) if (v2e and not ok) else f'Hỏi bạn rồi tải {V2E_REPO} và gắn vào Claude Code (e2e setup).'})
     node = shutil.which('node')
-    out.append({'ok': bool(node), 'level': 'later', 'what': 'Node.js (để cắt video và đăng Mux)',
+    out.append({'ok': bool(node), 'level': 'video', 'what': 'Node.js (để cắt video và đăng Mux)',
                 'you': 'Cài Node.js bản LTS từ nodejs.org (bấm tải, bấm Next tới hết).', 'claude': 'Kiểm tra lại sau khi bạn cài.'})
     v2e_ready = False
     if v2e and (v2e / 'state' / 'setup.json').exists():
@@ -67,9 +67,9 @@ def checks() -> list[dict]:
             v2e_ready = json.loads((v2e / 'state' / 'setup.json').read_text())['ready']
         except Exception:  # noqa: BLE001
             pass
-    out.append({'ok': v2e_ready, 'level': 'later', 'what': 'Công cụ xử lý video (ffmpeg, Whisper, Remotion)',
+    out.append({'ok': v2e_ready, 'level': 'video', 'what': 'Công cụ xử lý video (ffmpeg, Whisper, Remotion)',
                 'you': 'Trả lời "đồng ý" khi Claude hỏi cài (chỉ cần trước khi cắt video).', 'claude': 'Chạy v2e doctor, liệt kê thứ cần cài, hỏi bạn rồi mới cài.'})
-    out.append({'ok': MUX_TOKEN.exists(), 'level': 'later', 'what': 'Tài khoản Mux đã kết nối (để đăng video)',
+    out.append({'ok': MUX_TOKEN.exists(), 'level': 'video', 'what': 'Tài khoản Mux đã kết nối (để đăng video)',
                 'you': 'Tạo Access Token trong dashboard.mux.com (Settings → Access Tokens, quyền Mux Video Read + Write), rồi nói "Kết nối Mux". Xem docs/KET-NOI-MUX.md.',
                 'claude': 'Mở hộp thoại để bạn dán token (không qua chat), kiểm tra kết nối.'})
     gh = bool(shutil.which('gh'))
@@ -78,11 +78,19 @@ def checks() -> list[dict]:
     return out
 
 
+VIDEO_SIZES = """      Khi tới bước video sẽ cần (Claude hỏi trước từng mục):
+        • skill video-to-elearning + mux-publisher ……… ~15 MB
+        • FFmpeg (cắt video) ……………………………………… ~100 MB
+        • Remotion + Chrome Headless (intro, thumbnail) … ~340 MB
+        • Whisper + model tiếng Việt ……………………… ~1,6 GB — KHÔNG cần nếu có transcript Zoom (.vtt)
+        • Node.js, Homebrew: bạn tự cài nếu máy chưa có (cần mật khẩu máy)
+        • Tài khoản Mux: tạo token khi muốn đăng video"""
+
+
 def cmd_start(a):
     print('━━ KHỞI ĐỘNG ebook-to-elearning ━━\n')
     cs = checks()
-    groups = [('need', 'Cần ngay'), ('later', 'Cần ở bước sau (cắt video, đăng Mux)'), ('nice', 'Tuỳ chọn')]
-    for lv, title in groups:
+    for lv, title in [('need', 'Cần ngay (soạn khoá học, ebook)'), ('later', 'Cần ở bước sau')]:
         items = [c for c in cs if c['level'] == lv]
         print(f'{title}:')
         for c in items:
@@ -90,14 +98,18 @@ def cmd_start(a):
             if not c['ok']:
                 print(f'       👉 Bạn: {c["you"]}\n       🤖 Claude: {c["claude"]}')
         print()
+    vid = [c for c in cs if c['level'] == 'video']
+    print('Bước video (cắt bài, thumbnail, đăng Mux) — CHƯA tải gì về cho tới khi tới bước này hoặc bạn yêu cầu:')
+    for c in vid:
+        print(f'  {"✅" if c["ok"] else "⏸"} {c["what"]}')
+    if not all(c['ok'] for c in vid):
+        print(VIDEO_SIZES)
+    print('\n  Tuỳ chọn:')
+    for c in [c for c in cs if c['level'] == 'nice']:
+        print(f'  {"✅" if c["ok"] else "·"} {c["what"]}')
+    print()
     blockers = [c for c in cs if not c['ok'] and c['level'] == 'need']
-    later = [c for c in cs if not c['ok'] and c['level'] == 'later']
-    if blockers:
-        print('▶ Cần xử lý mục "Cần ngay" trước khi bắt đầu.')
-    elif later:
-        print(f'▶ Bắt đầu soạn khoá học được rồi. {len(later)} mục cho bước video sẽ chuẩn bị sau (có thể làm ngay: "cài đủ các skill đi kèm").')
-    else:
-        print('▶ Đã sẵn sàng toàn bộ quy trình, từ soạn nội dung tới đăng Mux.')
+    print('▶ Cần xử lý mục "Cần ngay" trước khi bắt đầu.' if blockers else '▶ Bắt đầu soạn khoá học được rồi.')
     if getattr(a, 'dir', None):
         print()
         cmd_next(a)
@@ -148,7 +160,7 @@ def next_step(d: Path) -> tuple[str, str, str]:
     chs = sorted(d.glob('chuong-[0-9][0-9]-*.md'))
     if 'G0' not in g:
         if not _filled(k / 'BRIEF.md'):
-            return ('G0 · Hỏi đáp', 'Trả lời các câu hỏi về khoá học và gửi mọi tư liệu đã có (bài giảng cũ, mindmap, tài liệu, link).',
+            return ('G0 · Hỏi đáp', 'Trả lời các câu hỏi về khoá học, gửi mọi tư liệu đã có (bài giảng cũ, mindmap, tài liệu, link), và cho biết bạn thuộc đội Coachio hay cần thương hiệu riêng (gửi logo, màu).',
                     'Đọc hết tư liệu, viết BRIEF.md và TU-LIEU.md.')
         return ('G0 · Duyệt brief', 'Đọc tóm tắt brief Claude gửi, sửa chỗ sai, trả lời "duyệt".', 'Ghi nhận duyệt, chuyển sang câu hỏi về đối tượng và trọng tâm.')
     if 'G1' not in g:
@@ -168,15 +180,18 @@ def next_step(d: Path) -> tuple[str, str, str]:
         return ('Quay video', 'Quay video theo kịch bản. Xong thì chép file .mp4 (và file transcript .vtt của Zoom) vào thư mục quay-video/, rồi nói "đã dán video".',
                 'Chuẩn bị sẵn thư mục và hướng dẫn (e2e handoff). Có thể làm song song: đưa ebook lên mạng (G6), bản free (G7).')
     p = d / 'video-elearning'
+    if not _skill_ok('video-to-elearning', 'bin/v2e.mjs'):
+        return ('G8 · Cài công cụ video', 'Trả lời "đồng ý" để tải skill cắt video (~15 MB), rồi đồng ý từng mục cài thêm Claude liệt kê (có transcript Zoom thì không cần Whisper 1,6 GB).',
+                'e2e setup --yes → v2e doctor (liệt kê, hỏi rồi mới cài).')
     if not (p / 'work' / 'project.json').exists():
-        return ('G8 · Bắt đầu cắt video', 'Không cần làm gì, chờ Claude chép lời.', 'e2e handoff → v2e init --from-ebook → prepare → transcribe → align.')
+        return ('G8 · Bắt đầu cắt video', 'Không cần làm gì, chờ Claude chép lời.', 'v2e doctor (hỏi trước khi cài) → e2e handoff → v2e init --from-ebook → prepare → transcribe → align.')
     if not (p / 'PLAN.md').exists():
         return ('G8 · Chia bài', 'Chờ Claude gửi PLAN chia bài.', 'Chạy v2e align, đọc transcript, viết PLAN.md.')
     if not (p / 'edl.json').exists():
         return ('G8 · Duyệt PLAN', 'Đọc PLAN (tên bài, chỗ cắt, đoạn lỗi), sửa nếu cần, rồi "duyệt".', 'Chuyển PLAN thành edl.json.')
     n = lambda x: len([f for f in (p / x).iterdir() if not f.name.startswith('.')]) if (p / x).exists() else 0  # noqa: E731
     if n('out/thumb') == 0:
-        return ('G8 · Thumbnail', 'Xem thumbnail thử (và logo/màu nếu là brand mới), rồi "duyệt".', 'Dựng 1 thumbnail thử, sau đó cả bộ.')
+        return ('G8 · Thumbnail', 'Xem 1 thumbnail thử theo thương hiệu đã chọn (Coachio hoặc bộ mới đã duyệt ở bước ebook), góp ý, rồi "duyệt".', 'Dựng 1 thumbnail thử, chờ duyệt, sau đó cả bộ.')
     if n('out/sample') == 0:
         return ('G8 · Bài mẫu', 'Xem 1 video bài mẫu, góp ý cách cắt, rồi "duyệt".', 'Render 1 bài mẫu.')
     if n('out/final') == 0:

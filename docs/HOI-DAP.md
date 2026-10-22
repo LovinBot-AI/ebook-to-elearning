@@ -13,6 +13,7 @@ Hỏi theo **vòng ngắn**, mỗi tin nhắn tối đa khoảng 7 câu, có ví
 | 5 | Thời lượng quay dự kiến? Quay một mạch hay nhiều buổi? | "Một mạch 3,5 giờ" | BRIEF · Ràng buộc |
 | 6 | Hình thức học: tự học e-learning, có buổi live, có nhóm hỗ trợ? | "Tự học + nhóm Zalo" | BRIEF · Hình thức |
 | 7 | Sản phẩm cuối khoá học viên mang về là gì? | "Một app chạy trên mạng có link" | BRIEF · Sản phẩm cuối |
+| 8 | Khoá thuộc **đội ngũ Coachio** hay cần **thương hiệu riêng**? Nếu riêng: gửi logo, mã màu (hoặc website để lấy màu). | "Thương hiệu riêng, logo đính kèm" | book.json › brand (docs/THUONG-HIEU.md) |
 
 ## Vòng 1b · Tư liệu đã có (G0)
 

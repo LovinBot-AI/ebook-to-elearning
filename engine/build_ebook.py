@@ -18,7 +18,7 @@ from urllib.parse import quote
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent / 'build'))
-from content import BOOK, PARTS, ROOT, load_chapters, render, to_xhtml  # noqa: E402
+from content import BOOK, PARTS, ROOT, load_chapters, render, theme_css, to_xhtml  # noqa: E402
 
 DIST = ROOT / 'downloads'
 APP = 'ebook-assets/app'
@@ -135,7 +135,7 @@ def build_web(chs):
 <meta name="theme-color" content="#12305a"><meta name="color-scheme" content="light dark">
 <meta property="og:title" content="{escape(BOOK["title"])}"><meta property="og:image" content="{COVER_IMG}">
 <link rel="icon" href="{COVER_IMG}">
-<link rel="stylesheet" href="{APP}/fonts.css"><link rel="stylesheet" href="{APP}/prose.css"><link rel="stylesheet" href="{APP}/reader.css">
+<link rel="stylesheet" href="{APP}/fonts.css"><link rel="stylesheet" href="{APP}/prose.css"><link rel="stylesheet" href="{APP}/reader.css">{theme_css()}
 <script>try{{const p=JSON.parse(localStorage.getItem('{BOOK["storage"]}prefs')||'{{}}');if(p.theme&&p.theme!=='light')document.documentElement.dataset.theme=p.theme}}catch(e){{}}</script>
 </head>
 <body data-book="{escape(BOOK["title"])}" data-storage="{BOOK["storage"]}">
@@ -223,7 +223,7 @@ def print_html(chs, pages=None):
 <div class="box"><b>Lưu ý:</b> giao diện các dịch vụ (GitHub, Supabase, Vercel, Tripo) thay đổi theo thời gian; hãy bám theo tên mục hơn là vị trí nút. Khoá bí mật trong ảnh minh họa đã được làm mờ. Giá các gói trả phí xem trên trang chính thức.</div>
 <p style="margin-top:10mm;font-size:8.5pt;color:#7a8692">© {TODAY.year} {escape(BOOK["org"])}. Phông chữ Be Vietnam Pro và JetBrains Mono theo giấy phép SIL Open Font License.</p></section>'''
     return f'''<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>{escape(BOOK["title"])}</title>
-<link rel="stylesheet" href="{APP}/fonts.css"><link rel="stylesheet" href="{APP}/prose.css"><link rel="stylesheet" href="{APP}/print.css"></head>
+<link rel="stylesheet" href="{APP}/fonts.css"><link rel="stylesheet" href="{APP}/prose.css"><link rel="stylesheet" href="{APP}/print.css">{theme_css()}</head>
 <body>{cover}{info}{"".join(toc)}{"".join(out)}</body></html>'''
 
 
@@ -380,7 +380,7 @@ def build_epub(chs):
             sub.append(f'<li><a href="{cf}">{escape(c.label)} · {escape(c.short)}</a></li>')
         nav_parts.append(f'<li><a href="{pf}">{p["label"]} · {escape(p["title"])}</a><ol>{"".join(sub)}</ol></li>')
     files['nav.xhtml'] = xhtml('Mục lục', f'<nav epub:type="toc" id="toc"><h1>Mục lục</h1><ol><li><a href="info.xhtml">Giới thiệu</a></li>{"".join(nav_parts)}</ol></nav>')
-    files['css/book.css'] = prose_css + EPUB_CSS
+    files['css/book.css'] = prose_css + EPUB_CSS + re.sub(r'</?style>', '', theme_css())
     for fnt in ['BeVietnamPro-Regular.ttf', 'BeVietnamPro-Italic.ttf', 'BeVietnamPro-Bold.ttf', 'BeVietnamPro-ExtraBold.ttf', 'JetBrainsMono.ttf']:
         files[f'fonts/{fnt}'] = (ROOT / 'ebook-assets/fonts' / fnt).read_bytes()
 

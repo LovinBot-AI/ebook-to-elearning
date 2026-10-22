@@ -9,7 +9,7 @@ import json
 import re
 from html import escape
 
-from content import BOOK, ROOT
+from content import BOOK, theme_css, ROOT
 from prompt_kit import by_id
 
 COLORS = ['#e2711d', '#1f4c86', '#1f7f79', '#12305a', '#5b47b6', '#b45309', '#2e7d32', '#a23b72', '#66727d', '#8a5a00', '#0e7490']
@@ -99,7 +99,7 @@ def build():
 <script id="mmData" type="application/json">{json.dumps(DATA, ensure_ascii=False).replace("</", "<\\/")}</script>'''
     html = f'''<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mindmap · {escape(BOOK["title"])}</title>
-<link rel="stylesheet" href="ebook-assets/app/fonts.css"><link rel="stylesheet" href="ebook-assets/app/prose.css"><link rel="stylesheet" href="ebook-assets/app/mindmap.css"><link rel="stylesheet" href="ebook-assets/app/prompt-kit.css">
+<link rel="stylesheet" href="ebook-assets/app/fonts.css"><link rel="stylesheet" href="ebook-assets/app/prose.css"><link rel="stylesheet" href="ebook-assets/app/mindmap.css"><link rel="stylesheet" href="ebook-assets/app/prompt-kit.css">{theme_css()}
 </head><body data-book="Mindmap" data-storage="{BOOK["storage"]}">{body}<script src="ebook-assets/app/mindmap.js"></script></body></html>'''
     (ROOT / 'mindmap.html').write_text(html, encoding='utf-8')
     print(f'mindmap: mindmap.html · {len(DATA)} ý · {sum(len(d["p"]) for d in DATA)} lượt prompt')

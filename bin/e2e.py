@@ -4,6 +4,9 @@
   e2e start [dir]                    KHỞI ĐỘNG: thiếu skill/phần mềm/kết nối nào, ai làm gì; có dir thì báo luôn việc tiếp theo
   e2e next <dir>                     việc tiếp theo của người dùng và của Claude (lời thường)
   e2e setup [--yes]                  tải + gắn skill đi kèm (video-to-elearning, mux-publisher) — chỉ --yes sau khi người dùng đồng ý
+  e2e brand-colors <logo>            rút màu chính từ logo
+  e2e brand-preview <dir>            trang xem trước 2–3 phương án thương hiệu (thumbnail, bìa, trang ebook)
+  e2e brand-apply <dir> --option A | --coachio   áp dụng thương hiệu đã được duyệt
   e2e doctor                         kiểm tra môi trường (không tự cài)
   e2e new <dir> --title … --slug … [--author …] [--mark AB]
   e2e status <dir>                   các cổng G0–G7 đã duyệt chưa, tài liệu kế hoạch nào đã có
@@ -31,6 +34,7 @@ from pathlib import Path
 SKILL = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import onboard  # noqa: E402
+import brand as brandmod  # noqa: E402
 ENGINE = SKILL / 'engine'
 TPL = SKILL / 'templates'
 GATES = {
@@ -460,6 +464,7 @@ def cmd_handoff(a):
         'video': {'dir': str(vdir), 'file': str(videos[0]) if videos else None, 'transcript': str(subs[0]) if subs else None,
                   'zoomJson': str(vdir / 'zoom.json') if (vdir / 'zoom.json').exists() else None},
         'mux': {'group': b['slug'].lower(), 'course': b['title']},
+        'brand': dict(b.get('brand') or {'coachio': True}, logo=str(d / b['brand']['logo']) if (b.get('brand') or {}).get('logo') else None),
     }
     out = d / '00-ke-hoach' / 'handoff-v2e.json'
     out.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -506,6 +511,9 @@ def cmd_attach_video(a):
 def main():
     ap = argparse.ArgumentParser(prog='e2e', description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sp = ap.add_subparsers(dest='cmd', required=True)
+    p = sp.add_parser('brand-colors'); p.add_argument('logo'); p.set_defaults(f=brandmod.cmd_colors)
+    p = sp.add_parser('brand-preview'); p.add_argument('dir'); p.set_defaults(f=brandmod.cmd_preview)
+    p = sp.add_parser('brand-apply'); p.add_argument('dir'); p.add_argument('--option'); p.add_argument('--coachio', action='store_true'); p.set_defaults(f=brandmod.cmd_apply)
     p = sp.add_parser('start'); p.add_argument('dir', nargs='?'); p.set_defaults(f=onboard.cmd_start)
     p = sp.add_parser('next'); p.add_argument('dir'); p.set_defaults(f=onboard.cmd_next)
     p = sp.add_parser('setup'); p.add_argument('--yes', action='store_true'); p.set_defaults(f=onboard.cmd_setup)

@@ -22,13 +22,7 @@ if [[ -n "$V2E" && -f "$V2E/bin/v2e.mjs" ]]; then
   link video-to-elearning "$V2E"
   link mux-publisher "$V2E/skills/mux-publisher"
 else
-  echo "⚠ Chưa có video-to-elearning (cần cho bước cắt video + đăng Mux)."
-fi
-
-if [[ -z "$V2E" ]]; then
-  printf "\nTải luôn video-to-elearning + mux-publisher (cần quyền vào repo GitHub)? [y/N] "
-  read ans
-  [[ "$ans" == [yY]* ]] && python3 "$DIR/bin/e2e.py" setup --yes
+  echo "⏸ Skill cắt video (video-to-elearning, mux-publisher) chưa tải — Claude sẽ hỏi tải khi tới bước video."
 fi
 echo ""
 python3 "$DIR/bin/e2e.py" start

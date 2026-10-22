@@ -2,7 +2,7 @@
 import re
 from html import escape
 
-from content import BOOK
+from content import BOOK, theme_css
 from mindmap import tabs
 from prompt_kit import FLOWS, ROOT, STEPS, TEMPLATES
 
@@ -55,7 +55,7 @@ def build():
 </main><div class="pk-toast" id="pkToast" role="status"></div>'''
     html = f'''<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bộ prompt · {escape(BOOK["title"])}</title>
-<link rel="stylesheet" href="ebook-assets/app/fonts.css"><link rel="stylesheet" href="ebook-assets/app/prose.css"><link rel="stylesheet" href="ebook-assets/app/mindmap.css"><link rel="stylesheet" href="ebook-assets/app/prompt-kit.css">
+<link rel="stylesheet" href="ebook-assets/app/fonts.css"><link rel="stylesheet" href="ebook-assets/app/prose.css"><link rel="stylesheet" href="ebook-assets/app/mindmap.css"><link rel="stylesheet" href="ebook-assets/app/prompt-kit.css">{theme_css()}
 </head><body data-book="Prompt" data-storage="{BOOK["storage"]}">{body}<script src="ebook-assets/app/prompt-kit.js"></script></body></html>'''
     (ROOT / 'prompt.html').write_text(html, encoding='utf-8')
     print(f'prompt: prompt.html · {n} prompt + {len(TEMPLATES)} mẫu')

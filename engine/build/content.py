@@ -58,6 +58,30 @@ def _load_book():
 
 BOOK, PARTS = _load_book()
 
+COACHIO = {'name': 'Coachio Academy', 'coachio': True, 'ink': '#12305a', 'primary': '#1f4c86', 'accent': '#e2711d', 'accent2': '#1f7f79'}
+
+
+def brand() -> dict:
+    """Brand đang dùng: book.json → brand (mặc định Coachio). Khoá: ink (chữ đậm, nền tối), primary, accent (cam), accent2 (xanh phụ), logo."""
+    return {**COACHIO, **(BOOK.get('brand') or {})}
+
+
+def _mix(hex_color: str, t: float) -> str:
+    h = hex_color.lstrip('#')
+    r, g, b = (int(h[i:i + 2], 16) for i in (0, 2, 4))
+    return '#%02x%02x%02x' % tuple(round(c + (255 - c) * t) for c in (r, g, b))
+
+
+def theme_css() -> str:
+    """<style> ghi đè biến màu theo brand (rỗng nếu là Coachio mặc định)."""
+    b = brand()
+    if b.get('coachio') and not BOOK.get('brand'):
+        return ''
+    return ('<style>:root{' f"--navy:{b['ink']};--navy-2:{b['primary']};--navy-soft:{_mix(b['primary'], .9)};"
+            f"--orange:{b['accent']};--orange-soft:{_mix(b['accent'], .9)};--teal:{b['accent2']};--teal-soft:{_mix(b['accent2'], .9)};"
+            f"--prompt-bg:{b['ink']};" '}</style>')
+
+
 
 def part_of(n: int) -> str:
     return next((p['id'] for p in PARTS if n in p['chapters']), PARTS[-2]['id'])

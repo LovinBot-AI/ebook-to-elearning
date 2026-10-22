@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 · 2026-10-22
+- Tải chậm: chưa tới bước video thì không tải skill cắt video, FFmpeg, Remotion, Whisper (trừ khi người dùng yêu cầu). `e2e start` chỉ ghi "⏸ chưa cần" kèm dung lượng; install.sh không hỏi tải nữa.
+- Thương hiệu: hỏi ở G0 "đội Coachio hay thương hiệu riêng". Coachio giữ nguyên. Thương hiệu mới: hỏi logo, màu, cảm giác → 2–3 phương án → `e2e brand-preview` (thumbnail, bìa, trang ebook) → duyệt → `e2e brand-apply`. `e2e brand-colors` rút màu từ logo. docs/THUONG-HIEU.md.
+- Engine: màu ebook (web, PDF, EPUB, mindmap, trang prompt) và bìa theo `book.json › brand`, logo trên bìa.
+- `e2e handoff` mang thương hiệu sang video-to-elearning.
+
 ## 0.3.0 · 2026-10-22
 - Khởi động: `e2e start [dir]` — liệt kê thiếu skill/phần mềm/kết nối nào, chia "cần ngay" và "cần ở bước sau", mỗi mục ghi 👉 người dùng làm gì và 🤖 Claude làm gì.
 - `e2e setup --yes`: tải `sonlovinbot/video-to-elearning` và gắn video-to-elearning + mux-publisher (chỉ sau khi người dùng đồng ý). install.sh hỏi luôn khi chạy.

@@ -8,18 +8,20 @@ import datetime as dt
 from html import escape
 from pathlib import Path
 
-from content import BOOK, ROOT
+from content import BOOK, ROOT, brand
 
 TPL = Path(__file__).parent / 'cover' / 'cover.html'
 
 
 def build():
     c = BOOK.get('cover', {})
+    br = brand()
     title = c.get('title', BOOK['title'])
     h1 = 186 if len(title) <= 10 else 150 if len(title) <= 14 else 120 if len(title) <= 24 else 96
     html = (TPL.read_text(encoding='utf-8')
             .replace('{{H1_SIZE}}', str(h1))
-            .replace('{{ORG}}', escape(BOOK['org'])).replace('{{TAGLINE}}', escape(BOOK['tagline']))
+            .replace('{{INK}}', br['ink']).replace('{{ACCENT}}', br['accent']).replace('{{ACCENT2}}', br['accent2'])
+            .replace('{{LOGO}}', f'<img src="{(ROOT / br["logo"]).as_uri()}" alt="">' if br.get('logo') and (ROOT / br['logo']).exists() else escape(BOOK['org'])).replace('{{TAGLINE}}', escape(BOOK['tagline']))
             .replace('{{TAG}}', escape(c.get('tag', BOOK.get('cover_tag', ''))))
             .replace('{{TITLE}}', escape(title)).replace('{{TITLE2}}', escape(c.get('title2', '')))
             .replace('{{SUB}}', escape(c.get('sub', BOOK['subtitle'])))

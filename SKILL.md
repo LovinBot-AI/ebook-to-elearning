@@ -15,8 +15,9 @@ The video is recorded LAST, in one 3–4 hour take. Everything this skill produc
 
 1. Run `e2e start` (add the project dir if one exists: `e2e start <dir>`). It lists what is missing — companion skills, Python packages, Chrome, Node, video tools, Mux connection — and for each item says what the USER does (👉) and what YOU do (🤖).
 2. Tell the user, in plain Vietnamese, only what matters now: "Cần ngay" items first; "cần ở bước sau" items in one short line ("phần cắt video/đăng Mux sẽ cần cài thêm X, tôi sẽ hỏi khi tới bước đó"). Offer to set up everything at once if they prefer.
-3. Missing companion skills → ask once: "Cần cài thêm video-to-elearning và mux-publisher để cắt video và đăng Mux. Tôi tải về và gắn nhé?" → on yes: `e2e setup --yes`. Missing Python packages → ask, then `pip install -r engine/requirements.txt`. Never install anything without a yes.
-4. Then continue at the step `e2e next <dir>` reports (new user → G0 intake).
+3. Missing Python packages → ask, then `pip install -r engine/requirements.txt`. Never install anything without a yes.
+4. **Lazy video tools:** do NOT download the video companions (video-to-elearning, mux-publisher) or video tools (FFmpeg, Whisper ~1.6 GB, Remotion ~340 MB) until the project reaches the video step (G8) — or the user explicitly asks to set everything up now. At start, just mention in one line that the video step will need extra downloads later (~0.5–2 GB; Whisper not needed with a Zoom .vtt transcript).
+5. Then continue at the step `e2e next <dir>` reports (new user → G0 intake).
 
 **Always end every reply with ONE line:** `👉 Việc tiếp theo của bạn: …` — a concrete action in plain words (answer these questions / read X and say "duyệt" / drop the video into `quay-video/` / create a Mux token…). Take it from `e2e next <dir>` when unsure. If the user asks "giờ làm gì?", "tiếp theo là gì?", "tôi không hiểu bước này", run `e2e next <dir>` and explain that step in 2–3 simple sentences — no commands, no jargon.
 
@@ -59,6 +60,7 @@ Covered by START HERE above (`e2e start`, `e2e setup --yes`). Details:
 Goal: collect idea, context and everything that already exists, so you understand the knowledge the speaker wants to pass on. Use the question bank in [docs/HOI-DAP.md](docs/HOI-DAP.md) (Round 1).
 - Ask in **2–3 short rounds**, max ~7 questions per message, grouped, each with an example answer. Offer defaults so the user can answer "ok mặc định".
 - Ask for materials: past lecture recordings/transcripts, slides, mindmaps (images ok), docs (Lark/Google/Notion links), repos, case studies, student FAQs, sales page. Read every link/file you are given (built-in browser for public links). Save copies or notes in `nguon/`.
+- **Brand (ask in round 1):** "Khoá thuộc đội ngũ Coachio hay cần thương hiệu riêng?" Coachio → `e2e brand-apply <dir> --coachio`, no more questions. New brand → follow [docs/THUONG-HIEU.md](docs/THUONG-HIEU.md): ask logo, colors (or extract with `e2e brand-colors`), feel, display name; write 2–3 options in `00-ke-hoach/brand-options.json`; `e2e brand-preview` → send screenshots → user picks → `e2e brand-apply --option X` → `e2e cover`. Never apply a new brand without the preview + an explicit choice. The approved brand flows to the video thumbnails via `e2e handoff`.
 - Write `00-ke-hoach/TU-LIEU.md` (inventory: source → what it contains → reliability → where it will be used) and `00-ke-hoach/BRIEF.md` from `templates/BRIEF.md`.
 - Mark unknowns as `❓` in the brief instead of guessing. Send a short summary + open questions. **STOP.**
 
@@ -112,7 +114,8 @@ Follow [docs/BAN-FREE.md](docs/BAN-FREE.md). Propose `free.json` (which chapters
 
 ## 9. G8 — After recording: video → lessons (video-to-elearning)
 
-Companion skills: `video-to-elearning` (CLI `v2e`, skill at `~/.claude/skills/video-to-elearning`) and `mux-publisher` (`mux-pub`). If they are missing, tell the user to run `install.sh` of this skill (it links them) — do not improvise a cutting pipeline.
+Companion skills: `video-to-elearning` (CLI `v2e`, skill at `~/.claude/skills/video-to-elearning`) and `mux-publisher` (`mux-pub`). They are installed only now (lazy). If missing: ask "Tới bước video rồi — tải skill cắt video (~15 MB) nhé?" → `e2e setup --yes`; then `v2e doctor` and list each tool with its size; install only after yes. Tell them: with a Zoom .vtt transcript, Whisper (~1.6 GB) is not needed. Do not improvise a cutting pipeline.
+Thumbnails use the brand approved at G0 (`handoff` carries it): Coachio → bundled kit; own brand → logo + colors pre-filled, still ONE test thumbnail to approve (v2e gate G2).
 
 1. Before the recording day: `e2e handoff <dir>` → `00-ke-hoach/handoff-v2e.json` + folder `quay-video/` with `HUONG-DAN-DAN-VIDEO.md`. Tell the speaker in plain words where to drop the files: **Zoom Cloud → Recordings → download the MP4 (shared screen with speaker view) + "Audio transcript" (.vtt)** — the .vtt is the best input (fast, accurate). Local/OBS recordings: just the .mp4 (Whisper will transcribe).
 2. When the user says the video is in: `e2e handoff <dir>` again (records the file), then `v2e init "<dir>/video-elearning" --from-ebook "<dir>"` → brief.md, glossary terms, expected lessons filled from the ebook. Follow the video-to-elearning SKILL.md from step 0/2 onward (doctor, prepare, clean-audio, transcribe).
